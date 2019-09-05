@@ -6,5 +6,7 @@ void test_malloc()
 
 	ft_malloc(3500);
 
+	show_alloc_mem_free();
+
 	printf("\n===== end test_malloc =====\n");
 }
