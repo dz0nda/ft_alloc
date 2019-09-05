@@ -72,4 +72,9 @@ extern					t_allocinfo g_allocinfo;
 
 int						ft_alloc_arena(t_node **head, size_t size);
 
+
+size_t				ft_alloc_get_size_aligned(size_t offset, size_t align);
+t_node  			**ft_alloc_get_arena(size_t size);
+size_t				ft_alloc_get_size_arena(size_t size);
+
 #endif
