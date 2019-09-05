@@ -5,19 +5,6 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/09/05 03:53:09 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/05 03:53:10 by dzonda      ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   alloc.h                                          .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/05 03:43:01 by dzonda       #+#   ##    ##    #+#       */
 /*   Updated: 2019/09/05 03:51:45 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
@@ -35,9 +22,9 @@
 # include <stdint.h>
 # include <sys/mman.h>
 
-# define FT_ALLOC_PTR_UINT      size_t
+# define FT_ALLOC_UINT      		size_t
 # define FT_ALLOC_SIZE_NODE     32
-# define FT_ALLOC_ALIGNMENT     sizeof(FT_ALLOC_PTR_UINT)
+# define FT_ALLOC_ALIGNMENT     sizeof(FT_ALLOC_UINT)
 
 # define FT_ALLOC_PAGESIZE      (getpagesize())
 # define FT_ALLOC_TINY          (FT_ALLOC_PAGESIZE / 16)
@@ -72,9 +59,8 @@ extern					t_allocinfo g_allocinfo;
 
 int						ft_alloc_arena(t_node **head, size_t size);
 
-
 size_t				ft_alloc_get_size_aligned(size_t offset, size_t align);
-t_node  			**ft_alloc_get_arena(size_t size);
 size_t				ft_alloc_get_size_arena(size_t size);
+t_node  			**ft_alloc_get_arena(size_t size);
 
 #endif
