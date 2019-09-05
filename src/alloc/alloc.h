@@ -58,6 +58,7 @@ typedef struct			s_allocinfo {
 extern					t_allocinfo g_allocinfo;
 
 int						ft_alloc_arena(t_node **head, size_t size);
+int						ft_alloc_split_node(t_node *node, size_t size);
 
 size_t				ft_alloc_get_size_aligned(size_t offset, size_t align);
 size_t				ft_alloc_get_size_arena(size_t size);

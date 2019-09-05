@@ -15,6 +15,19 @@
 
 t_allocinfo		g_allocinfo = { { NULL } };
 
+int		ft_alloc_split_node(t_node *node, size_t size)
+{
+	t_node *next;
+
+	next = NULL;
+	next = node->next;
+	node->next = (t_node *)((FT_ALLOC_UINT)node + FT_ALLOC_SIZE_NODE + size);
+	node->next->size = node->size - (FT_ALLOC_SIZE_NODE + size);
+	node->next->free = TRUE;
+	node->next->next = next;
+	return (EXIT_SUCCESS);
+}
+
 int		ft_alloc_arena(t_node **head, size_t size)
 {
 	t_node	*new;
