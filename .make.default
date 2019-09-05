@@ -1,0 +1,14 @@
+#! /usr/bin/env bash
+
+CONFIGURE=basic
+
+TARGET=a.out
+PROJDIR=$PWD
+SRCDIR=src
+OBJDIR=obj
+
+VERBOSE=false
+
+CC=gcc
+CFLAGS=
+LDFLAGS=
