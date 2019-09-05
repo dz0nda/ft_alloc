@@ -21,9 +21,13 @@ CFLAGS = -fPIC
 LDFLAGS = -shared
 SUBDIR = alloc \
 malloc \
+show \
 
-SUBFILE = ./src/alloc/alloc.c \
-./src/malloc/malloc.c
+SUBFILE = ./src/alloc/alloc_get.c \
+./src/alloc/alloc.c \
+./src/malloc/malloc.c \
+./src/show/show.c \
+./src/show/show_utils.c
 
 SRCDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(SRCDIR)/, $(dir)))
 OBJDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(OBJDIR)/, $(dir)))
