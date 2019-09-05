@@ -63,4 +63,6 @@ size_t				ft_alloc_get_size_aligned(size_t offset, size_t align);
 size_t				ft_alloc_get_size_arena(size_t size);
 t_node  			**ft_alloc_get_arena(size_t size);
 
+t_node				*ft_alloc_search(t_node **head, size_t size);
+
 #endif
