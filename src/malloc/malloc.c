@@ -15,5 +15,11 @@
 
 void	*ft_malloc(size_t size)
 {
+	t_node	**arena;
+
+	arena = NULL;
+	size = ft_alloc_get_size_aligned(size, FT_ALLOC_ALIGNMENT);
+	arena = ft_alloc_get_arena(size);
+
 	return (NULL);
 }
