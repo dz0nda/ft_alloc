@@ -25,12 +25,11 @@ void	*ft_malloc(size_t size)
 	{
 		if (ft_alloc_arena(head, ft_alloc_get_size_arena(size)) == EXIT_FAILURE)
 			return (NULL);
-		if ((node = ft_alloc_search(head, size)) == NULL)
-			return (NULL);
+		node = (*head)->prev;
 	}
-	if (node->size > (size + FT_ALLOC_SIZE_NODE))
-		ft_alloc_split_node(node, size);
-	node->size = size;
+	if (node->size > (size + FT_ALLOC_SIZE_NODE + FT_ALLOC_ALIGNMENT))
+		ft_alloc_arena_split(node, size);
 	node->free = FALSE;
+	// ft_display(*head);
 	return (NULL);
 }

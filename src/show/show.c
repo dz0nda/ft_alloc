@@ -31,12 +31,14 @@ static void		ft_show_alloc(t_free free)
 		{
 				node = g_allocinfo.arena[arena];
 				ft_show_arena_head(node, arena);
-				while(node != NULL)
+				while(g_allocinfo.arena[arena] && node->next != g_allocinfo.arena[arena])
 				{
 						if (node->free == free)
 							ft_show_node_size((void *)node, node->size);
 						node = node->next;
 				}
+				if (g_allocinfo.arena[arena] && node->free == free)
+					ft_show_node_size((void *)node, node->size);
 				ft_putstr("Total : ");
 				// if (free == TRUE)
 				// 		ft_putnbr(g_allocinfo.total_unused[arena_map]);
