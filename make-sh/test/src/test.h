@@ -11,6 +11,13 @@
 
 # include "../../../liballoc.h"
 
+typedef struct s_block
+{
+  size_t  data;
+  struct s_block *next;
+  struct s_block *prev;
+}               t_block;
+
 void    test_malloc(void);
 
 #endif
