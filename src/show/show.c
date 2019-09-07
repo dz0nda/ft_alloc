@@ -20,7 +20,7 @@ static void		ft_show_node_size(t_node *node, size_t node_size)
     ft_putstr(" bytes\n");
 }
 
-static void		ft_show_alloc(t_free free)
+static void		ft_show_alloc(t_bool free)
 {
 		t_alloc_arena 	arena;
 		t_node	*node;
@@ -29,21 +29,21 @@ static void		ft_show_alloc(t_free free)
 		node = NULL;
 		while (++arena < ALLOC_NONE)
 		{
-				node = g_allocinfo.arena[arena];
+				node = g_alloc_state.alloc_arena[arena];
 				ft_show_arena_head(node, arena);
-				while(g_allocinfo.arena[arena] && node->next != g_allocinfo.arena[arena])
+				while(g_alloc_state.alloc_arena[arena] && node->next != g_alloc_state.alloc_arena[arena])
 				{
 						if (node->free == free)
 							ft_show_node_size((void *)node, node->size);
 						node = node->next;
 				}
-				if (g_allocinfo.arena[arena] && node->free == free)
+				if (g_alloc_state.alloc_arena[arena] && node->free == free)
 					ft_show_node_size((void *)node, node->size);
 				ft_putstr("Total : ");
 				// if (free == TRUE)
-				// 		ft_putnbr(g_allocinfo.total_unused[arena_map]);
+				// 		ft_putnbr(g_alloc_state.total_unused[arena_map]);
 				// else
-				// 		ft_putnbr(g_allocinfo.total_allocated[arena_map]);
+				// 		ft_putnbr(g_alloc_state.total_allocated[arena_map]);
 				ft_putstr(" bytes \n");
 		}
 }
