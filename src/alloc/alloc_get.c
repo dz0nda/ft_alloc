@@ -17,8 +17,8 @@ size_t	ft_alloc_get_size_arena(size_t size)
 t_node  **ft_alloc_get_arena(size_t size)
 {
   if (size <= FT_ALLOC_TINY)
-    return (&(g_allocinfo.arena)[ALLOC_TINY]);
+    return (&(g_alloc_state.alloc_arena)[ALLOC_TINY]);
   else if (size > FT_ALLOC_TINY && size <= FT_ALLOC_SMALL)
-    return (&(g_allocinfo.arena)[ALLOC_SMALL]);
-  return (&(g_allocinfo.arena)[ALLOC_LARGE]);
+    return (&(g_alloc_state.alloc_arena)[ALLOC_SMALL]);
+  return (&(g_alloc_state.alloc_arena)[ALLOC_LARGE]);
 }

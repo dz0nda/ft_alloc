@@ -13,7 +13,7 @@
 
 #include "alloc.h"
 
-t_allocinfo		g_allocinfo = { { NULL } };
+t_alloc_state		g_alloc_state;
 
 int		ft_alloc_arena_split(t_node *node, size_t size)
 {
@@ -55,4 +55,20 @@ int 	ft_alloc_arena(t_node **head, size_t size)
 			(*head)->prev = new; 
 		}
 		return (EXIT_SUCCESS);
+}
+
+
+int		ft_alloc_init(void)
+{
+  t_alloc_info  *alloc_info;
+  struct rlimit rlp;
+
+	ft_memset(&rlp, 0, sizeof(struct rlimit));
+  alloc_info = &(g_alloc_state).alloc_info;
+  if (alloc_info->rlim_cur == 0 && alloc_info->rlim_max == 0)
+    if (getrlimit(RLIMIT_MEMLOCK, &rlp) == -1)
+      return (EXIT_FAILURE);
+  alloc_info->rlim_cur = rlp.rlim_cur;
+  alloc_info->rlim_max = rlp.rlim_max;
+  return (EXIT_SUCCESS);
 }
