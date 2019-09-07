@@ -41,3 +41,12 @@ int   ft_ainfo_rall(t_aarena arena, size_t size, t_bool free)
     return (ft_alloc_error(AE_RALL));
   return (EXIT_SUCCESS);
 }
+
+int   ft_ainfo_raddr(t_aarena arena, FT_ALLOC_UINT ptr)
+{
+  t_alloc_info *info;
+
+  info = &(g_alloc_state).alloc_info;
+  info->raddr[arena] = ptr;
+  return (EXIT_SUCCESS);
+}

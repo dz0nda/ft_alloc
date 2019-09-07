@@ -23,6 +23,9 @@ void  ft_show_alloc_info(void)
     ft_putnbr(alloc_info->rall_inuse[arena]);
     ft_putstr("\nTotal free bytes : ");
     ft_putnbr(alloc_info->rall_freed[arena]);
+    ft_putstr("\nAdress of begin section : ");
+    ft_putnbr(alloc_info->raddr[arena]);
     arena++;
   }
+  ft_putchar('\n');
 }

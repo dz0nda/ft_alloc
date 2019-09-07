@@ -34,9 +34,11 @@ int		ft_alloc_arena_split(t_anode *node, size_t size)
 int 	ft_alloc_arena(t_anode **head, size_t size) 
 { 
     t_anode *new;
+		t_aarena arena;
 
 		new = NULL;
-		ft_ainfo_mmap(ft_alloc_get_target(size), ft_alloc_get_size_arena(size), FALSE);
+		arena = ft_alloc_get_target(size);
+		ft_ainfo_mmap(arena, ft_alloc_get_size_arena(size), FALSE);
 		size = ft_alloc_get_size_arena(size);
 //		ft_ainfo_rall_mmap(ALLOC_NONE, size, FALSE);
 		if ((new = (t_anode *)mmap(NULL, size,
@@ -44,6 +46,7 @@ int 	ft_alloc_arena(t_anode **head, size_t size)
 			return (EXIT_FAILURE);
 		new->size = size - FT_ALLOC_SIZE_NODE;
 		new->free = TRUE;
+		ft_ainfo_raddr(arena, (FT_ALLOC_UINT)new);
     if (*head == NULL) 
     {
 				new->prev = new; 

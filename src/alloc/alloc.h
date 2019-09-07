@@ -67,6 +67,8 @@ typedef struct s_alloc_info
 	FT_ALLOC_UINT rall_mmap;
 	FT_ALLOC_UINT rall_inuse[ALLOC_NONE];
 	FT_ALLOC_UINT rall_freed[ALLOC_NONE];
+	FT_ALLOC_UINT raddr[ALLOC_NONE];
+
 }							t_alloc_info;
 
 typedef struct			s_alloc_state {
@@ -89,6 +91,7 @@ t_anode				*ft_alloc_search(t_anode **head, size_t size);
 
 int   				ft_ainfo_rall(t_aarena arena, size_t size, t_bool free);
 int   				ft_ainfo_mmap(t_aarena arena, size_t size, t_bool free);
+int   				ft_ainfo_raddr(t_aarena arena, FT_ALLOC_UINT ptr);
 
 int   				ft_alloc_init_modifier();
 
