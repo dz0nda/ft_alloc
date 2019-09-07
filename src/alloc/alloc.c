@@ -15,12 +15,12 @@
 
 t_alloc_state		g_alloc_state;
 
-int		ft_alloc_arena_split(t_node *node, size_t size)
+int		ft_alloc_arena_split(t_anode *node, size_t size)
 {
-	t_node *new;
+	t_anode *new;
 
 	new = NULL;
-	new = (t_node *)((FT_ALLOC_UINT)node + FT_ALLOC_SIZE_NODE + size);
+	new = (t_anode *)((FT_ALLOC_UINT)node + FT_ALLOC_SIZE_NODE + size);
 	new->size = node->size - (FT_ALLOC_SIZE_NODE + size);
 	new->free = TRUE;
 	node->size = size;
@@ -31,12 +31,15 @@ int		ft_alloc_arena_split(t_node *node, size_t size)
 	return (EXIT_SUCCESS);
 }
 
-int 	ft_alloc_arena(t_node **head, size_t size) 
+int 	ft_alloc_arena(t_anode **head, size_t size) 
 { 
-    t_node*		new;
+    t_anode *new;
 
 		new = NULL;
-		if ((new = (t_node *)mmap(NULL, size,
+		ft_ainfo_mmap(ft_alloc_get_target(size), ft_alloc_get_size_arena(size), FALSE);
+		size = ft_alloc_get_size_arena(size);
+//		ft_ainfo_rall_mmap(ALLOC_NONE, size, FALSE);
+		if ((new = (t_anode *)mmap(NULL, size,
 		PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_SHARED, -1, 0)) == MAP_FAILED)
 			return (EXIT_FAILURE);
 		new->size = size - FT_ALLOC_SIZE_NODE;
@@ -67,7 +70,7 @@ int		ft_alloc_init(void)
   alloc_info = &(g_alloc_state).alloc_info;
   if (alloc_info->rlim_cur == 0 && alloc_info->rlim_max == 0)
     if (getrlimit(RLIMIT_MEMLOCK, &rlp) == -1)
-      return (EXIT_FAILURE);
+      return (ft_alloc_error(AE_INIT));
   alloc_info->rlim_cur = rlp.rlim_cur;
   alloc_info->rlim_max = rlp.rlim_max;
   return (EXIT_SUCCESS);

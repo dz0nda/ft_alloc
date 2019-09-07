@@ -14,11 +14,20 @@ size_t	ft_alloc_get_size_arena(size_t size)
   return (ft_alloc_get_size_aligned(size, FT_ALLOC_PAGESIZE));
 }
 
-t_node  **ft_alloc_get_arena(size_t size)
+t_anode  **ft_alloc_get_arena(size_t size)
 {
   if (size <= FT_ALLOC_TINY)
     return (&(g_alloc_state.alloc_arena)[ALLOC_TINY]);
   else if (size > FT_ALLOC_TINY && size <= FT_ALLOC_SMALL)
     return (&(g_alloc_state.alloc_arena)[ALLOC_SMALL]);
   return (&(g_alloc_state.alloc_arena)[ALLOC_LARGE]);
+}
+
+t_aarena  ft_alloc_get_target(size_t size)
+{
+  if (size <= FT_ALLOC_TINY)
+    return (ALLOC_TINY);
+  else if (size > FT_ALLOC_TINY && size <= FT_ALLOC_SMALL)
+    return (ALLOC_SMALL);
+  return (ALLOC_LARGE);
 }

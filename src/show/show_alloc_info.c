@@ -2,7 +2,7 @@
 
 void  ft_show_alloc_info(void)
 {
-  t_alloc_arena arena;
+  t_aarena arena;
   t_alloc_info *alloc_info;
 
   arena = ALLOC_TINY;

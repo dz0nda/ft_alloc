@@ -34,8 +34,8 @@
 # define FT_ALLOC_M             (FT_ALLOC_PAGESIZE * 10)
 
 typedef enum	e_bool {
-	TRUE,
-	FALSE
+	FALSE,
+	TRUE
 }				t_bool;
 
 typedef enum	e_alloc_arena {
@@ -43,21 +43,22 @@ typedef enum	e_alloc_arena {
 	ALLOC_SMALL,
 	ALLOC_LARGE,
 	ALLOC_NONE
-}				t_alloc_arena;
+}				t_aarena;
 
 typedef enum	e_alloc_error {
+	AE_INIT,
 	AE_RALL,
 	AE_RALL_MMAP,
 	AE_UNDEFINED
 }				t_aerror;
 
 
-typedef struct			s_node {
+typedef struct			s_alloc_node {
 	size_t			size;
 	t_bool			free;
-	struct s_node	*next;
-	struct s_node	*prev;
-}						t_node;
+	struct s_alloc_node	*next;
+	struct s_alloc_node	*prev;
+}						t_anode;
 
 typedef struct s_alloc_info
 {
@@ -70,20 +71,24 @@ typedef struct s_alloc_info
 
 typedef struct			s_alloc_state {
 	t_alloc_info	alloc_info;
-	t_node			 *alloc_arena[ALLOC_NONE];
+	t_anode			 *alloc_arena[ALLOC_NONE];
 }						t_alloc_state;
 
 extern				t_alloc_state g_alloc_state;
 
 int   				ft_alloc_init();
-int						ft_alloc_arena(t_node **head, size_t size);
-int						ft_alloc_arena_split(t_node *node, size_t size);
+int						ft_alloc_arena(t_anode **head, size_t size);
+int						ft_alloc_arena_split(t_anode *node, size_t size);
 
 size_t				ft_alloc_get_size_aligned(size_t offset, size_t align);
 size_t				ft_alloc_get_size_arena(size_t size);
-t_node  			**ft_alloc_get_arena(size_t size);
+t_anode  			**ft_alloc_get_arena(size_t size);
+t_aarena  		ft_alloc_get_target(size_t size);
 
-t_node				*ft_alloc_search(t_node **head, size_t size);
+t_anode				*ft_alloc_search(t_anode **head, size_t size);
+
+int   				ft_ainfo_rall(t_aarena arena, size_t size, t_bool free);
+int   				ft_ainfo_mmap(t_aarena arena, size_t size, t_bool free);
 
 int   				ft_alloc_init_modifier();
 

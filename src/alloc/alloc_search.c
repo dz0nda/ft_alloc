@@ -1,8 +1,8 @@
 # include "alloc.h"
 
-static t_node   *ft_alloc_search_first_fit(t_node *head, size_t size)
+static t_anode   *ft_alloc_search_first_fit(t_anode *head, size_t size)
 {
-    t_node  *node;
+    t_anode  *node;
 
     node = NULL;
     if ((node = head) == NULL)
@@ -18,9 +18,9 @@ static t_node   *ft_alloc_search_first_fit(t_node *head, size_t size)
     return (NULL);
 }
 
-t_node          *ft_alloc_search(t_node **head, size_t size)
+t_anode          *ft_alloc_search(t_anode **head, size_t size)
 {
-    t_node *node;
+    t_anode *node;
 
     node = NULL;
     if (*head == NULL)

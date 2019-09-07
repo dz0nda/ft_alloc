@@ -1,6 +1,6 @@
 # include "show.h"
 
-static void		ft_show_arena_head(t_node *arena_head, t_alloc_arena arena)
+static void		ft_show_arena_head(t_anode *arena_head, t_aarena arena)
 {
 		const char *arena_name[ALLOC_NONE] = { "TINY : ", "SMALL : ", "LARGE : " };
 
@@ -10,7 +10,7 @@ static void		ft_show_arena_head(t_node *arena_head, t_alloc_arena arena)
 		ft_putstr("\n");
 }
 
-static void		ft_show_node_size(t_node *node, size_t node_size)
+static void		ft_show_node_size(t_anode *node, size_t node_size)
 {
     ft_show_address((FT_ALLOC_UINT)node + FT_ALLOC_SIZE_NODE);
     ft_putstr(" - ");
@@ -22,8 +22,8 @@ static void		ft_show_node_size(t_node *node, size_t node_size)
 
 static void		ft_show_alloc(t_bool free)
 {
-		t_alloc_arena 	arena;
-		t_node	*node;
+		t_aarena 	arena;
+		t_anode	*node;
 
 		arena = -1;
 		node = NULL;
