@@ -1,51 +1,56 @@
 # include "show.h"
 
-static void		ft_show_arena_head(t_anode *arena_head, t_aarena arena)
+static void		ft_show_node(t_anode *node, t_bool free)
 {
-		const char *arena_name[ALLOC_NONE] = { "TINY : ", "SMALL : ", "LARGE : " };
+	FT_ALLOC_UINT address;
+	FT_ALLOC_UINT size;
 
-		ft_putstr(arena_name[arena]);
-		if (arena_head != NULL)
-				ft_show_address((FT_ALLOC_UINT)arena_head);
+	address = (FT_ALLOC_UINT)node;
+	size = (FT_ALLOC_UINT)node->size;
+	if (node->free == free)
+	{
 		ft_putstr("\n");
+		ft_show_address(address + FT_ALLOC_SIZE_NODE);
+		ft_putstr(" - ");
+		ft_show_address(address + FT_ALLOC_SIZE_NODE + size);
+		ft_putstr(" : ");
+		ft_putnbr(size);
+		ft_putstr(" bytes\n");
+	}
 }
 
-static void		ft_show_node_size(t_anode *node, size_t node_size)
+static void 	ft_show_iter(t_anode *head, t_bool free, void (*f)(t_anode *node, t_bool free))
 {
-    ft_show_address((FT_ALLOC_UINT)node + FT_ALLOC_SIZE_NODE);
-    ft_putstr(" - ");
-    ft_show_address((FT_ALLOC_UINT)node + FT_ALLOC_SIZE_NODE + node_size);
-    ft_putstr(" : ");
-    ft_putnbr(node_size);
-    ft_putstr(" bytes\n");
+	t_anode *node;
+
+	if ((node = head) == NULL)
+		return ;
+	f(node, free);
+	while ((node = node->next) != head)
+		f(node, free);
 }
 
 static void		ft_show_alloc(t_bool free)
 {
-		t_aarena 	arena;
-		t_anode	*node;
+	const char *arena[ALLOC_NONE] = { "TINY : ", "SMALL : ", "LARGE : " };
+	t_aarena 	index;
+	t_anode	*node;
 
-		arena = -1;
-		node = NULL;
-		while (++arena < ALLOC_NONE)
-		{
-				node = g_alloc_state.alloc_arena[arena];
-				ft_show_arena_head(node, arena);
-				while(g_alloc_state.alloc_arena[arena] && node->next != g_alloc_state.alloc_arena[arena])
-				{
-						if (node->free == free)
-							ft_show_node_size((void *)node, node->size);
-						node = node->next;
-				}
-				if (g_alloc_state.alloc_arena[arena] && node->free == free)
-					ft_show_node_size((void *)node, node->size);
-				ft_putstr("Total : ");
-				// if (free == TRUE)
-				// 		ft_putnbr(g_alloc_state.total_unused[arena_map]);
-				// else
-				// 		ft_putnbr(g_alloc_state.total_allocated[arena_map]);
-				ft_putstr(" bytes \n");
-		}
+	index = -1;
+	node = NULL;
+	while (++index < ALLOC_NONE)
+	{
+		ft_putstr(arena[index]);
+		if ((node = g_alloc_state.alloc_arena[index]) != NULL)
+			ft_show_address((FT_ALLOC_UINT)node);
+		ft_show_iter(node, free, ft_show_node);
+		ft_putstr("Total : ");
+		if (free == TRUE)
+				ft_putnbr(g_alloc_state.alloc_info.rall_freed[index]);
+		else
+				ft_putnbr(g_alloc_state.alloc_info.rall_inuse[index]);
+		ft_putstr(" bytes \n");
+	}
 }
 
 void				show_alloc_mem(void)
