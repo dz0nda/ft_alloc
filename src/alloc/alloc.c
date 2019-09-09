@@ -31,50 +31,51 @@ int		ft_alloc_arena_split(t_anode *node, size_t size)
 	return (EXIT_SUCCESS);
 }
 
-int 	ft_alloc_arena(t_anode **head, size_t size) 
-{ 
-    t_anode *new;
-		t_aarena arena;
-
-		new = NULL;
-		arena = ft_alloc_get_target(size);
-		ft_ainfo_mmap(arena, ft_alloc_get_size_arena(size), FALSE);
-		size = ft_alloc_get_size_arena(size);
-//		ft_ainfo_rall_mmap(ALLOC_NONE, size, FALSE);
-		if ((new = (t_anode *)mmap(NULL, size,
-		PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_SHARED, -1, 0)) == MAP_FAILED)
-			return (EXIT_FAILURE);
-		new->size = size - FT_ALLOC_SIZE_NODE;
-		new->free = TRUE;
-		ft_ainfo_raddr(arena, (FT_ALLOC_UINT)new);
-    if (*head == NULL) 
-    {
-				new->prev = new; 
-        new->next = new; 
-        *head = new; 
-    }
-		else
-		{
-			(*head)->prev->next = new;
-			new->prev = (*head)->prev; 
-			new->next = *head; 
-			(*head)->prev = new; 
-		}
-		return (EXIT_SUCCESS);
+void	ft_alloc_arena_append(t_anode **head, t_anode *new)
+{
+	if (*head == NULL) 
+	{
+		new->prev = new; 
+		new->next = new; 
+		*head = new; 
+	}
+	else
+	{
+		(*head)->prev->next = new;
+		new->prev = (*head)->prev; 
+		new->next = *head; 
+		(*head)->prev = new; 
+	}
 }
 
-
-int		ft_alloc_init(void)
+void		*ft_alloc_mmap(FT_ALLOC_UINT size)
 {
-  t_alloc_info  *alloc_info;
-  struct rlimit rlp;
+	void	*anon;
 
-	ft_memset(&rlp, 0, sizeof(struct rlimit));
-  alloc_info = &(g_alloc_state).alloc_info;
-  if (alloc_info->rlim_cur == 0 && alloc_info->rlim_max == 0)
-    if (getrlimit(RLIMIT_MEMLOCK, &rlp) == -1)
-      return (ft_alloc_error(AE_INIT));
-  alloc_info->rlim_cur = rlp.rlim_cur;
-  alloc_info->rlim_max = rlp.rlim_max;
-  return (EXIT_SUCCESS);
+	anon = NULL;
+	if ((anon = (t_anode *)mmap(NULL, size,
+	PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_SHARED, -1, 0)) == MAP_FAILED)
+		return (NULL);
+	return (anon);
+}
+
+t_anode 	*ft_alloc_arena_new(size_t size) 
+{ 
+	t_anode *new;
+	t_anode **head;
+	t_aarena arena;
+
+	new = NULL;
+	head = ft_alloc_get_arena_by_size(size);
+	arena = ft_alloc_get_arena_index_by_size(size);
+	size = ft_alloc_get_arena_size_by_size(size);
+	if (ft_ainfo_mmap(arena, size, FALSE) == EXIT_FAILURE)
+		return (NULL);
+	if ((new = (t_anode *)ft_alloc_mmap(size)) == NULL)
+		return (NULL);
+	new->size = size - FT_ALLOC_SIZE_NODE;
+	new->free = TRUE;
+	ft_ainfo_raddr(arena, (FT_ALLOC_UINT)new);
+	ft_alloc_arena_append(head, new);
+	return (new);
 }

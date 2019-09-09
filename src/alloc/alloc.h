@@ -28,10 +28,12 @@
 # define FT_ALLOC_ALIGNMENT     sizeof(FT_ALLOC_UINT)
 
 # define FT_ALLOC_PAGESIZE      (getpagesize())
-# define FT_ALLOC_TINY          (FT_ALLOC_PAGESIZE / 16)
-# define FT_ALLOC_SMALL         (FT_ALLOC_PAGESIZE / 2)
-# define FT_ALLOC_N             (FT_ALLOC_PAGESIZE * 10)
-# define FT_ALLOC_M             (FT_ALLOC_PAGESIZE * 10)
+# define FT_ALLOC_TINY          (FT_ALLOC_UINT)(FT_ALLOC_PAGESIZE / 16)
+# define FT_ALLOC_SMALL         (FT_ALLOC_UINT)(FT_ALLOC_PAGESIZE / 2)
+# define FT_ALLOC_N             (FT_ALLOC_UINT)(FT_ALLOC_PAGESIZE * 10)
+# define FT_ALLOC_M             (FT_ALLOC_UINT)(FT_ALLOC_PAGESIZE * 10)
+
+typedef struct rlimit 	t_limit;
 
 typedef enum	e_bool {
 	FALSE,
@@ -60,6 +62,10 @@ typedef struct			s_alloc_node {
 	struct s_alloc_node	*prev;
 }						t_anode;
 
+typedef struct			s_alloc_noder {
+
+}						t_anoder;
+
 typedef struct s_alloc_info
 {
 	FT_ALLOC_UINT	rlim_cur;
@@ -72,28 +78,43 @@ typedef struct s_alloc_info
 }							t_alloc_info;
 
 typedef struct			s_alloc_state {
+	t_bool			init;
 	t_alloc_info	alloc_info;
-	t_anode			 *alloc_arena[ALLOC_NONE];
+	t_anode			*alloc_arena[ALLOC_NONE];
 }						t_alloc_state;
 
 extern				t_alloc_state g_alloc_state;
 
+/*
+ *	Init functions
+ */
 int   				ft_alloc_init();
-int						ft_alloc_arena(t_anode **head, size_t size);
+
+
+/*
+ *	Node functions
+ */
+t_anode 				*ft_alloc_arena_new(size_t size);
 int						ft_alloc_arena_split(t_anode *node, size_t size);
 
-size_t				ft_alloc_get_size_aligned(size_t offset, size_t align);
-size_t				ft_alloc_get_size_arena(size_t size);
-t_anode  			**ft_alloc_get_arena(size_t size);
-t_aarena  		ft_alloc_get_target(size_t size);
+/*
+ *	Get functions
+ */
+size_t					ft_alloc_get_size_aligned(size_t offset, size_t align);
+t_aarena  				ft_alloc_get_arena_index_by_size(size_t size);
+size_t					ft_alloc_get_arena_size_by_size(size_t size);
+t_anode  				**ft_alloc_get_arena_by_size(size_t size);
 
+/*
+ *	Search functions
+ */
 t_anode				*ft_alloc_search(t_anode **head, size_t size);
+t_anode				*ft_alloc_search_node_by_address(FT_ALLOC_UINT address);
+t_anode          	*ft_alloc_search_node_by_size(size_t size);
 
 int   				ft_ainfo_rall(t_aarena arena, size_t size, t_bool free);
 int   				ft_ainfo_mmap(t_aarena arena, size_t size, t_bool free);
 int   				ft_ainfo_raddr(t_aarena arena, FT_ALLOC_UINT ptr);
-
-int   				ft_alloc_init_modifier();
 
 int 					ft_alloc_error(t_aerror err);
 
