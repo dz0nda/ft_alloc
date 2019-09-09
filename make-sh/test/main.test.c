@@ -9,7 +9,6 @@ int main(void)
 {
     printf("\n\n===== Test Start =====\n\n");
 
-
      test_malloc();
 
     printf("\n\n===== Test End =====\n\n");

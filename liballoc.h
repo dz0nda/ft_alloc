@@ -15,5 +15,6 @@
 
 # include "./src/malloc/malloc.h"
 # include "./src/show/show.h"
+# include "./src/free/free.h"
 
 #endif

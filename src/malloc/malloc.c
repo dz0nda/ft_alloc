@@ -34,5 +34,5 @@ void	*ft_malloc(size_t size)
 		ft_alloc_arena_split(node, size);
 	ft_ainfo_rall(ft_alloc_get_target(node->size), node->size, FALSE);
 	node->free = FALSE;
-	return (NULL);
+	return ((void *)(node + 1));
 }
