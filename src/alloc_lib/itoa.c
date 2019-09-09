@@ -26,4 +26,5 @@ char    	*ft_itoa(int input, char *buffer, int radix)
         buffer[i++] = sign;
     buffer[i] = '\0';
     ft_strrev(buffer);
+    return (buffer);
 }

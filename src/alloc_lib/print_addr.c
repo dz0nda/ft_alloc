@@ -8,6 +8,7 @@ void        ft_show_address(size_t quotient)
     
     tmp = 0;
     i = 0;
+	ft_memset(hexaNumber, '\0', sizeof(hexaNumber));
 	while (quotient != 0)
 	{
 		tmp = quotient % 16;
@@ -15,10 +16,10 @@ void        ft_show_address(size_t quotient)
 			tmp = tmp + 48;
 		else
 			tmp = tmp + 87; // 55
-		hexaNumber[i++] = tmp;
+		hexaNumber[i] = tmp;
 		quotient = quotient / 16;
+		i++;
 	}
-	hexaNumber[i] = '0';
 
 	ft_putstr("0x");
 	while (--i > -1)
