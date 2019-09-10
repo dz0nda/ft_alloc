@@ -14,17 +14,17 @@ void  ft_show_alloc_info(void)
   ft_putstr("\nHard limit max allocated bytes : ");
   ft_putnbr(alloc_info->rlim_max);
   ft_putstr("\nTotal mmap requested bytes : ");
-  ft_putnbr(alloc_info->rall_mmap);
+  ft_putnbr(alloc_info->a_mmap);
   while (arena < ALLOC_NONE)
   {
     ft_putstr("\nArena ");
     ft_putnbr(arena);
     ft_putstr(" : \nTotal in use bytes : ");
-    ft_putnbr(alloc_info->rall_inuse[arena]);
+    ft_putnbr(alloc_info->a_used[arena]);
     ft_putstr("\nTotal free bytes : ");
-    ft_putnbr(alloc_info->rall_freed[arena]);
+    ft_putnbr(alloc_info->a_free[arena]);
     ft_putstr("\nAdress of begin section : ");
-    ft_putnbr(alloc_info->raddr[arena]);
+    ft_show_address(alloc_info->a_addr[arena], 0);
     arena++;
   }
   ft_putchar('\n');

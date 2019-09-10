@@ -9,13 +9,12 @@ static void		ft_show_node(t_anode *node, t_bool free)
 	size = (FT_ALLOC_UINT)node->size;
 	if (node->free == free)
 	{
-		ft_putstr("\n");
-		ft_show_address(address + FT_ALLOC_SIZE_NODE);
+		ft_show_address(address + FT_ALLOC_SIZE_NODE, 0);
 		ft_putstr(" - ");
-		ft_show_address(address + FT_ALLOC_SIZE_NODE + size);
+		ft_show_address(address + FT_ALLOC_SIZE_NODE + size, 0);
 		ft_putstr(" : ");
 		ft_putnbr(size);
-		ft_putstr(" bytes\n");
+		ft_putstr(" bytes \n");
 	}
 }
 
@@ -42,13 +41,13 @@ static void		ft_show_alloc(t_bool free)
 	{
 		ft_putstr(arena[index]);
 		if ((node = g_alloc_state.alloc_arena[index]) != NULL)
-			ft_show_address((FT_ALLOC_UINT)node);
+			ft_show_address((FT_ALLOC_UINT)node, 1);
 		ft_show_iter(node, free, ft_show_node);
 		ft_putstr("Total : ");
 		if (free == TRUE)
-				ft_putnbr(g_alloc_state.alloc_info.rall_freed[index]);
+				ft_putnbr(g_alloc_state.alloc_info.a_free[index]);
 		else
-				ft_putnbr(g_alloc_state.alloc_info.rall_inuse[index]);
+				ft_putnbr(g_alloc_state.alloc_info.a_used[index]);
 		ft_putstr(" bytes \n");
 	}
 }
