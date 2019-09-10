@@ -7,7 +7,7 @@ static int ft_alloc_init_info()
 
     ft_memset(&rlp, 0, sizeof(t_limit));
     alloc_info = &(g_alloc_state).alloc_info;
-    if (getrlimit(RLIMIT_AS, &rlp) == -1)
+    if (getrlimit(RLIMIT_MEMLOCK, &rlp) == -1)
         return (ft_alloc_error(AE_INIT));
     alloc_info->rlim_cur = (FT_ALLOC_UINT)rlp.rlim_cur;
     alloc_info->rlim_max = (FT_ALLOC_UINT)rlp.rlim_max;

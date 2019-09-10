@@ -50,7 +50,7 @@ typedef enum	e_alloc_arena {
 typedef enum	e_alloc_error {
 	AE_INIT,
 	AE_RALL,
-	AE_RALL_MMAP,
+	AE_a_mmap,
 	AE_UNDEFINED
 }				t_aerror;
 
@@ -70,10 +70,10 @@ typedef struct s_alloc_info
 {
 	FT_ALLOC_UINT	rlim_cur;
 	FT_ALLOC_UINT rlim_max;
-	FT_ALLOC_UINT rall_mmap;
-	FT_ALLOC_UINT rall_inuse[ALLOC_NONE];
-	FT_ALLOC_UINT rall_freed[ALLOC_NONE];
-	FT_ALLOC_UINT raddr[ALLOC_NONE];
+	FT_ALLOC_UINT a_mmap;
+	FT_ALLOC_UINT a_used[ALLOC_NONE];
+	FT_ALLOC_UINT a_free[ALLOC_NONE];
+	FT_ALLOC_UINT a_addr[ALLOC_NONE];
 
 }							t_alloc_info;
 
@@ -94,9 +94,9 @@ int   				ft_alloc_init();
 /*
  *	Node functions
  */
-t_anode 				*ft_alloc_arena_new(size_t size);
-int						ft_alloc_arena_split(t_anode *node, size_t size);
-
+t_anode 				*ft_alloc_arena_new_by_size(size_t size);
+int							ft_alloc_arena_split(t_anode *node, size_t size);
+int     				ft_alloc_arena_concat(t_anode *node);
 /*
  *	Get functions
  */
@@ -108,13 +108,13 @@ t_anode  				**ft_alloc_get_arena_by_size(size_t size);
 /*
  *	Search functions
  */
-t_anode				*ft_alloc_search(t_anode **head, size_t size);
+t_anode       *ft_alloc_search_node_by_size(size_t size);
 t_anode				*ft_alloc_search_node_by_address(FT_ALLOC_UINT address);
-t_anode          	*ft_alloc_search_node_by_size(size_t size);
 
-int   				ft_ainfo_rall(t_aarena arena, size_t size, t_bool free);
-int   				ft_ainfo_mmap(t_aarena arena, size_t size, t_bool free);
-int   				ft_ainfo_raddr(t_aarena arena, FT_ALLOC_UINT ptr);
+int   				ft_alloc_info_free(size_t size, t_bool free);
+int   				ft_alloc_info_used_free(size_t size, t_bool free);
+int   				ft_alloc_info_mmap(size_t size, t_bool free);
+int   				ft_alloc_info_address(FT_ALLOC_UINT ptr, size_t size);
 
 int 					ft_alloc_error(t_aerror err);
 

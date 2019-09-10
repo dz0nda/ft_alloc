@@ -29,18 +29,6 @@ static int     ft_alloc_is_alloc(t_anode *node, FT_ALLOC_UINT ptr)
     return (EXIT_FAILURE);
 }
 
-t_anode          *ft_alloc_search(t_anode **head, size_t size)
-{
-    t_anode *node;
-
-    node = NULL;
-    if (*head == NULL)
-        return (NULL);
-    if ((node = ft_alloc_search_first_fit(*head, size)) == NULL)
-        return (NULL);
-    return (node);
-}
-
 t_anode          *ft_alloc_search_node_by_size(size_t size)
 {
     t_anode *head;
@@ -69,15 +57,17 @@ t_anode    *ft_alloc_search_node_by_address(FT_ALLOC_UINT address)
     while (++arena < ALLOC_NONE)
     {
         head = g_alloc_state.alloc_arena[arena];
-        node = head;
-        while(node != head && node->free == FALSE)
+        if ((node = head) != NULL)
         {
-            if (ft_alloc_is_alloc(node, address) == EXIT_SUCCESS)
+            if (node->free == FALSE && ft_alloc_is_alloc(node, address) == EXIT_SUCCESS)
                 return (node);
-            node = node->next;
+            while((node = node->next) != head && node->free == FALSE)
+            {
+                if (ft_alloc_is_alloc(node, address) == EXIT_SUCCESS)
+                    return (node);
+                node = node->next;
+            }
         }
-        if (node->free == FALSE && ft_alloc_is_alloc(node, address) == EXIT_SUCCESS)
-            return (node);
     }
     return (NULL);
 }

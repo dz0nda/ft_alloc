@@ -1,52 +1,77 @@
 #include "alloc.h"
 
-int   ft_ainfo_mmap(t_aarena arena, size_t size, t_bool free)
+int   ft_alloc_info_mmap(size_t size, t_bool free)
 {
   t_alloc_info *info;
+  t_aarena index;
+	size_t	size_arena;
 
   info = &(g_alloc_state).alloc_info;
+  index = ft_alloc_get_arena_index_by_size(size);
+	size_arena = ft_alloc_get_arena_size_by_size(size);
   if (free == TRUE)
   {
-    if (info->rall_mmap < size || info->rall_freed[arena] < size)
-      return (ft_alloc_error(AE_RALL_MMAP));
-    info->rall_mmap -= size;
-    info->rall_freed[arena] -= size;
+    if (info->a_mmap < size_arena || info->a_free[index] < size_arena)
+      return (ft_alloc_error(AE_a_mmap));
+    info->a_mmap -= size_arena;
+    info->a_free[index] -= (size_arena - FT_ALLOC_SIZE_NODE);
   }
   else if (free == FALSE)
   {
-    if ((info->rall_mmap + size) > info->rlim_cur)
-      return (ft_alloc_error(AE_RALL_MMAP));
-    info->rall_mmap += size;
-    info->rall_freed[arena] += size;
+    if ((info->a_mmap + size_arena) > info->rlim_cur)
+      return (ft_alloc_error(AE_a_mmap));
+    info->a_mmap += size_arena;
+    info->a_free[index] += (size_arena - FT_ALLOC_SIZE_NODE);
   }
   return (EXIT_SUCCESS);
 }
 
-int   ft_ainfo_rall(t_aarena arena, size_t size, t_bool free)
+int   ft_alloc_info_used_free(size_t size, t_bool free)
 {
   t_alloc_info *info;
+  t_aarena index;
 
   info = &(g_alloc_state).alloc_info;
+  index = ft_alloc_get_arena_index_by_size(size + FT_ALLOC_SIZE_NODE);    
   if (free == TRUE)
   {
-    info->rall_inuse[arena] -= size;
-    info->rall_freed[arena] += size;
+    info->a_used[index] -= size;
+    info->a_free[index] += size;
   }
   else if (free == FALSE)
   {
-    info->rall_inuse[arena] += size;
-    info->rall_freed[arena] -= size;
+    info->a_used[index] += size;
+    info->a_free[index] -= size;
   }
   else
     return (ft_alloc_error(AE_RALL));
   return (EXIT_SUCCESS);
 }
 
-int   ft_ainfo_raddr(t_aarena arena, FT_ALLOC_UINT ptr)
+int   ft_alloc_info_free(size_t size, t_bool free)
+{
+    t_alloc_info *info;
+    t_aarena index;
+
+    info = &(g_alloc_state).alloc_info;
+    index = ft_alloc_get_arena_index_by_size(size + FT_ALLOC_SIZE_NODE);
+    if (free == TRUE)
+      info->a_free[index] += FT_ALLOC_SIZE_NODE;
+    else if (free == FALSE)
+      info->a_free[index] -= FT_ALLOC_SIZE_NODE;
+    else
+      return (ft_alloc_error(AE_RALL));
+    return (EXIT_SUCCESS);
+}
+
+
+int   ft_alloc_info_address(FT_ALLOC_UINT ptr, size_t size)
 {
   t_alloc_info *info;
+  t_aarena index;
 
   info = &(g_alloc_state).alloc_info;
-  info->raddr[arena] = ptr;
+  index = ft_alloc_get_arena_index_by_size(size);
+  info->a_addr[index] = ptr;
   return (EXIT_SUCCESS);
 }
