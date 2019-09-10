@@ -9,9 +9,9 @@ static void		ft_show_node(t_anode *node, t_bool free)
 	size = (FT_ALLOC_UINT)node->size;
 	if (node->free == free)
 	{
-		ft_show_address(address + FT_ALLOC_SIZE_NODE, 0);
+		ft_show_address(address + FT_ALLOC_SIZE_META, 0);
 		ft_putstr(" - ");
-		ft_show_address(address + FT_ALLOC_SIZE_NODE + size, 0);
+		ft_show_address(address + FT_ALLOC_SIZE_META + size, 0);
 		ft_putstr(" : ");
 		ft_putnbr(size);
 		ft_putstr(" bytes \n");
