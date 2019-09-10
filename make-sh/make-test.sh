@@ -19,6 +19,7 @@ function test_sharedlib ()
       "gcc -g -g3 -o $MAKESH_PATH_TEST/main.test $MAKESH_PATH_TEST/main.test.c $MAKESH_PATH_TEST/src/*.c -L$MAKESH_TARGET/ -lft_malloc"
       # "gdb $MAKESH_PATH_TEST/main.test"
       "valgrind --suppressions=$MAKESH_PATH_TEST/.valgrind.supp --tool=memcheck --leak-check=full --leak-resolution=high --show-reachable=yes $MAKESH_PATH_TEST/main.test"
+      # "$MAKESH_PATH_TEST/main.test"
       "rm $MAKESH_PATH_TEST/main.test"
     )
 
