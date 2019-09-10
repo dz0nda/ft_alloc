@@ -1,8 +1,8 @@
 #include "alloc_lib.h"
 
-void        ft_show_address(size_t quotient)
+void        ft_show_address(size_t quotient, int endl)
 {
-	char    hexaNumber[9];
+	char    hexaNumber[17];
 	int     tmp;
 	int     i;
     
@@ -24,4 +24,6 @@ void        ft_show_address(size_t quotient)
 	ft_putstr("0x");
 	while (--i > -1)
 		ft_putchar(hexaNumber[i]);
+	if (endl)
+		ft_putchar('\n');
 }
