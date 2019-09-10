@@ -24,7 +24,8 @@
 # include "../alloc_lib/alloc_lib.h"
 
 # define FT_ALLOC_UINT      		size_t
-# define FT_ALLOC_SIZE_NODE     32
+# define FT_ALLOC_SIZE_META     (FT_ALLOC_UINT)32
+# define FT_ALLOC_SIZE_NODE     (FT_ALLOC_UINT)(FT_ALLOC_SIZE_META * 2)
 # define FT_ALLOC_ALIGNMENT     sizeof(FT_ALLOC_UINT)
 
 # define FT_ALLOC_PAGESIZE      (getpagesize())

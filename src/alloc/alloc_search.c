@@ -24,7 +24,7 @@ static int     ft_alloc_is_alloc(t_anode *node, FT_ALLOC_UINT ptr)
 
     addr = (FT_ALLOC_UINT)node;
     // if (addr < ptr && ptr < addr + node->size)
-    if ((addr + FT_ALLOC_SIZE_NODE) == ptr)
+    if ((addr + FT_ALLOC_SIZE_META) == ptr)
         return (EXIT_SUCCESS);
     return (EXIT_FAILURE);
 }

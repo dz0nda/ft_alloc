@@ -46,7 +46,7 @@ t_anode 	*ft_alloc_arena_new_by_size(size_t size)
 	if ((new = (t_anode *)mmap(NULL, size_arena,
 	PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_SHARED, -1, 0)) == MAP_FAILED)
 		return (NULL);
-	new->size = size_arena - FT_ALLOC_SIZE_NODE;
+	new->size = size_arena - FT_ALLOC_SIZE_META;
 	new->free = TRUE;
 	ft_alloc_arena_append(head, new);
 		ft_alloc_info_address((FT_ALLOC_UINT)new, size);
@@ -58,10 +58,10 @@ int		ft_alloc_arena_split(t_anode *node, size_t size)
 	t_anode *new;
 
 	new = NULL;
-	if (!(node->size > (size + FT_ALLOC_SIZE_NODE + FT_ALLOC_ALIGNMENT)))
+	if (!(node->size > (size + FT_ALLOC_SIZE_META + FT_ALLOC_ALIGNMENT)))
 		return (EXIT_FAILURE);
-	new = (t_anode *)((FT_ALLOC_UINT)node + FT_ALLOC_SIZE_NODE + size);
-	new->size = node->size - (FT_ALLOC_SIZE_NODE + size);
+	new = (t_anode *)((FT_ALLOC_UINT)node + FT_ALLOC_SIZE_META + size);
+	new->size = node->size - (FT_ALLOC_SIZE_META + size);
 	new->free = TRUE;
 	node->size = size;
 	new->next = node->next;
@@ -80,18 +80,18 @@ int     ft_alloc_arena_concat(t_anode *node)
     addr_next = (FT_ALLOC_UINT)node->next;
     if ((node->prev->free == TRUE) && (node->prev < node))
     {
-        node->prev->size += node->size + FT_ALLOC_SIZE_NODE;
+        node->prev->size += node->size + FT_ALLOC_SIZE_META;
         node->prev->next = node->next;
         node->next->prev = node->prev;
         node = node->prev;
-        ft_alloc_info_free(FT_ALLOC_SIZE_NODE, TRUE);
+        ft_alloc_info_free(FT_ALLOC_SIZE_META, TRUE);
     }
     if ((node->next->free == TRUE) && (node->next > node))
     {
-        node->size += node->next->size + FT_ALLOC_SIZE_NODE;
+        node->size += node->next->size + FT_ALLOC_SIZE_META;
         node->next = node->next->next;
         node->next->prev = node;
-        ft_alloc_info_free(FT_ALLOC_SIZE_NODE, TRUE);
+        ft_alloc_info_free(FT_ALLOC_SIZE_META, TRUE);
     }
     return (EXIT_SUCCESS);
 }
