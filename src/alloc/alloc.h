@@ -84,40 +84,31 @@ typedef struct			s_alloc_state {
 	t_anode			*alloc_arena[ALLOC_NONE];
 }						t_alloc_state;
 
-extern				t_alloc_state g_alloc_state;
+extern					t_alloc_state g_alloc_state;
 
-/*
- *	Init functions
- */
-int   				ft_alloc_init();
+t_anode 				*ft_alloc_arena(size_t size);
 
+int     				ft_alloc_concat(t_anode *node);
+int     				ft_alloc_concat_next(t_anode *node);
+int    				  ft_alloc_concat_prev(t_anode *node);
 
-/*
- *	Node functions
- */
-t_anode 				*ft_alloc_arena_new_by_size(size_t size);
-int							ft_alloc_arena_split(t_anode *node, size_t size);
-int     				ft_alloc_arena_concat(t_anode *node);
-/*
- *	Get functions
- */
+int 						ft_alloc_error(t_aerror err);
+
 size_t					ft_alloc_get_size_aligned(size_t offset, size_t align);
-t_aarena  				ft_alloc_get_arena_index_by_size(size_t size);
+t_aarena  			ft_alloc_get_arena_index_by_size(size_t size);
 size_t					ft_alloc_get_arena_size_by_size(size_t size);
 t_anode  				**ft_alloc_get_arena_by_size(size_t size);
 
-/*
- *	Search functions
- */
-t_anode       *ft_alloc_search_node_by_size(size_t size);
-t_anode				*ft_alloc_search_node_by_address(FT_ALLOC_UINT address);
+int   					ft_alloc_info_free(size_t size, t_bool free);
+int   					ft_alloc_info_used_free(size_t size, t_bool free);
+int   					ft_alloc_info_mmap(size_t size, t_bool free);
+int		   				ft_alloc_info_address(FT_ALLOC_UINT ptr, size_t size);
 
-int   				ft_alloc_info_free(size_t size, t_bool free);
-int   				ft_alloc_info_used_free(size_t size, t_bool free);
-int   				ft_alloc_info_mmap(size_t size, t_bool free);
-int   				ft_alloc_info_address(FT_ALLOC_UINT ptr, size_t size);
+int   					ft_alloc_init(void);
 
-int 					ft_alloc_error(t_aerror err);
+t_anode       	*ft_alloc_search_by_size(size_t size);
+t_anode					*ft_alloc_search_by_address(FT_ALLOC_UINT address);
 
+int							ft_alloc_split(t_anode *node, size_t size);
 
 #endif

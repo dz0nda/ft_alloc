@@ -13,8 +13,6 @@
 
 #include "alloc.h"
 
-t_alloc_state		g_alloc_state;
-
 static void		ft_alloc_arena_append(t_anode **head, t_anode *new)
 {
 	if (*head == NULL) 
@@ -32,7 +30,7 @@ static void		ft_alloc_arena_append(t_anode **head, t_anode *new)
 	}
 }
 
-t_anode 	*ft_alloc_arena_new_by_size(size_t size) 
+t_anode 	*ft_alloc_arena(size_t size) 
 { 
 	t_anode *new;
 	t_anode **head;
@@ -49,49 +47,6 @@ t_anode 	*ft_alloc_arena_new_by_size(size_t size)
 	new->size = size_arena - FT_ALLOC_SIZE_META;
 	new->free = TRUE;
 	ft_alloc_arena_append(head, new);
-		ft_alloc_info_address((FT_ALLOC_UINT)new, size);
-	return (*head);
-}
-
-int		ft_alloc_arena_split(t_anode *node, size_t size)
-{
-	t_anode *new;
-
-	new = NULL;
-	if (!(node->size > (size + FT_ALLOC_SIZE_META + FT_ALLOC_ALIGNMENT)))
-		return (EXIT_FAILURE);
-	new = (t_anode *)((FT_ALLOC_UINT)node + FT_ALLOC_SIZE_META + size);
-	new->size = node->size - (FT_ALLOC_SIZE_META + size);
-	new->free = TRUE;
-	node->size = size;
-	new->next = node->next;
-	new->prev = node;
-	node->next->prev = new;
-	node->next = new;
-	return (EXIT_SUCCESS);
-}
-
-int     ft_alloc_arena_concat(t_anode *node)
-{
-    FT_ALLOC_UINT addr_prev;
-    FT_ALLOC_UINT addr_next;
-
-    addr_prev = (FT_ALLOC_UINT)node->prev;
-    addr_next = (FT_ALLOC_UINT)node->next;
-    if ((node->prev->free == TRUE) && (node->prev < node))
-    {
-        node->prev->size += node->size + FT_ALLOC_SIZE_META;
-        node->prev->next = node->next;
-        node->next->prev = node->prev;
-        node = node->prev;
-        ft_alloc_info_free(FT_ALLOC_SIZE_META, TRUE);
-    }
-    if ((node->next->free == TRUE) && (node->next > node))
-    {
-        node->size += node->next->size + FT_ALLOC_SIZE_META;
-        node->next = node->next->next;
-        node->next->prev = node;
-        ft_alloc_info_free(FT_ALLOC_SIZE_META, TRUE);
-    }
-    return (EXIT_SUCCESS);
+	ft_alloc_info_address((FT_ALLOC_UINT)new, size);
+	return (new);
 }

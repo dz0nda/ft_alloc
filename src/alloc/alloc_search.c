@@ -29,7 +29,7 @@ static int     ft_alloc_is_alloc(t_anode *node, FT_ALLOC_UINT ptr)
     return (EXIT_FAILURE);
 }
 
-t_anode          *ft_alloc_search_node_by_size(size_t size)
+t_anode          *ft_alloc_search_by_size(size_t size)
 {
     t_anode *head;
     t_anode *node;
@@ -45,7 +45,7 @@ t_anode          *ft_alloc_search_node_by_size(size_t size)
     return (node);
 }
 
-t_anode    *ft_alloc_search_node_by_address(FT_ALLOC_UINT address)
+t_anode    *ft_alloc_search_by_address(FT_ALLOC_UINT address)
 {
     t_aarena arena;
     t_anode *head;
