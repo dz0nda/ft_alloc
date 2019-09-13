@@ -71,6 +71,7 @@ function make_test ()
     fi
     
     cmds=(
+      "export LD_LIBRARY_PATH=$MAKESH_TARGET"
       "$compile"
       "$execute"
       "rm $MAKESH_TEST_TARGET"
