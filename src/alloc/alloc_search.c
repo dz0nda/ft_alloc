@@ -45,15 +45,17 @@ t_anode          *ft_alloc_search_by_size(size_t size)
     return (node);
 }
 
-t_anode    *ft_alloc_search_by_address(FT_ALLOC_UINT address)
+t_anode    *ft_alloc_search_by_address(void *ptr)
 {
     t_aarena arena;
     t_anode *head;
     t_anode *node;
+    FT_ALLOC_UINT address;
 
     arena = -1;
     head = NULL;
     node = NULL;
+    address = (FT_ALLOC_UINT)ptr;
     while (++arena < ALLOC_NONE)
     {
         head = g_alloc_state.alloc_arena[arena];

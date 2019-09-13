@@ -81,7 +81,7 @@ typedef struct s_alloc_info
 typedef struct			s_alloc_state {
 	t_bool			init;
 	t_alloc_info	alloc_info;
-	t_anode			*alloc_arena[ALLOC_NONE];
+	t_anode				*alloc_arena[ALLOC_NONE];
 }						t_alloc_state;
 
 extern					t_alloc_state g_alloc_state;
@@ -107,7 +107,7 @@ int		   				ft_alloc_info_address(FT_ALLOC_UINT ptr, size_t size);
 int   					ft_alloc_init(void);
 
 t_anode       	*ft_alloc_search_by_size(size_t size);
-t_anode					*ft_alloc_search_by_address(FT_ALLOC_UINT address);
+t_anode					*ft_alloc_search_by_address(void *ptr);
 
 int							ft_alloc_split(t_anode *node, size_t size);
 

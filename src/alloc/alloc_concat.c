@@ -30,6 +30,7 @@ int     ft_alloc_concat_prev(t_anode *node)
   node->prev->size += node->size + FT_ALLOC_SIZE_META;
   node->prev->next = node->next;
   node->next->prev = node->prev;
+  ft_memcpy((void *)(node->prev + 1), (void *)(node + 1), node->size);
   node = node->prev;
   ft_alloc_info_free(FT_ALLOC_SIZE_META, TRUE);
   return (EXIT_SUCCESS);

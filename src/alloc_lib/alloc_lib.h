@@ -6,6 +6,7 @@
 # include <stdlib.h>
 
 char    *ft_itoa(int input, char *buffer, int radix);
+void		*ft_memcpy(void *dest, const void *src, size_t n);
 void	  *ft_memset(void *b, int c, size_t len);
 void    ft_show_address(size_t quotient, int endl);
 int		  ft_putchar(int c);

@@ -64,7 +64,6 @@ int   ft_alloc_info_free(size_t size, t_bool free)
     return (EXIT_SUCCESS);
 }
 
-
 int   ft_alloc_info_address(FT_ALLOC_UINT ptr, size_t size)
 {
   t_alloc_info *info;
