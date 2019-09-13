@@ -34,10 +34,10 @@ function    setLibBasic ()
 
 function  setLib ()
 {
-    if [ "$CONFIGURE" == "libshared" ]
+    if [ "$CONFIGURE" == "libshared" ] || [ "$CONFIGURE" == "libshared42" ]
     then
       setLibShared
-    elif [ "$CONFIGURE" == "basic" ]
+    elif [ "$CONFIGURE" == "basic" ] || [ "$CONFIGURE" == "basic42" ]
     then
       setLibBasic
     fi

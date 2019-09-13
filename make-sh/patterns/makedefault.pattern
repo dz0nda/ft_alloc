@@ -10,5 +10,6 @@ OBJDIR=obj
 VERBOSE=false
 
 CC=gcc
-CFLAGS=
-LDFLAGS=
+CFLAGS=(-Wall -Wextra -Werror)
+LDFLAGS=-L
+LDLIBS=-l

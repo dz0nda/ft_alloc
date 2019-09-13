@@ -5,9 +5,9 @@
 ###############################################################################
 
 TARGET = {{TARGET}}.a
-PROJDIR := {{PROJDIR}}
-SRCDIR := {{SRCDIR}}
-OBJDIR := {{OBJDIR}}
+PROJDIR = {{PROJDIR}}
+SRCDIR = {{SRCDIR}}
+OBJDIR = {{OBJDIR}}
 
 MAKEFILE_NAME = Makefile-$(lastword $(subst /, ,$(TARGET)))
 
@@ -22,7 +22,7 @@ INCLUDES = $(foreach dir, $(SRCDIRS), $(addprefix -I, $(dir)))
 
 VPATH = $(SRCDIRS)
 SRCS = $(SUBFILE)
-OBJS := $(subst $(SRCDIR),$(OBJDIR),$(SRCS:.c=.o))
+OBJS = $(subst $(SRCDIR),$(OBJDIR),$(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
 
 VERBOSE = FALSE
@@ -41,7 +41,7 @@ PSEP = $(strip $(SEP))
 define buildSource
 $(1)/%.o: %.c
 	@echo $(MAKEFILE_NAME): Building $$@
-	$(HIDE)$(CC) -c $$(INCLUDES) -o $$(subst /,$$(PSEP),$$@) $$(subst /,$$(PSEP),$$<) -MMD
+	$(HIDE)$(CC) $(CFLAGS) -c $$(INCLUDES) -o $$(subst /,$$(PSEP),$$@) $$(subst /,$$(PSEP),$$<) -MMD
 endef
 
 .PHONY: all directories clean fclean re 

@@ -14,8 +14,8 @@ MAKESH_NAME_INFO=$green$bold$(basename "$0")$end
 MAKESH_NAME_ERR=$red$bold$(basename "$0")$end
 MAKESH_NAME_EJECT=$yellow$bold$(basename "$0")$end
 MAKESH_PATH=$(dirname "$0")
-MAKESH_PATH_PATTERN="$MAKESH_PATH/pattern"
-MAKESH_PATH_TEST="$MAKESH_PATH/test"
+MAKESH_PATH_PATTERNS="$MAKESH_PATH/patterns"
+MAKESH_PATH_TESTS="$MAKESH_PATH/tests"
 MAKESH_TARGET=$PWD
 
 # Define global commands

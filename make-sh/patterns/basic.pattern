@@ -12,6 +12,7 @@ OBJDIR = {{OBJDIR}}
 MAKEFILE_NAME = Makefile-$(lastword $(subst /, ,$(TARGET)))
 
 CC = {{CC}}
+CFLAGS = {{CFLAGS}}
 LDFLAGS = {{LDFLAGS}}
 LDLIBS = {{LDLIBS}}
 SUBDIR = {{SRCSUBDIR}}
@@ -42,7 +43,7 @@ PSEP = $(strip $(SEP))
 define buildSource
 $(1)/%.o: %.c
 	@echo $(MAKEFILE_NAME): Building $$@
-	$(HIDE)$(CC) -c $$(INCLUDES) -o $$(subst /,$$(PSEP),$$@) $$(subst /,$$(PSEP),$$<) -MMD
+	$(HIDE)$(CC) $(CFLAGS) -c $$(INCLUDES) -o $$(subst /,$$(PSEP),$$@) $$(subst /,$$(PSEP),$$<) -MMD
 endef
 
 .PHONY: all directories clean fclean re lib

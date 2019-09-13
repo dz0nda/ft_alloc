@@ -5,22 +5,75 @@ MAKESH_PATH=$(dirname "$0")
 # Import global
 source $MAKESH_PATH/scripts/make-import-global.sh
 
-# Import scripts
-source $MAKESH_PATH/scripts/make-import.sh
+# Usage
+usage="Usage:
+$MAKESH_NAME [-t$ital type$end] -- Configure tests of make.sh
 
-# Import config
-source $MAKESH_TARGET/.make.default
-source $MAKESH_TARGET/.make.config
+where:
+    -h  show this help text
+    -t  set the project$ital type$end. Can be$bold basic$end(default) |$bold valgrind$end |$bold gdb$end |$bold lldb$end \n"
 
-function test_sharedlib ()
+# Types
+types=(basic valgrind gdb lldb)
+
+# Init var
+TYPE=basic
+
+# Arguments script
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+    -h|--help)
+        $PRINT "$usage" >&2
+        exit 0
+    ;;
+    -t|--type)
+        TYPE="$2"
+        shift # past argument
+        shift # past value
+    ;;
+esac
+done
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
+# Check arguments
+case $TYPE in
+    (basic|valgrind|gdb|lldb) ;; # OK
+    (*) TYPE=basic ;; # Set default
+esac
+
+MAKESH_TEST_FLAG="-g3"
+MAKESH_TEST_TARGET=$MAKESH_PATH_TESTS/main.test
+MAKESH_TEST_MAIN=$MAKESH_PATH_TESTS/main.test.c
+MAKESH_TEST_SOURCES=$MAKESH_PATH_TESTS/src/*.c
+MAKESH_TEST_LIB_PATH=-L$MAKESH_TARGET/
+MAKESH_TEST_LIB_TARGET=-lft_malloc
+
+function make_test ()
 {
+    if [ "$TYPE" == "basic" ];then
+      compile="gcc -o $MAKESH_TEST_TARGET $MAKESH_TEST_MAIN $MAKESH_TEST_SOURCES $MAKESH_TEST_LIB_PATH $MAKESH_TEST_LIB_TARGET"
+    else
+      compile="gcc -o $MAKESH_TEST_TARGET $MAKESH_TEST_MAIN $MAKESH_TEST_SOURCES"
+    fi
+
+    if [ "$TYPE" == "valgrind" ];then
+      execute="valgrind --suppressions=$MAKESH_PATH_TESTS/.valgrind.supp --tool=memcheck --leak-check=full --leak-resolution=high --show-reachable=yes $MAKESH_TEST_TARGET"
+    elif [ "$TYPE" == "gdb" ];then
+      execute="lldb $MAKESH_TEST_TARGET"
+    elif [ "$TYPE" == "lldb" ];then
+      execute="lldb $MAKESH_TEST_TARGET"
+    else
+      execute="$MAKESH_TEST_TARGET"
+    fi
+    
     cmds=(
-      "export LD_LIBRARY_PATH=$MAKESH_TARGET"
-      "gcc -g -g3 -o $MAKESH_PATH_TEST/main.test $MAKESH_PATH_TEST/main.test.c $MAKESH_PATH_TEST/src/*.c -L$MAKESH_TARGET/ -lft_malloc"
-      # "gdb $MAKESH_PATH_TEST/main.test"
-      "valgrind --suppressions=$MAKESH_PATH_TEST/.valgrind.supp --tool=memcheck --leak-check=full --leak-resolution=high --show-reachable=yes $MAKESH_PATH_TEST/main.test"
-      # "$MAKESH_PATH_TEST/main.test"
-      "rm $MAKESH_PATH_TEST/main.test"
+      "$compile"
+      "$execute"
+      "rm $MAKESH_TEST_TARGET"
     )
 
     for cmd in "${cmds[@]}"; do
@@ -28,6 +81,7 @@ function test_sharedlib ()
       if [ $(echo $?) != 0 ]
       then
         $PRINT "$MAKESH_NAME_ERR: exited with error"
+        $PRINT "$usage" >&2
         exit 1
       fi
     done
@@ -35,7 +89,7 @@ function test_sharedlib ()
 
 function main ()
 {
-  test_sharedlib
+  make_test
   
   $PRINT "$MAKESH_NAME_INFO: done"
 

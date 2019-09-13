@@ -8,5 +8,3 @@ SRCDIR=src
 OBJDIR=build
 
 VERBOSE=false
-
-CFLAGS=-Wall

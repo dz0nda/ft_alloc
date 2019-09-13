@@ -9,6 +9,3 @@ OBJDIR=build
 LIBDIR=lib
 
 VERBOSE=false
-
-LDFLAGS=-L
-LDLIBS=-l

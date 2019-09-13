@@ -5,9 +5,6 @@ MAKESH_PATH=$(dirname "$0")
 # Import global
 source $MAKESH_PATH/scripts/make-import-global.sh
 
-# Import scripts
-source $MAKESH_PATH/scripts/make-import.sh
-
 # Usage
 usage="Usage:
 $MAKESH_NAME [-h] [-i -t$ital type$end -e -d] -- Configure environnement of make.sh
@@ -77,7 +74,7 @@ case $INIT in
 esac
 
 case $TYPE in
-    (basic|lib|libshared|light) ;; # OK
+    (basic|basic42|lib|lib42|libshared|libshared42|light) ;; # OK
     (*) TYPE=basic ;; # Set default
 esac
 
@@ -99,11 +96,11 @@ fi
 if [ "$INIT" == "true" ]
 then
     $PRINT "Initialization with type "$bold$TYPE$end" \n"
-    cp $MAKESH_PATH_PATTERN/makedefault.pattern $MAKESH_TARGET/.make.default
+    cp $MAKESH_PATH_PATTERNS/makedefault.pattern $MAKESH_TARGET/.make.default
     case $TYPE in
-        (basic) cp $MAKESH_PATH_PATTERN/makebasic.pattern $MAKESH_TARGET/.make.config ;;
-        (libshared) cp $MAKESH_PATH_PATTERN/makelibshared.pattern $MAKESH_TARGET/.make.config ;;
-        (lib) cp $MAKESH_PATH_PATTERN/makelib.pattern $MAKESH_TARGET/.make.config ;;
+        (basic|basic42) cp $MAKESH_PATH_PATTERNS/makebasic.pattern $MAKESH_TARGET/.make.config ;;
+        (libshared|libshared42) cp $MAKESH_PATH_PATTERNS/makelibshared.pattern $MAKESH_TARGET/.make.config ;;
+        (lib|lib42) cp $MAKESH_PATH_PATTERNS/makelib.pattern $MAKESH_TARGET/.make.config ;;
         (*) ;; # Do nothing
     esac
 fi
