@@ -1,6 +1,6 @@
 # include "realloc.h"
 
-static int   ft_realloc_by_consolidate(t_aarena *arena, void *ptr, size_t size)
+static int   ft_realloc_by_concat(t_aarena *arena, void *ptr, size_t size)
 {
   t_achunk   *node;
   t_aindex   new_idx;
@@ -36,7 +36,7 @@ static void *ft_realloc_by_mmap(void *ptr, size_t size)
 
 void    *ft_realloc(void *ptr, size_t size)
 {
-  t_aarena *arena;
+  t_aarena **arena;
   void *new;
 
   arena = NULL;
@@ -46,7 +46,7 @@ void    *ft_realloc(void *ptr, size_t size)
     return (ft_malloc(size));
   if ((arena = ft_alloc_search_arena_by_address(ptr)) == NULL)
     return (ptr);
-  if ((ft_realloc_by_consolidate(arena, ptr, size)) == EXIT_SUCCESS)
+  if ((ft_realloc_by_concat(*arena, ptr, size)) == EXIT_SUCCESS)
     return (ptr);
   return (ft_realloc_by_mmap(ptr, size));
 }

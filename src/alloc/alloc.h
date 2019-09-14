@@ -78,6 +78,7 @@ typedef struct s_alloc_arena
 	FT_ALLOC_UINT size;
 	t_achunk			*head;
 	struct s_alloc_arena *next;
+	struct s_alloc_arena *prev;
 }							t_aarena;
 
 typedef struct			s_alloc_state {
@@ -89,6 +90,7 @@ typedef struct			s_alloc_state {
 extern					t_astate g_alloc_state;
 
 t_achunk 				*ft_alloc_arena_mmap(t_aarena **arena, size_t size);
+int					ft_alloc_arena_munmap(t_aarena **arena);
 
 int     				ft_alloc_chunk_concat(t_aarena *arena, t_achunk *node);
 int							ft_alloc_chunk_split(t_aarena *arena, t_achunk *node, size_t size);
@@ -108,7 +110,7 @@ int   ft_alloc_info_total(t_aarena *arena, size_t size, t_bool free);
 
 int   					ft_alloc_init(void);
 
-t_aarena    		*ft_alloc_search_arena_by_address(void *ptr);
+t_aarena    		**ft_alloc_search_arena_by_address(void *ptr);
 t_achunk    		*ft_alloc_search_chunk_by_address(t_aarena *arena, void *ptr);
 t_achunk       	*ft_alloc_search_chunk_by_size(t_aarena *arena, size_t size);
 
