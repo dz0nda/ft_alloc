@@ -27,7 +27,7 @@ t_aindex  ft_alloc_get_arena_index_by_size_request(size_t size)
   return (ALLOC_LARGE);
 }
 
-size_t    ft_alloc_get_arena_size_by_size(size_t size)
+size_t    ft_alloc_get_arena_size_by_size_request(size_t size)
 {
   if (size <= FT_ALLOC_TINY)
     return (FT_ALLOC_N);

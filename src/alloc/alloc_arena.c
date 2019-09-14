@@ -36,13 +36,14 @@ t_achunk 		*ft_alloc_arena_mmap(t_aarena **arena, size_t size)
 	size_t 		size_arena;
 
 	new = NULL;
-	size_arena = ft_alloc_get_arena_size_by_size(size);
+	size_arena = ft_alloc_get_arena_size_by_size_request(size);
 	if (ft_alloc_info_mmap(size_arena, TRUE) == EXIT_FAILURE)
 	 	return (NULL);
 	if ((new = (t_aarena *)mmap(NULL, size_arena,
 	PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_SHARED, -1, 0)) == MAP_FAILED)
 		return (NULL);
 	new->size = size_arena;
+	new->aindex = ft_alloc_get_arena_index_by_size_request(size);
 	new->head = (t_achunk *)(new + 1);
 	new->head->size = size_arena - (FT_ALLOC_SIZE_ARENA + FT_ALLOC_SIZE_CHUNK);
 	new->head->free = TRUE;

@@ -3,13 +3,11 @@
 static int   ft_realloc_by_concat(t_aarena *arena, void *ptr, size_t size)
 {
   t_achunk   *node;
-  t_aindex   new_idx;
-  t_aindex   node_idx;
+  t_aindex   aindex;
 
   node = NULL;
-  new_idx = ft_alloc_get_arena_index_by_size_request(size);
-  node_idx = ft_alloc_get_arena_index_by_size_arena(arena->size);
-  if ((new_idx != node_idx) || ((node = ft_alloc_search_chunk_by_address(arena, ptr)) == NULL))
+  aindex = ft_alloc_get_arena_index_by_size_request(size);
+  if ((aindex != arena->aindex) || ((node = ft_alloc_search_chunk_by_address(arena, ptr)) == NULL))
     return (EXIT_FAILURE);
   if (size > node->size)
   {

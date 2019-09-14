@@ -24,7 +24,7 @@
 # include "../alloc_lib/alloc_lib.h"
 
 # define FT_ALLOC_UINT      		size_t
-# define FT_ALLOC_SIZE_ARENA    (FT_ALLOC_UINT)32
+# define FT_ALLOC_SIZE_ARENA    (FT_ALLOC_UINT)40
 # define FT_ALLOC_SIZE_CHUNK    (FT_ALLOC_UINT)32
 # define FT_ALLOC_SIZE_NODE     (FT_ALLOC_UINT)(FT_ALLOC_SIZE_CHUNK * 2)
 # define FT_ALLOC_ALIGNMENT     sizeof(FT_ALLOC_UINT)
@@ -76,6 +76,7 @@ typedef struct 	s_alloc_info
 typedef struct s_alloc_arena
 {
 	FT_ALLOC_UINT size;
+	t_aindex			aindex; 
 	t_achunk			*head;
 	struct s_alloc_arena *next;
 	struct s_alloc_arena *prev;
@@ -90,7 +91,7 @@ typedef struct			s_alloc_state {
 extern					t_astate g_alloc_state;
 
 t_achunk 				*ft_alloc_arena_mmap(t_aarena **arena, size_t size);
-int					ft_alloc_arena_munmap(t_aarena **arena);
+int							ft_alloc_arena_munmap(t_aarena **arena);
 
 int     				ft_alloc_chunk_concat(t_aarena *arena, t_achunk *node);
 int							ft_alloc_chunk_split(t_aarena *arena, t_achunk *node, size_t size);
@@ -100,13 +101,13 @@ int 						ft_alloc_error(t_aerror err);
 t_aarena  			**ft_alloc_get_arena_by_size(size_t size);
 t_aindex  			ft_alloc_get_arena_index_by_size_arena(size_t size);
 t_aindex  			ft_alloc_get_arena_index_by_size_request(size_t size);
-size_t					ft_alloc_get_arena_size_by_size(size_t size);
+size_t					ft_alloc_get_arena_size_by_size_request(size_t size);
 size_t					ft_alloc_get_size_aligned(size_t offset, size_t align);
 
 int   					ft_alloc_info_freed(t_aarena *arena, size_t size, t_bool free);
 int   					ft_alloc_info_mmap(size_t size, t_bool mmap);
+int   					ft_alloc_info_total(t_aarena *arena, size_t size, t_bool free);
 int   					ft_alloc_info_used(t_aarena *arena, size_t size, t_bool free);
-int   ft_alloc_info_total(t_aarena *arena, size_t size, t_bool free);
 
 int   					ft_alloc_init(void);
 
