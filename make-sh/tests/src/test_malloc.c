@@ -14,29 +14,37 @@ void test_malloc()
 {
 	printf("\n===== start test_malloc =====\n");
 
-	printf("\n %ld \n", sizeof(t_alloc_state));
+	printf("\n astate : %ld \n", sizeof(t_astate));
 
 	void *s = ft_malloc(150);
-	// void *s2 = ft_malloc(20);
-	// void *s3 =	 ft_malloc(20);
-	// void *s4=ft_malloc(20);
-	printf("\n");
-	show_alloc_mem();
-	printf("\n");
-	show_alloc_mem_free();
+	 void *s2 = ft_malloc(20);
+	void *s3 =	 ft_malloc(20);
+	void *s4=ft_malloc(1024);
+	// printf("\n");
+	// printf("\n\n Allocated: \n\n");
+	// show_alloc_mem();
+	//  printf("Free: \n");
+	// show_alloc_mem_free();
 
-	void *s2 = ft_realloc(s, 40);
+	// void *s2 = ft_realloc(s, 40);
 
-	// ft_free(s);
-	// ft_free(s2);
-	// // ft_free(s3);
-	// ft_free(s4);
+	// printf("\n\n Allocated: \n\n");
+	// show_alloc_mem();
+	//  printf("Free: \n");
+	// show_alloc_mem_free();
 
 
-	// ft_show_alloc_info();
-	printf("\n");
-	show_alloc_mem();
-	printf("\n");
+
+	//  ft_free(s2);
+	// // // ft_free(s2);
+	// // // // ft_free(s3);
+	// // // ft_free(s4);
+
+
+	ft_show_alloc_info();
+	printf("\n\n Allocated: \n\n");
+	 show_alloc_mem();
+	 printf("\n\n Free: \n\n");
 	show_alloc_mem_free();
 
 
