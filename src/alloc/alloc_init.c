@@ -1,11 +1,11 @@
 #include "alloc.h"
 
-t_alloc_state       g_alloc_state;
+t_astate       g_alloc_state;
 
 static int          ft_alloc_init_info()
 {
     t_limit         rlp;
-    t_alloc_info    *alloc_info;
+    t_ainfo    *alloc_info;
 
     ft_memset(&rlp, 0, sizeof(t_limit));
     alloc_info = &(g_alloc_state).alloc_info;

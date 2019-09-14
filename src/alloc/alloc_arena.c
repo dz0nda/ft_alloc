@@ -13,50 +13,41 @@
 
 #include "alloc.h"
 
-static void		ft_alloc_arena_append(t_anode **head, t_anode *new)
+static void		ft_alloc_arena_mmap_append(t_aarena **arena, t_aarena *new)
 {
-	if (*head == NULL) 
+	t_aarena 		*last;
+
+	last = *arena;
+	if (*arena == NULL)
 	{
-		new->prev = new; 
-		new->next = new; 
-		*head = new; 
+		*arena = new;
+		return ;
 	}
-	else
-	{
-		(*head)->prev->next = new;
-		new->prev = (*head)->prev; 
-		new->next = *head; 
-		(*head)->prev = new; 
-	}
+	while (last->next != NULL)
+		last = last->next;
+	last->next = new;
+	return ;
 }
 
-static t_anode *ft_alloc_arena_mmap(size_t size)
-{
-		t_anode *new;
-		size_t	size_arena;
-
-		new = NULL;
-		size_arena = ft_alloc_get_arena_size_by_size(size);
-		if ((new = (t_anode *)mmap(NULL, size_arena,
-		PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_SHARED, -1, 0)) == MAP_FAILED)
-			return (NULL);
-		new->size = size_arena - FT_ALLOC_SIZE_META;
-		new->free = TRUE;
-		return (new);
-}
-
-t_anode 	*ft_alloc_arena(size_t size) 
+t_achunk 		*ft_alloc_arena_mmap(t_aarena **arena, size_t size) 
 { 
-	t_anode *new;
-	t_anode **head;
+	t_aarena 	*new;
+	size_t 		size_arena;
 
 	new = NULL;
-	head = ft_alloc_get_arena_by_size(size);
-	// if (ft_alloc_info_mmap(size, FALSE) == EXIT_FAILURE)
-	// 	return (NULL);
-	if ((new = ft_alloc_arena_mmap(size)) == NULL)
+	size_arena = ft_alloc_get_arena_size_by_size(size);
+	if (ft_alloc_info_mmap(size_arena, TRUE) == EXIT_FAILURE)
+	 	return (NULL);
+	if ((new = (t_aarena *)mmap(NULL, size_arena,
+	PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_SHARED, -1, 0)) == MAP_FAILED)
 		return (NULL);
-	ft_alloc_arena_append(head, new);
-	ft_alloc_info_address((FT_ALLOC_UINT)new, size);
-	return (new);
+	new->size = size_arena;
+	new->head = (t_achunk *)(new + 1);
+	new->head->size = size_arena - (FT_ALLOC_SIZE_ARENA + FT_ALLOC_SIZE_CHUNK);
+	new->head->free = TRUE;
+	new->head->prev = new->head;
+	new->head->next = new->head;
+	ft_alloc_arena_mmap_append(arena, new);
+	ft_alloc_info_freed(*arena, new->head->size, TRUE);
+	return (new->head);
 }

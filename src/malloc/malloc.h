@@ -17,5 +17,6 @@
 # include "../alloc/alloc.h"
 
 void	*ft_malloc(size_t size);
+void	*ft_malloc_new(size_t size);
 
 #endif

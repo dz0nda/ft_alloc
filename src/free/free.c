@@ -2,14 +2,16 @@
 
 void    ft_free(void *ptr)
 {
-    t_anode *node;
+    t_aarena *arena;
+    t_achunk *node;
     
+    arena = NULL;
     node = NULL;
-    if (ptr == NULL)
+    if ((ptr == NULL) || ((arena = ft_alloc_search_arena_by_address(ptr)) == NULL))
+        return ; 
+    if ((node = ft_alloc_search_chunk_by_address(arena, ptr)) == NULL)
         return ;
-    if ((node = ft_alloc_search_by_address(ptr)) == NULL)
-        return ;
-    ft_alloc_info_used_free(node->size, TRUE);
-    ft_alloc_concat(node);
+    ft_alloc_info_total(arena, node->size, TRUE);
     node->free = TRUE;
+    ft_alloc_chunk_concat(arena, node); 
 }

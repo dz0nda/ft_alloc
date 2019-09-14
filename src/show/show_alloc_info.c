@@ -2,8 +2,8 @@
 
 void  ft_show_alloc_info(void)
 {
-  t_aarena arena;
-  t_alloc_info *alloc_info;
+  t_aindex arena;
+  t_ainfo *alloc_info;
 
   arena = ALLOC_TINY;
   alloc_info = NULL;
@@ -22,9 +22,7 @@ void  ft_show_alloc_info(void)
     ft_putstr(" : \nTotal in use bytes : ");
     ft_putnbr(alloc_info->a_used[arena]);
     ft_putstr("\nTotal free bytes : ");
-    ft_putnbr(alloc_info->a_free[arena]);
-    ft_putstr("\nAdress of begin section : ");
-    ft_show_address(alloc_info->a_addr[arena], 0);
+    ft_putnbr(alloc_info->a_freed[arena]);
     arena++;
   }
   ft_putchar('\n');

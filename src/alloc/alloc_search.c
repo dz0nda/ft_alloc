@@ -1,8 +1,8 @@
 # include "alloc.h"
 
-static t_anode   *ft_alloc_search_first_fit(t_anode *head, size_t size)
+static t_achunk   *ft_alloc_search_first_fit(t_achunk *head, size_t size)
 {
-    t_anode  *node;
+    t_achunk  *node;
 
     node = NULL;
     if ((node = head) == NULL)
@@ -18,58 +18,73 @@ static t_anode   *ft_alloc_search_first_fit(t_anode *head, size_t size)
     return (NULL);
 }
 
-static int     ft_alloc_is_alloc(t_anode *node, FT_ALLOC_UINT ptr)
+static int     ft_alloc_is_in_arena(t_aarena *arena, void *ptr)
 {
-    FT_ALLOC_UINT addr;
+    FT_ALLOC_UINT addr_arena;
+    FT_ALLOC_UINT addr_ptr;
 
-    addr = (FT_ALLOC_UINT)node;
-    // if (addr < ptr && ptr < addr + node->size)
-    if ((addr + FT_ALLOC_SIZE_META) == ptr)
+    addr_arena = (FT_ALLOC_UINT)arena;
+    addr_ptr = (FT_ALLOC_UINT)ptr;
+    if ((addr_arena + FT_ALLOC_SIZE_ARENA) <= addr_ptr && addr_ptr <= (addr_arena + arena->size))
         return (EXIT_SUCCESS);
     return (EXIT_FAILURE);
 }
 
-t_anode          *ft_alloc_search_by_size(size_t size)
+static int     ft_alloc_is_in_chunk(t_achunk *node, void *ptr)
 {
-    t_anode *head;
-    t_anode *node;
-    t_aarena arena;
+    FT_ALLOC_UINT adrr_chunk;
+    FT_ALLOC_UINT addr_ptr;
 
-    head = NULL;
-    node = NULL;
-    arena = ft_alloc_get_arena_index_by_size(size);
-    if ((head = g_alloc_state.alloc_arena[arena]) == NULL)
-        return (NULL);
-    if ((node = ft_alloc_search_first_fit(head, size)) == NULL)
-        return (NULL);
-    return (node);
+    adrr_chunk = (FT_ALLOC_UINT)node;
+    addr_ptr = (FT_ALLOC_UINT)ptr;
+    if ((adrr_chunk + FT_ALLOC_SIZE_CHUNK) <= addr_ptr && addr_ptr <= (adrr_chunk + node->size))
+        return (EXIT_SUCCESS);
+    return (EXIT_FAILURE);
 }
 
-t_anode    *ft_alloc_search_by_address(void *ptr)
+t_aarena    *ft_alloc_search_arena_by_address(void *ptr)
 {
-    t_aarena arena;
-    t_anode *head;
-    t_anode *node;
-    FT_ALLOC_UINT address;
-
-    arena = -1;
-    head = NULL;
-    node = NULL;
-    address = (FT_ALLOC_UINT)ptr;
-    while (++arena < ALLOC_NONE)
+    t_aindex index;
+    t_aarena *arena;
+    
+    index = -1;
+    while (++index < ALLOC_NONE)
     {
-        head = g_alloc_state.alloc_arena[arena];
-        if ((node = head) != NULL)
+        arena = g_alloc_state.alloc_arena[index];
+        while (arena)
         {
-            if (node->free == FALSE && ft_alloc_is_alloc(node, address) == EXIT_SUCCESS)
-                return (node);
-            while((node = node->next) != head && node->free == FALSE)
-            {
-                if (ft_alloc_is_alloc(node, address) == EXIT_SUCCESS)
-                    return (node);
-                node = node->next;
-            }
+            if (ft_alloc_is_in_arena(arena, ptr) == EXIT_SUCCESS)
+                return (arena);
+            arena = arena->next;
         }
     }
     return (NULL);
+}
+
+t_achunk    *ft_alloc_search_chunk_by_address(t_aarena *arena, void *ptr)
+{
+    t_achunk *node;
+
+    if (arena == NULL)
+        return (NULL);
+    node = arena->head;
+    if (node->free == FALSE && ft_alloc_is_in_chunk(node, ptr) == EXIT_SUCCESS)
+        return (node);
+    while((node = node->next) != arena->head && node->free == FALSE)
+    {
+        if (ft_alloc_is_in_chunk(node, ptr) == EXIT_SUCCESS)
+            return (node);
+        node = node->next;
+    }
+    return (NULL);
+}
+
+t_achunk          *ft_alloc_search_chunk_by_size(t_aarena *arena, size_t size)
+{
+    t_achunk *node;
+
+    node = NULL;
+    while (arena && (node = ft_alloc_search_first_fit(arena->head, size)) == NULL)
+        arena = arena->next;
+    return (node);
 }
