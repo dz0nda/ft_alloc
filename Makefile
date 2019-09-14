@@ -17,24 +17,44 @@ OBJDIR = ./build
 MAKEFILE_NAME = Makefile-$(lastword $(subst /, ,$(TARGET)))
 
 CC = gcc
-CFLAGS = -fPIC
+CFLAGS = -fPIC 
 LDFLAGS = -shared
-SUBDIR = alloc \
-malloc \
-show \
-
-SUBFILE = ./src/alloc/alloc_get.c \
-./src/alloc/alloc.c \
-./src/malloc/malloc.c \
-./src/show/show.c \
-./src/show/show_utils.c
+SUBDIR = \
+				alloc \
+				alloc_lib \
+				free \
+				malloc \
+				realloc \
+				show
+SUBFILE = \
+				alloc_lib/print_addr.c \
+				alloc_lib/strlen.c \
+				alloc_lib/strrev.c \
+				alloc_lib/memcpy.c \
+				alloc_lib/itoa.c \
+				alloc_lib/putchar.c \
+				alloc_lib/putnbr.c \
+				alloc_lib/putstr.c \
+				alloc_lib/memset.c \
+				alloc/alloc_get.c \
+				alloc/alloc_info.c \
+				alloc/alloc_arena.c \
+				alloc/alloc_error.c \
+				alloc/alloc_chunk.c \
+				alloc/alloc_init.c \
+				alloc/alloc_search.c \
+				malloc/malloc.c \
+				realloc/realloc.c \
+				free/free.c \
+				show/show.c \
+				show/show_alloc_info.c
 
 SRCDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(SRCDIR)/, $(dir)))
 OBJDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(OBJDIR)/, $(dir)))
 INCLUDES = $(foreach dir, $(SRCDIRS), $(addprefix -I, $(dir)))
 
 VPATH = $(SRCDIRS)
-SRCS = $(SUBFILE)
+SRCS = $(foreach file, $(SUBFILE), $(addprefix $(SRCDIR)/, $(file)))
 OBJS = $(subst $(SRCDIR),$(OBJDIR),$(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
 
@@ -51,12 +71,6 @@ ERRIGNORE = 2>/dev/null
 SEP=/
 PSEP = $(strip $(SEP))
 
-define buildSource
-$(1)/%.o: %.c
-	@echo $(MAKEFILE_NAME): Building $$@
-	$(HIDE)$(CC) $(CFLAGS) -c $$(INCLUDES) -o $$(subst /,$$(PSEP),$$@) $$(subst /,$$(PSEP),$$<) -MMD
-endef
-
 .PHONY: all directories clean fclean re
 
 all: directories $(TARGET)
@@ -66,9 +80,9 @@ $(TARGET): $(OBJS)
 	$(HIDE)$(CC) $(OBJS) $(LDFLAGS) -o $(TARGET)
 	$(HIDE)ln -s $(TARGET) $(LIBNAME)
 
--include $(DEPS)
-
-$(foreach targetdir, $(OBJDIRS), $(eval $(call buildSource, $(targetdir))))
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@echo $(MAKEFILE_NAME): Building $@
+	$(HIDE)$(CC) $(CFLAGS) -c $(INCLUDES) -o $@ $< -MMD
 
 directories:
 	$(HIDE)$(MKDIR) $(subst /,$(PSEP),$(OBJDIRS)) $(ERRIGNORE)
