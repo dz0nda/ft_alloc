@@ -54,11 +54,11 @@ MAKESH_TEST_LIB_TARGET=-lft_malloc
 
 function make_test ()
 {
-    if [ "$TYPE" == "basic" ];then
+    # if [ "$TYPE" == "basic" ];then
       compile="gcc -o $MAKESH_TEST_TARGET $MAKESH_TEST_MAIN $MAKESH_TEST_SOURCES $MAKESH_TEST_LIB_PATH $MAKESH_TEST_LIB_TARGET"
-    else
-      compile="gcc -o $MAKESH_TEST_TARGET $MAKESH_TEST_MAIN $MAKESH_TEST_SOURCES"
-    fi
+    # else
+    #   compile="gcc -o $MAKESH_TEST_TARGET $MAKESH_TEST_MAIN $MAKESH_TEST_SOURCES"
+    # fi
 
     if [ "$TYPE" == "valgrind" ];then
       execute="valgrind --suppressions=$MAKESH_PATH_TESTS/.valgrind.supp --tool=memcheck --leak-check=full --leak-resolution=high --show-reachable=yes $MAKESH_TEST_TARGET"
@@ -81,7 +81,7 @@ function make_test ()
       $cmd
       if [ $(echo $?) != 0 ]
       then
-        $PRINT "$MAKESH_NAME_ERR: exited with error"
+        $PRINT "$MAKESH_NAME_ERR: exited with error \n"
         $PRINT "$usage" >&2
         exit 1
       fi

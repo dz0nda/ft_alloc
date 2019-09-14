@@ -35,10 +35,10 @@ void test_malloc()
 
 
 
-	//  ft_free(s2);
-	// // // ft_free(s2);
-	// // // // ft_free(s3);
-	// // // ft_free(s4);
+	 ft_free(s);
+// 	ft_free(s2);
+// 	ft_free(s3);
+// ft_free(s4);
 
 
 	ft_show_alloc_info();
