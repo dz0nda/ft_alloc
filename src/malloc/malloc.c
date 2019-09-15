@@ -22,13 +22,13 @@ void	*ft_malloc(size_t size)
 	node = NULL;
 	size = ft_alloc_get_size_aligned(size, FT_ALLOC_ALIGNMENT);
 	arena = ft_alloc_get_arena_by_size(size);
-	if (g_alloc_state.init == FALSE)
-		ft_alloc_init();
+	if (g_alloc.info.pagesize == 0 && ft_alloc_init() == EXIT_FAILURE)
+		return (NULL);
 	if (arena && (node = ft_alloc_search_chunk_by_size(*arena, size)) == NULL)
-		if ((node = ft_alloc_arena_mmap(arena, size)) == NULL)
+		if ((node = ft_alloc_arena_new(arena, size)) == NULL)
 			return (NULL);
 	ft_alloc_chunk_split(*arena, node, size);
-	ft_alloc_info_total(*arena, node->size, FALSE);
+	ft_alloc_state_swap((*arena)->aindex, node->size, FALSE);
 	node->free = FALSE;
 	return ((void *)(node + 1));
 }

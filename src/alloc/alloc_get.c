@@ -3,19 +3,10 @@
 t_aarena  **ft_alloc_get_arena_by_size(size_t size)
 {
   if (size <= FT_ALLOC_TINY)
-    return (&(g_alloc_state.alloc_arena)[ALLOC_TINY]);
+    return (&(g_alloc.state.arena)[ALLOC_TINY]);
   else if (size > FT_ALLOC_TINY && size <= FT_ALLOC_SMALL)
-    return (&(g_alloc_state.alloc_arena)[ALLOC_SMALL]);
-  return (&(g_alloc_state.alloc_arena)[ALLOC_LARGE]);
-}
-
-t_aindex  ft_alloc_get_arena_index_by_size_arena(size_t size)
-{
-  if (size == FT_ALLOC_N)
-    return (ALLOC_TINY);
-  else if (size == FT_ALLOC_M)
-    return (ALLOC_SMALL);
-  return (ALLOC_LARGE);
+    return (&(g_alloc.state.arena)[ALLOC_SMALL]);
+  return (&(g_alloc.state.arena)[ALLOC_LARGE]);
 }
 
 t_aindex  ft_alloc_get_arena_index_by_size_request(size_t size)

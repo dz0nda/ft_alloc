@@ -27,7 +27,7 @@ static void *ft_realloc_by_mmap(void *ptr, size_t size)
 
     if ((new = ft_malloc(size)) == NULL)
       return (NULL);
-    ft_memcpy(new, ptr, size);
+    ft_alloc_chunk_copy(new, ptr, size);
     ft_free(ptr);
     return (new);
 }

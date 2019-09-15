@@ -51,7 +51,7 @@ t_aarena    **ft_alloc_search_arena_by_address(void *ptr)
     arena = NULL;
     while (++index < ALLOC_NONE)
     {
-        arena = &(g_alloc_state.alloc_arena)[index];
+        arena = &(g_alloc.state.arena)[index];
         while (*arena)
         {
             if (ft_alloc_is_in_arena(*arena, ptr) == EXIT_SUCCESS)

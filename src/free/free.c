@@ -11,10 +11,10 @@ void    ft_free(void *ptr)
         return ; 
     if ((node = ft_alloc_search_chunk_by_address(*arena, ptr)) == NULL)
         return ;
-    ft_alloc_info_total(*arena, node->size, TRUE);
+    ft_alloc_state_swap((*arena)->aindex, node->size, TRUE);
     node->free = TRUE;
     ft_alloc_chunk_concat(*arena, node);
     if ((*arena)->head == node && 
     (FT_ALLOC_SIZE_ARENA + FT_ALLOC_SIZE_CHUNK + node->size) == (*arena)->size)
-        ft_alloc_arena_munmap(arena);
+        ft_alloc_arena_del(arena);
 }

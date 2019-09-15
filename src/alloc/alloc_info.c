@@ -1,61 +1,55 @@
 #include "alloc.h"
 
-int   ft_alloc_info_freed(t_aarena *arena, size_t size, t_bool free)
+int   ft_alloc_state_freed(t_aindex aindex, size_t size, t_bool free)
 {
-  t_aindex aindex;
-  t_ainfo  *info;
+  t_astate  *state;
 
-  aindex = arena->aindex;
-  info = &(g_alloc_state).alloc_info;
+  state = &(g_alloc).state;
   if (free == TRUE)
-    info->a_freed[aindex] += size;
+    state->freed[aindex] += size;
   else
-    info->a_freed[aindex] -= size;
+    state->freed[aindex] -= size;
   return (EXIT_SUCCESS);
 }
 
-int   ft_alloc_info_mmap(size_t size, t_bool mmap)
+int   ft_alloc_state_mmap(t_aindex aindex, size_t size, t_bool mmap)
 {
-  t_ainfo *info;
+  t_astate *state;
 
-  info = &(g_alloc_state).alloc_info;
+  state = &(g_alloc).state;
   if (mmap == TRUE)
-    info->a_mmap += size;
+    state->mmap[aindex] += size;
   else
-    info->a_mmap -= size;
+    state->mmap[aindex] -= size;
   return (EXIT_SUCCESS);
 }
 
-int   ft_alloc_info_total(t_aarena *arena, size_t size, t_bool free)
+int   ft_alloc_state_swap(t_aindex aindex, size_t size, t_bool free)
 {
-  t_aindex aindex;
-  t_ainfo  *info;
+  t_astate  *state;
 
-  aindex = arena->aindex;
-  info = &(g_alloc_state).alloc_info;
+  state = &(g_alloc).state;
   if (free == TRUE)
   {
-    info->a_freed[aindex] += size;
-    info->a_used[aindex] -= size;
+    state->freed[aindex] += size;
+    state->used[aindex] -= size;
   }
   else
   {
-    info->a_freed[aindex] -= size;
-    info->a_used[aindex] += size;
+    state->freed[aindex] -= size;
+    state->used[aindex] += size;
   }
   return (EXIT_SUCCESS);
 }
 
-int   ft_alloc_info_used(t_aarena *arena, size_t size, t_bool free)
+int   ft_alloc_state_used(t_aindex aindex, size_t size, t_bool free)
 {
-  t_aindex aindex;
-  t_ainfo  *info;
+  t_astate  *state;
 
-  aindex = arena->aindex;
-  info = &(g_alloc_state).alloc_info;
+  state = &(g_alloc).state;
   if (free == TRUE)
-    info->a_used[aindex] -= size;
+    state->used[aindex] -= size;
   else
-    info->a_used[aindex] += size;
+    state->used[aindex] += size;
   return (EXIT_SUCCESS);
 }
