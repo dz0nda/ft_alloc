@@ -40,6 +40,7 @@ void  ft_show_alloc_state(void)
       ft_show_alloc_detail("Total mmaped in bytes : ", state.mmap[i]);
       ft_show_alloc_detail("Total used in bytes : ", state.used[i]);
       ft_show_alloc_detail("Total freed in bytes : ", state.freed[i]);
+      ft_show_alloc_detail("Total overhead in bytes : ", state.ovhead[i]);
       ft_putstr("Addresses : \n");
       ft_show_alloc_arena(g_alloc.state.arena[i], -1);
       i++;

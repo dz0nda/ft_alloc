@@ -23,15 +23,12 @@
 # include <sys/mman.h>
 
 # define FT_ALLOC_UINT      		size_t
-# define FT_ALLOC_SIZE_ARENA    (FT_ALLOC_UINT)40
-# define FT_ALLOC_SIZE_CHUNK    (FT_ALLOC_UINT)32
 # define FT_ALLOC_ALIGNMENT     sizeof(FT_ALLOC_UINT) * 2
 
-# define FT_ALLOC_PAGESIZE      (getpagesize())
-# define FT_ALLOC_TINY          (FT_ALLOC_UINT)(FT_ALLOC_PAGESIZE / 16)
-# define FT_ALLOC_SMALL         (FT_ALLOC_UINT)(FT_ALLOC_PAGESIZE / 2)
-# define FT_ALLOC_N             (FT_ALLOC_UINT)(FT_ALLOC_PAGESIZE * 10)
-# define FT_ALLOC_M             (FT_ALLOC_UINT)(FT_ALLOC_PAGESIZE * 10)
+# define FT_ALLOC_TINY          (FT_ALLOC_UINT)16
+# define FT_ALLOC_SMALL         (FT_ALLOC_UINT)2
+# define FT_ALLOC_N             (FT_ALLOC_UINT)10
+# define FT_ALLOC_M             (FT_ALLOC_UINT)10
 
 typedef struct rlimit 	t_limit;
 
@@ -46,14 +43,6 @@ typedef enum	e_alloc_index {
 	ALLOC_LARGE,
 	ALLOC_NONE
 }				t_aindex;
-
-typedef enum	e_alloc_error {
-	AE_INIT,
-	AE_RALL,
-	AE_a_mmap,
-	AE_UNDEFINED
-}				t_aerror;
-
 
 typedef struct			s_alloc_chunk {
 	size_t			size;
@@ -75,6 +64,8 @@ typedef struct 	s_alloc_info
 {
 	FT_ALLOC_UINT	rlim_cur;
 	FT_ALLOC_UINT rlim_max;
+	FT_ALLOC_UINT size_chunk;
+	FT_ALLOC_UINT size_arena;
 	FT_ALLOC_UINT	pagesize;
 	FT_ALLOC_UINT tiny_size_request;
 	FT_ALLOC_UINT small_size_request;
@@ -87,6 +78,7 @@ typedef struct 	s_alloc_state
 	FT_ALLOC_UINT mmap[ALLOC_NONE];
 	FT_ALLOC_UINT used[ALLOC_NONE];
 	FT_ALLOC_UINT freed[ALLOC_NONE];
+	FT_ALLOC_UINT	ovhead[ALLOC_NONE];
 	t_aarena			*arena[ALLOC_NONE];
 
 }								t_astate;
@@ -114,6 +106,7 @@ int   					ft_alloc_state_freed(t_aindex aindex, size_t size, t_bool free);
 int   					ft_alloc_state_mmap(t_aindex aindex, size_t size, t_bool mmap);
 int   					ft_alloc_state_swap(t_aindex aindex, size_t size, t_bool free);
 int   					ft_alloc_state_used(t_aindex aindex, size_t size, t_bool free);
+int   					ft_alloc_state_ovhead(t_aindex aindex, size_t size, t_bool free);
 
 int   					ft_alloc_init(void);
 

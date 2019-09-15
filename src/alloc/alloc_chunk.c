@@ -4,25 +4,33 @@ static int ft_alloc_chunk_concat_info(t_aindex aindex, t_achunk *node)
 {
   if (node->free == FALSE)
   {
-    ft_alloc_state_used(aindex, FT_ALLOC_SIZE_CHUNK, FALSE);
+    ft_alloc_state_used(aindex, g_alloc.info.size_chunk, FALSE);
+    ft_alloc_state_ovhead(aindex, g_alloc.info.size_chunk, TRUE);
     ft_alloc_state_swap(aindex, node->size, FALSE);
   }
   else
-    ft_alloc_state_freed(aindex, FT_ALLOC_SIZE_CHUNK, TRUE);
+  {
+    ft_alloc_state_freed(aindex, g_alloc.info.size_chunk, TRUE);
+    ft_alloc_state_ovhead(aindex, g_alloc.info.size_chunk, TRUE);
+  }
   return (EXIT_SUCCESS);
 }
 
 static int		ft_alloc_chunk_split_info(t_aindex aindex, t_achunk *node, size_t size)
 {
-  if (!(node->size > (size + FT_ALLOC_SIZE_CHUNK)))
+  if (!(node->size > (size + g_alloc.info.size_chunk)))
     return (EXIT_FAILURE);
   if (node->free == FALSE)
   {
-    ft_alloc_state_used(aindex, FT_ALLOC_SIZE_CHUNK, TRUE);
-    ft_alloc_state_swap(aindex, node->size - (FT_ALLOC_SIZE_CHUNK + size), TRUE);
+    ft_alloc_state_used(aindex, g_alloc.info.size_chunk, TRUE);
+    ft_alloc_state_ovhead(aindex, g_alloc.info.size_chunk, FALSE);
+    ft_alloc_state_swap(aindex, node->size - (g_alloc.info.size_chunk + size), TRUE);
   }
   else
-    ft_alloc_state_freed(aindex, FT_ALLOC_SIZE_CHUNK, FALSE);
+  {
+    ft_alloc_state_freed(aindex, g_alloc.info.size_chunk, FALSE);
+    ft_alloc_state_ovhead(aindex, g_alloc.info.size_chunk, FALSE);
+  }
   return (EXIT_SUCCESS);
 }
 
@@ -31,14 +39,14 @@ int     ft_alloc_chunk_concat(t_aarena *arena, t_achunk *node)
 	if ((node->next->free == TRUE) && (node->next > node))
   {
     ft_alloc_chunk_concat_info(arena->aindex, node);
-    node->size += node->next->size + FT_ALLOC_SIZE_CHUNK;
+    node->size += node->next->size + g_alloc.info.size_chunk;
     node->next = node->next->next;
     node->next->prev = node;
   }
   if ((node->prev->free == TRUE) && (node->prev < node))
   {
     ft_alloc_chunk_concat_info(arena->aindex, node);
-    node->prev->size += node->size + FT_ALLOC_SIZE_CHUNK;
+    node->prev->size += node->size + g_alloc.info.size_chunk;
     node->prev->free = node->free;
     node->prev->next = node->next;
     node->next->prev = node->prev;
@@ -70,8 +78,8 @@ int		ft_alloc_chunk_split(t_aarena *arena, t_achunk *node, size_t size)
 	new = NULL;
   if (ft_alloc_chunk_split_info(arena->aindex, node, size) == EXIT_FAILURE)
     return (EXIT_FAILURE);
-	new = (t_achunk *)((FT_ALLOC_UINT)node + FT_ALLOC_SIZE_CHUNK + size);
-	new->size = node->size - (FT_ALLOC_SIZE_CHUNK + size);
+	new = (t_achunk *)((FT_ALLOC_UINT)node + g_alloc.info.size_chunk + size);
+	new->size = node->size - (g_alloc.info.size_chunk + size);
 	new->free = TRUE;
 	node->size = size;
 	new->next = node->next;

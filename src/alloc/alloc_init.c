@@ -2,13 +2,18 @@
 
 t_alloc       g_alloc;
 
-static void	*ft_memset(void *b, int c, size_t len)
+static void	        *ft_memset(void *b, int c, size_t len)
 {
-    size_t i;
+    unsigned char *s;
+    unsigned char set;
 
-    i = 0;
-    while (i < len)
-        ((char *)b)[i++] = c;
+    s = (unsigned char *)b;
+    set = (unsigned char)c;
+    while (len-- > 0)
+    {
+        *s = set;
+        s++;
+    }
     return (b);
 }
 
@@ -23,12 +28,14 @@ static int          ft_alloc_init_info()
         return (EXIT_FAILURE);
     info->rlim_cur = (FT_ALLOC_UINT)rlp.rlim_cur;
     info->rlim_max = (FT_ALLOC_UINT)rlp.rlim_max;
+    info->size_chunk = ft_alloc_get_size_aligned(sizeof(t_achunk), FT_ALLOC_ALIGNMENT);
+    info->size_arena = ft_alloc_get_size_aligned(sizeof(t_aarena) + info->size_chunk, FT_ALLOC_ALIGNMENT);
     if ((info->pagesize = getpagesize()) == 0)
         return (EXIT_FAILURE);
-    info->tiny_size_request = info->pagesize / 16;
-    info->small_size_request = info->pagesize / 2;
-    info->tiny_size_arena = info->pagesize * 10;
-    info->small_size_arena = info->pagesize * 10;
+    info->tiny_size_request = info->pagesize / FT_ALLOC_TINY;
+    info->small_size_request = info->pagesize / FT_ALLOC_SMALL;
+    info->tiny_size_arena = info->pagesize * FT_ALLOC_N;
+    info->small_size_arena = info->pagesize * FT_ALLOC_M;
     return (EXIT_SUCCESS);
 }
  

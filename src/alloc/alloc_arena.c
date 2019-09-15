@@ -15,6 +15,7 @@
 
 static void		ft_alloc_arena_del_delete(t_aarena **arena, t_aarena *del)
 {
+
 	if (*arena == NULL || del == NULL)
 		return ;
 	if (del->prev == NULL)
@@ -55,7 +56,7 @@ static t_aarena		*ft_alloc_arena_new_mmap(size_t size)
 	new->size = size_arena;
 	new->aindex = ft_alloc_get_arena_index_by_size_request(size);
 	new->head = (t_achunk *)(new + 1);
-	new->head->size = size_arena - (FT_ALLOC_SIZE_ARENA + FT_ALLOC_SIZE_CHUNK);
+	new->head->size = size_arena - g_alloc.info.size_arena;
 	new->head->free = TRUE;
 	new->head->prev = new->head;
 	new->head->next = new->head;
@@ -72,6 +73,7 @@ t_achunk 		*ft_alloc_arena_new(t_aarena **arena, size_t size)
 	ft_alloc_arena_new_append(arena, new);
 	ft_alloc_state_mmap(new->aindex, new->size, TRUE);
 	ft_alloc_state_freed(new->aindex, new->head->size, TRUE);
+	ft_alloc_state_ovhead(new->aindex, g_alloc.info.size_arena, FALSE);
 	return (new->head);
 }
 
@@ -80,9 +82,11 @@ int					ft_alloc_arena_del(t_aarena **arena)
 	t_aarena 	*del;
 
 	del = *arena;
-	ft_alloc_arena_del_delete(arena, del);
+
 	ft_alloc_state_mmap(del->aindex, del->size, FALSE);
 	ft_alloc_state_freed(del->aindex, del->head->size, FALSE);
+	ft_alloc_state_ovhead(del->aindex, g_alloc.info.size_arena, TRUE);
+	ft_alloc_arena_del_delete(arena, del);
 	if (munmap((void *)(del), del->size) == -1)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

@@ -15,7 +15,7 @@ static void		ft_show_alloc(t_bool free)
 		if (state.arena[i] != NULL)
 		{
 			ft_putstr(aindex[i]);
-			ft_show_alloc_addr((FT_ALLOC_UINT)state.arena[i]->head, state.arena[i]->size - (FT_ALLOC_SIZE_ARENA + FT_ALLOC_SIZE_CHUNK));
+			ft_show_alloc_addr((FT_ALLOC_UINT)state.arena[i]->head, state.arena[i]->size - g_alloc.info.size_arena);
 			ft_show_alloc_arena(state.arena[i], free);
 		}
 	}

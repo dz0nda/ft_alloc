@@ -29,7 +29,7 @@ void  ft_show_alloc_addr(FT_ALLOC_UINT ptr, FT_ALLOC_UINT size)
   {
     while (arena != NULL)
     {
-      ft_show_alloc_addr((FT_ALLOC_UINT)arena->head, arena->size - (FT_ALLOC_SIZE_ARENA + FT_ALLOC_SIZE_CHUNK));
+      ft_show_alloc_addr((FT_ALLOC_UINT)arena->head, arena->size - g_alloc.info.size_arena);
       arena = arena->next;
     }
   }
