@@ -32,35 +32,55 @@ static int     ft_alloc_is_in_arena(t_aarena *arena, void *ptr)
 
 static int     ft_alloc_is_in_chunk(t_achunk *chunk, void *ptr)
 {
-    FT_ALLOC_UINT adrr_chunk;
+    FT_ALLOC_UINT addr_chunk;
     FT_ALLOC_UINT addr_ptr;
 
-    adrr_chunk = (FT_ALLOC_UINT)chunk;
+    addr_chunk = (FT_ALLOC_UINT)(chunk + 1);
     addr_ptr = (FT_ALLOC_UINT)ptr;
-    if (adrr_chunk <= addr_ptr && addr_ptr <= (adrr_chunk + chunk->size))
+    if (addr_chunk  <= addr_ptr && addr_ptr <= (addr_chunk + chunk->size))
         return (EXIT_SUCCESS);
     return (EXIT_FAILURE);
 }
 
-t_aarena    **ft_alloc_search_arena_by_address(void *ptr)
+t_aarena    *ft_alloc_search_arena_by_address(void *ptr)
 {
     t_aindex index;
-    t_aarena **arena;
+    t_aarena *arena;
     
     index = -1;
     arena = NULL;
     while (++index < ALLOC_NONE)
     {
-        arena = &(g_alloc.state.arena)[index];
-        while (*arena != NULL)
+        arena = g_alloc.state.arena[index];
+        while (arena != NULL)
         {
-            if (ft_alloc_is_in_arena(*arena, ptr) == EXIT_SUCCESS)
+            if (ft_alloc_is_in_arena(arena, ptr) == EXIT_SUCCESS)
                 return (arena);
-            *arena = (*arena)->next;
+            arena = arena->next;
         }
     }
     return (NULL);
 }
+
+// t_aarena    **ft_alloc_search_arena_by_address(void *ptr)
+// {
+//     t_aindex index;
+//     t_aarena **arena;
+    
+//     index = -1;
+//     arena = NULL;
+//     while (++index < ALLOC_NONE)
+//     {
+//         arena = &(g_alloc.state.arena)[index];
+//         while (*arena != NULL)
+//         {
+//             if (ft_alloc_is_in_arena(*arena, ptr) == EXIT_SUCCESS)
+//                 return (arena);
+//             *arena = (*arena)->next;
+//         }
+//     }
+//     return (NULL);
+// }
 
 t_achunk    *ft_alloc_search_chunk_by_address(t_aarena *arena, void *ptr)
 {

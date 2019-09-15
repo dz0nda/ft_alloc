@@ -15,11 +15,14 @@ void      ft_show_alloc_info(void)
   ft_putstr("\n========================= Alloc Info =========================\n");
   ft_show_alloc_detail("\nSoft limit max allocated bytes : ", info.rlim_cur);
   ft_show_alloc_detail("Hard limit max allocated bytes : ", info.rlim_max);
+  ft_show_alloc_detail("Size of chunk : ", info.size_chunk);
+  ft_show_alloc_detail("Size of arena : ", info.size_arena);
   ft_show_alloc_detail("Pagesize : ", info.pagesize);
   ft_show_alloc_detail("Tiny size request : ", info.tiny_size_request);
   ft_show_alloc_detail("Small size request : ", info.small_size_request);
   ft_show_alloc_detail("Tiny size arena : ", info.tiny_size_arena);
   ft_show_alloc_detail("Small size arena : ", info.small_size_arena);
+  ft_putstr("\n========================= Alloc Info =========================\n");
 }
 
 
@@ -45,4 +48,5 @@ void  ft_show_alloc_state(void)
       ft_show_alloc_arena(g_alloc.state.arena[i], -1);
       i++;
 	}
+  ft_putstr("\n========================= Alloc State =========================\n");
 }

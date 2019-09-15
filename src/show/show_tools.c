@@ -40,7 +40,7 @@ void  ft_show_alloc_addr(FT_ALLOC_UINT ptr, FT_ALLOC_UINT size)
     if (chunk->free == free)
         ft_show_alloc_addr((FT_ALLOC_UINT)chunk, chunk->size);
     while ((chunk = chunk->next) != arena->head)
-		  if (chunk->free = free)
+		  if (chunk->free == free)
         ft_show_alloc_addr((FT_ALLOC_UINT)chunk, chunk->size);
   }
 }

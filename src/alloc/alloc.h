@@ -91,7 +91,7 @@ typedef struct			s_alloc {
 extern					t_alloc g_alloc;
 
 t_achunk 				*ft_alloc_arena_new(t_aarena **arena, size_t size);
-int							ft_alloc_arena_del(t_aarena **arena);
+int							ft_alloc_arena_del(t_aarena *arena);
 
 int     				ft_alloc_chunk_concat(t_aarena *arena, t_achunk *node);
 void						*ft_alloc_chunk_copy(void *dest, const void *src, size_t n);
@@ -110,7 +110,7 @@ int   					ft_alloc_state_ovhead(t_aindex aindex, size_t size, t_bool free);
 
 int   					ft_alloc_init(void);
 
-t_aarena    		**ft_alloc_search_arena_by_address(void *ptr);
+t_aarena    		*ft_alloc_search_arena_by_address(void *ptr);
 t_achunk    		*ft_alloc_search_chunk_by_address(t_aarena *arena, void *ptr);
 t_achunk       	*ft_alloc_search_chunk_by_size(t_aarena *arena, size_t size);
 

@@ -12,23 +12,24 @@
 /* ************************************************************************** */
 
 #include "malloc.h"
+#include "../show/show.h"
 
 void	*ft_malloc(size_t size)
 {
 	t_aarena	**arena;
-	t_achunk	*node;
+	t_achunk	*chunk;
 
 	arena = NULL;
-	node = NULL;
+	chunk = NULL;
 	if (g_alloc.info.pagesize == 0 && ft_alloc_init() == EXIT_FAILURE)
 		return (NULL);
 	size = ft_alloc_get_size_aligned(size, FT_ALLOC_ALIGNMENT);
 	arena = ft_alloc_get_arena_by_size(size);
-	if (arena && (node = ft_alloc_search_chunk_by_size(*arena, size)) == NULL)
-		if ((node = ft_alloc_arena_new(arena, size)) == NULL)
+	if (arena == NULL || (chunk = ft_alloc_search_chunk_by_size(*arena, size)) == NULL)
+		if ((chunk = ft_alloc_arena_new(arena, size)) == NULL)
 			return (NULL);
-	ft_alloc_chunk_split(*arena, node, size);
-	ft_alloc_state_swap((*arena)->aindex, node->size, FALSE);
-	node->free = FALSE;
-	return ((void *)(node + 1));
+	ft_alloc_chunk_split(*arena, chunk, size);
+	ft_alloc_state_swap((*arena)->aindex, chunk->size, FALSE);
+	chunk->free = FALSE;
+	return ((void *)(chunk + 1));
 }
