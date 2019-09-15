@@ -13,13 +13,13 @@
 
 #include "alloc.h"
 
-static void		ft_alloc_arena_del_delete(t_aarena *arena, t_aarena *del)
+static void		ft_alloc_arena_del_delete(t_aarena **arena, t_aarena *del)
 {
 
-	if (arena == NULL || del == NULL)
+	if (*arena == NULL || del == NULL)
 		return ;
 	if (del->prev == NULL)
-		arena = del->next;
+		*arena = del->next;
 	if (del->next != NULL)
 		del->next->prev = del->prev;
 	if (del->prev != NULL)
@@ -77,11 +77,11 @@ t_achunk 		*ft_alloc_arena_new(t_aarena **arena, size_t size)
 	return (new->head);
 }
 
-int					ft_alloc_arena_del(t_aarena *arena) 
+int					ft_alloc_arena_del(t_aarena **arena) 
 { 
 	t_aarena 	*del;
 
-	del = arena;
+	del = *arena;
 	ft_alloc_state_mmap(del->aindex, del->size, FALSE);
 	ft_alloc_state_freed(del->aindex, del->head->size, FALSE);
 	ft_alloc_state_ovhead(del->aindex, g_alloc.info.size_arena, TRUE);

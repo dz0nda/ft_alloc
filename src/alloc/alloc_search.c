@@ -42,21 +42,22 @@ static int     ft_alloc_is_in_chunk(t_achunk *chunk, void *ptr)
     return (EXIT_FAILURE);
 }
 
-t_aarena    *ft_alloc_search_arena_by_address(void *ptr)
+t_aarena    **ft_alloc_search_arena_by_address(void *ptr)
 {
     t_aindex index;
-    t_aarena *arena;
-    
+    t_aarena **arena;
+    t_aarena *p;
+
     index = -1;
     arena = NULL;
     while (++index < ALLOC_NONE)
     {
-        arena = g_alloc.state.arena[index];
-        while (arena != NULL)
+        arena = &(g_alloc.state).arena[index];
+        while (*arena != NULL)
         {
-            if (ft_alloc_is_in_arena(arena, ptr) == EXIT_SUCCESS)
+            if (ft_alloc_is_in_arena(*arena, ptr) == EXIT_SUCCESS)
                 return (arena);
-            arena = arena->next;
+            arena = &(*arena)->next;
         }
     }
     return (NULL);
