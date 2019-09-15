@@ -82,13 +82,34 @@ void test_malloc()
 {
 	printf("\n===== start test_malloc =====\n");
 
+	void *s = ft_malloc(20);
 
-	test_malloc_0();
-	test_malloc_1();
+	ft_putstr("\n");
+	show_alloc_mem();
+	ft_putstr("\n");
+	show_alloc_mem_free();
+
+		ft_show_alloc_info();
+	ft_show_alloc_state();
+
+	ft_free(s);
+
+	ft_putstr("\n");
+	show_alloc_mem();
+	ft_putstr("\n");
+	show_alloc_mem_free();
+		ft_show_alloc_info();
+	ft_show_alloc_state();
+
+	// ft_show_alloc_info();
+	// ft_show_alloc_state();
+
+	// test_malloc_0();
+	// test_malloc_1();
 	// test_malloc_2();
 	// test_malloc_3();
 	// test_malloc_4();
-	test_malloc_5();
+	// test_malloc_5();
 
 	printf("\n===== end test_malloc =====\n");
 }
