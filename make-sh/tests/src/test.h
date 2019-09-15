@@ -19,7 +19,7 @@ typedef struct s_block
 }               t_block;
 
 void    test_malloc(void);
-
+void hexDump(char *desc, void *addr, int len) ;
 #endif
 
 
