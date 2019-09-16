@@ -13,9 +13,9 @@ static void ft_show_alloc(t_bool details)
 	while (++i < ALLOC_NONE)
 	{
 		ft_putstr(aindex[i]);
-		ft_show_alloc_detail("- used : ", state.used[i], FALSE);
-		ft_show_alloc_detail("- freed : ", state.freed[i], FALSE);
-		ft_show_alloc_detail("- overhead : ", state.ovhead[i], TRUE);
+		ft_show_alloc_detail(NULL, state.used[i], FALSE, FALSE);
+		ft_show_alloc_detail(NULL, state.freed[i], FALSE, TRUE);
+		ft_show_alloc_detail(NULL, state.ovhead[i], TRUE, -1);
 		if ((arena = state.arena[i]) != NULL)
 			while (arena)
 			{
@@ -35,15 +35,15 @@ void      show_alloc_info(void)
 
   info = g_alloc.info;
 	ft_putstr("show_alloc_info : \n\n");
-  ft_show_alloc_detail("Soft limit max allocated bytes : ", info.rlim_cur, TRUE);
-  ft_show_alloc_detail("Hard limit max allocated bytes : ", info.rlim_max, TRUE);
-  ft_show_alloc_detail("Size of chunk : ", info.size_chunk, TRUE);
-  ft_show_alloc_detail("Size of arena : ", info.size_arena, TRUE);
-  ft_show_alloc_detail("Pagesize : ", info.pagesize, TRUE);
-  ft_show_alloc_detail("Tiny size request : ", info.tiny_size_request, TRUE);
-  ft_show_alloc_detail("Small size request : ", info.small_size_request, TRUE);
-  ft_show_alloc_detail("Tiny size arena : ", info.tiny_size_arena, TRUE);
-  ft_show_alloc_detail("Small size arena : ", info.small_size_arena, TRUE);
+  ft_show_alloc_detail("Soft limit max allocated bytes", info.rlim_cur, TRUE, -1);
+  ft_show_alloc_detail("Hard limit max allocated bytes", info.rlim_max, TRUE, -1);
+  ft_show_alloc_detail("Size of chunk", info.size_chunk, TRUE, -1);
+  ft_show_alloc_detail("Size of arena", info.size_arena, TRUE, -1);
+  ft_show_alloc_detail("Pagesize", info.pagesize, TRUE, -1);
+  ft_show_alloc_detail("Tiny size request", info.tiny_size_request, TRUE, -1);
+  ft_show_alloc_detail("Small size request", info.small_size_request, TRUE, -1);
+  ft_show_alloc_detail("Tiny size arena", info.tiny_size_arena, TRUE, -1);
+  ft_show_alloc_detail("Small size arena", info.small_size_arena, TRUE, -1);
 }
 
 void				show_alloc_mem(void)
@@ -53,5 +53,5 @@ void				show_alloc_mem(void)
 
 void      show_alloc_state(void)
 {
-		ft_show_alloc(FALSE);
+	ft_show_alloc(FALSE);
 }
