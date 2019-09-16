@@ -114,12 +114,16 @@ void test_malloc()
 	// show_alloc_mem_free();
 
 
-	test_malloc_tiny();
+	// test_malloc_tiny();
 	// test_malloc_0();
 	// test_malloc_1();
 	// test_malloc_2();
 	// test_malloc_3();
 	// test_malloc_4();
+
+  int *foo = ft_malloc(4);
+  int *bar = ft_malloc(4);
+  printf("%p - %p : %d\n", bar, foo, (int)bar - (int)foo);
 
 	show_alloc_mem();
 	
