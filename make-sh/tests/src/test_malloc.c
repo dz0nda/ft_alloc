@@ -5,11 +5,11 @@
 
 void test_malloc_5()
 {
-	ft_malloc(1024);
+	 ft_malloc(1024);
 	ft_malloc(1024 * 32);
 	ft_malloc(1024 * 1024);
-	ft_malloc(1024 * 1024 * 16);
-	ft_malloc(1024 * 1024 * 128);
+	// ft_malloc(1024 * 1024 * 16);
+	// ft_malloc(1024 * 1024 * 128);
 	show_alloc_mem();
 }
 
@@ -17,7 +17,7 @@ void test_malloc_4()
 {
 	char	*addr;
 
-	addr = malloc(16);
+	addr = ft_malloc(16);
 	ft_free(NULL);
 	ft_free((void *)addr + 5);
 	if (ft_realloc((void *)addr + 5, 10) == NULL)
@@ -78,35 +78,53 @@ void test_malloc_0()
 			i++;
 	}
 
+void test_malloc_tiny()
+{
+	char	*addr;
+	int		i;
+
+	i = 0;
+	while (i < 101)
+	{
+		addr = (char*)ft_malloc(256);
+		// addr[0] = 42;
+		// ft_free(addr);
+		i++;
+	}
+}
+
 void test_malloc()
 {
 	printf("\n===== start test_malloc =====\n");
 
-	void *s = ft_malloc(20);
+	//void *s = ft_malloc(20);
 	// void *s2 = ft_malloc(30);
  	// void *s3= ft_malloc(40);
  	// void *s4= ft_malloc(1024);
 	// void *s5= ft_malloc(1024);
 
-	 // ft_free(s);
+	// ft_free(s);
 	 	// ft_free(s2);
 	 // ft_free(s3);
-	 //	ft_free(s4);
+	//  //	ft_free(s4);
 
-	ft_putstr("\n");
-	show_alloc_mem();
-	ft_putstr("\n");
-	show_alloc_mem_free();
+	// ft_putstr("\n");
+	// show_alloc_mem();
+	// ft_putstr("\n");
+	// show_alloc_mem_free();
 
-	ft_show_alloc_info();
-	ft_show_alloc_state();
 
+	test_malloc_tiny();
 	// test_malloc_0();
 	// test_malloc_1();
 	// test_malloc_2();
 	// test_malloc_3();
 	// test_malloc_4();
-	// test_malloc_5();
 
+	show_alloc_mem();
+	
+	ft_putstr("\n");
+	show_alloc_state();
+	show_alloc_info();
 	printf("\n===== end test_malloc =====\n");
 }
