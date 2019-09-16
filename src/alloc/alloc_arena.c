@@ -60,6 +60,7 @@ static t_aarena		*ft_alloc_arena_new_mmap(size_t size)
 	new->head->free = TRUE;
 	new->head->prev = new->head;
 	new->head->next = new->head;
+	new->next = NULL;
 	return (new);
 }
 

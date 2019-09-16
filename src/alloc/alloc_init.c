@@ -32,10 +32,10 @@ static int          ft_alloc_init_info()
     info->size_arena = ft_alloc_get_size_aligned(sizeof(t_aarena) + info->size_chunk, FT_ALLOC_ALIGNMENT);
     if ((info->pagesize = getpagesize()) == 0)
         return (EXIT_FAILURE);
-    info->tiny_size_request = info->pagesize / FT_ALLOC_TINY;
-    info->small_size_request = info->pagesize / FT_ALLOC_SMALL;
-    info->tiny_size_arena = info->pagesize * FT_ALLOC_N;
-    info->small_size_arena = info->pagesize * FT_ALLOC_M;
+    info->tiny_size_request = ft_alloc_get_size_aligned(FT_ALLOC_TINY, FT_ALLOC_ALIGNMENT);
+    info->small_size_request = ft_alloc_get_size_aligned(FT_ALLOC_SMALL, FT_ALLOC_ALIGNMENT);
+    info->tiny_size_arena = (info->tiny_size_request * FT_ALLOC_N) + (info->size_chunk * (FT_ALLOC_N - 1)) + info->size_arena;
+    info->small_size_arena = (info->small_size_request * FT_ALLOC_M) + (info->size_chunk * (FT_ALLOC_M - 1)) + info->size_arena;
     return (EXIT_SUCCESS);
 }
  

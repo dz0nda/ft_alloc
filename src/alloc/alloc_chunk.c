@@ -18,7 +18,7 @@ static int ft_alloc_chunk_concat_info(t_aindex aindex, t_achunk *node)
 
 static int		ft_alloc_chunk_split_info(t_aindex aindex, t_achunk *node, size_t size)
 {
-  if (!(node->size > (size + g_alloc.info.size_chunk)))
+  if (size > g_alloc.info.small_size_request || !(node->size > (size + g_alloc.info.size_chunk)))
     return (EXIT_FAILURE);
   if (node->free == FALSE)
   {

@@ -24,7 +24,7 @@ void	*ft_malloc(size_t size)
 	if (g_alloc.info.pagesize == 0 && ft_alloc_init() == EXIT_FAILURE)
 		return (NULL);
 	size = ft_alloc_get_size_aligned(size, FT_ALLOC_ALIGNMENT);
-	arena = ft_alloc_get_arena_by_size(size);
+	arena = ft_alloc_get_arena_by_size_request(size);
 	if (arena == NULL || (chunk = ft_alloc_search_chunk_by_size(*arena, size)) == NULL)
 		if ((chunk = ft_alloc_arena_new(arena, size)) == NULL)
 			return (NULL);

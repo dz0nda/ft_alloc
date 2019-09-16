@@ -25,10 +25,10 @@
 # define FT_ALLOC_UINT      		size_t
 # define FT_ALLOC_ALIGNMENT     sizeof(FT_ALLOC_UINT) * 2
 
-# define FT_ALLOC_TINY          (FT_ALLOC_UINT)16
-# define FT_ALLOC_SMALL         (FT_ALLOC_UINT)2
-# define FT_ALLOC_N             (FT_ALLOC_UINT)10
-# define FT_ALLOC_M             (FT_ALLOC_UINT)10
+# define FT_ALLOC_TINY          (FT_ALLOC_UINT)256
+# define FT_ALLOC_SMALL         (FT_ALLOC_UINT)2048
+# define FT_ALLOC_N             (FT_ALLOC_UINT)100
+# define FT_ALLOC_M             (FT_ALLOC_UINT)100
 
 typedef struct rlimit 	t_limit;
 
@@ -97,7 +97,7 @@ int     				ft_alloc_chunk_concat(t_aarena *arena, t_achunk *node);
 void						*ft_alloc_chunk_copy(void *dest, const void *src, size_t n);
 int							ft_alloc_chunk_split(t_aarena *arena, t_achunk *node, size_t size);
 
-t_aarena  			**ft_alloc_get_arena_by_size(size_t size);
+t_aarena  			**ft_alloc_get_arena_by_size_request(size_t size);
 t_aindex  			ft_alloc_get_arena_index_by_size_request(size_t size);
 size_t					ft_alloc_get_arena_size_by_size_request(size_t size);
 size_t					ft_alloc_get_size_aligned(size_t offset, size_t align);

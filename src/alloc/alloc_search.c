@@ -1,23 +1,5 @@
 # include "alloc.h"
 
-static t_achunk   *ft_alloc_search_first_fit(t_achunk *head, size_t size)
-{
-    t_achunk  *chunk;
-
-    chunk = NULL;
-    if ((chunk = head) == NULL)
-        return (NULL);
-    while (chunk->next != head)
-    {
-        if (chunk->size >= size && chunk->free == TRUE)
-            break;
-        chunk = chunk->next;
-    }
-    if (chunk->size >= size && chunk->free == TRUE)
-        return (chunk);
-    return (NULL);
-}
-
 static int     ft_alloc_is_in_arena(t_aarena *arena, void *ptr)
 {
     FT_ALLOC_UINT addr_arena;
@@ -63,26 +45,6 @@ t_aarena    **ft_alloc_search_arena_by_address(void *ptr)
     return (NULL);
 }
 
-// t_aarena    **ft_alloc_search_arena_by_address(void *ptr)
-// {
-//     t_aindex index;
-//     t_aarena **arena;
-    
-//     index = -1;
-//     arena = NULL;
-//     while (++index < ALLOC_NONE)
-//     {
-//         arena = &(g_alloc.state.arena)[index];
-//         while (*arena != NULL)
-//         {
-//             if (ft_alloc_is_in_arena(*arena, ptr) == EXIT_SUCCESS)
-//                 return (arena);
-//             *arena = (*arena)->next;
-//         }
-//     }
-//     return (NULL);
-// }
-
 t_achunk    *ft_alloc_search_chunk_by_address(t_aarena *arena, void *ptr)
 {
     t_achunk *chunk;
@@ -103,7 +65,23 @@ t_achunk          *ft_alloc_search_chunk_by_size(t_aarena *arena, size_t size)
     t_achunk *chunk;
 
     chunk = NULL;
-    while (arena && (chunk = ft_alloc_search_first_fit(arena->head, size)) == NULL)
+    if (size > g_alloc.info.small_size_request)
+        return (NULL);
+    while (arena && chunk == NULL)
+    {
+        if ((chunk = arena->head) != NULL)
+        {
+            while (chunk->next != arena->head)
+            {
+                if (chunk->size >= size && chunk->free == TRUE)
+                    return (chunk);
+                chunk = chunk->next;
+            }
+            if (chunk->size >= size && chunk->free == TRUE)
+                return (chunk);
+        }
+        chunk = NULL;
         arena = arena->next;
-    return (chunk);
+    }   
+    return (NULL);
 }
