@@ -44,11 +44,11 @@ void  ft_show_alloc_addr(FT_ALLOC_UINT ptr, FT_ALLOC_UINT size, t_bool free)
   if (arena == NULL || (chunk = arena->head) == NULL)
     return ;
   ft_putstr("    - ");
-  ft_show_alloc_addr((FT_ALLOC_UINT)chunk, chunk->size, chunk->free);
+  ft_show_alloc_addr((FT_ALLOC_UINT)(chunk + 1), chunk->size, chunk->free);
   while ((chunk = chunk->next) != arena->head)
   {
     ft_putstr("    - ");
-    ft_show_alloc_addr((FT_ALLOC_UINT)chunk, chunk->size, chunk->free);
+    ft_show_alloc_addr((FT_ALLOC_UINT)(chunk + 1), chunk->size, chunk->free);
   }
 }
 

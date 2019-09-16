@@ -20,7 +20,7 @@ static void ft_show_alloc(t_bool details)
 			while (arena)
 			{
 				ft_putstr(" - ");
-				ft_show_alloc_addr((FT_ALLOC_UINT)arena->head, arena->size - g_alloc.info.size_arena, -1);
+				ft_show_alloc_addr((FT_ALLOC_UINT)arena->head, arena->size - (g_alloc.info.size_arena + g_alloc.info.size_chunk), -1);
 				if (details)
 					ft_show_alloc_arena(arena);
 				ft_putstr("\n");
@@ -42,8 +42,8 @@ void      show_alloc_info(void)
   ft_show_alloc_detail("Pagesize", info.pagesize, TRUE, -1);
   ft_show_alloc_detail("Tiny size request", info.tiny_size_request, TRUE, -1);
   ft_show_alloc_detail("Small size request", info.small_size_request, TRUE, -1);
-  ft_show_alloc_detail("Tiny size arena", info.tiny_size_arena, TRUE, -1);
-  ft_show_alloc_detail("Small size arena", info.small_size_arena, TRUE, -1);
+  ft_show_alloc_detail("Tiny size arena", info.tiny_size_map, TRUE, -1);
+  ft_show_alloc_detail("Small size arena", info.small_size_map, TRUE, -1);
 }
 
 void				show_alloc_mem(void)

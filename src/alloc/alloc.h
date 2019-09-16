@@ -69,8 +69,8 @@ typedef struct 	s_alloc_info
 	FT_ALLOC_UINT	pagesize;
 	FT_ALLOC_UINT tiny_size_request;
 	FT_ALLOC_UINT small_size_request;
-	FT_ALLOC_UINT tiny_size_arena;
-	FT_ALLOC_UINT small_size_arena;
+	FT_ALLOC_UINT tiny_size_map;
+	FT_ALLOC_UINT small_size_map;
 }								t_ainfo;
 
 typedef struct 	s_alloc_state
@@ -99,7 +99,7 @@ int							ft_alloc_chunk_split(t_aarena *arena, t_achunk *node, size_t size);
 
 t_aarena  			**ft_alloc_get_arena_by_size_request(size_t size);
 t_aindex  			ft_alloc_get_arena_index_by_size_request(size_t size);
-size_t					ft_alloc_get_arena_size_by_size_request(size_t size);
+size_t					ft_alloc_get_map_size_by_size_request(size_t size);
 size_t					ft_alloc_get_size_aligned(size_t offset, size_t align);
 
 int   					ft_alloc_state_freed(t_aindex aindex, size_t size, t_bool free);

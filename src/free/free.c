@@ -14,6 +14,6 @@ void    ft_free(void *ptr)
     chunk->free = TRUE;
     ft_alloc_state_swap((*arena)->aindex, chunk->size, TRUE);
     ft_alloc_chunk_concat(*arena, chunk);
-    if (((*arena)->head->size + g_alloc.info.size_arena) == (*arena)->size)
+    if (((*arena)->head->size + g_alloc.info.size_arena + g_alloc.info.size_chunk) == (*arena)->size)
         ft_alloc_arena_del(arena);
 }
