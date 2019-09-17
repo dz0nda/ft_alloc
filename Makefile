@@ -17,37 +17,28 @@ OBJDIR = ./build
 MAKEFILE_NAME = Makefile-$(lastword $(subst /, ,$(TARGET)))
 
 CC = gcc
-CFLAGS = -fPIC 
+CFLAGS = -g -fPIC -Wall -Werror -Wextra -pedantic
 LDFLAGS = -shared
 SUBDIR = \
 				alloc \
-				alloc_lib \
 				free \
 				malloc \
 				realloc \
 				show
 SUBFILE = \
-				alloc_lib/print_addr.c \
-				alloc_lib/strlen.c \
-				alloc_lib/strrev.c \
-				alloc_lib/memcpy.c \
-				alloc_lib/itoa.c \
-				alloc_lib/putchar.c \
-				alloc_lib/putnbr.c \
-				alloc_lib/putstr.c \
-				alloc_lib/memset.c \
 				alloc/alloc_get.c \
-				alloc/alloc_info.c \
 				alloc/alloc_arena.c \
-				alloc/alloc_error.c \
+				alloc/alloc_state_user.c \
+				alloc/alloc_state_system.c \
 				alloc/alloc_chunk.c \
 				alloc/alloc_init.c \
 				alloc/alloc_search.c \
 				malloc/malloc.c \
 				realloc/realloc.c \
 				free/free.c \
+				show/show_hexa.c \
 				show/show.c \
-				show/show_alloc_info.c
+				show/show_tools.c
 
 SRCDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(SRCDIR)/, $(dir)))
 OBJDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(OBJDIR)/, $(dir)))
