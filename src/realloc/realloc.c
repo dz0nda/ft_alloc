@@ -38,15 +38,14 @@ static void *ft_realloc_by_mmap(t_aarena *arena, void *ptr, size_t size)
 void    *ft_realloc(void *ptr, size_t size)
 {
   t_aarena **arena;
-  void *new;
 
   arena = NULL;
-  new = NULL;
   size = ft_alloc_get_size_aligned(size, FT_ALLOC_ALIGNMENT);
   if (ptr == NULL)
     return (ft_malloc(size));
-  if ((arena = ft_alloc_search_arena_by_address(ptr)) == NULL)
-    return (ptr);
+  if (g_alloc.info.pagesize == 0 && ft_alloc_init() == EXIT_FAILURE
+  || (arena = ft_alloc_search_arena_by_address(ptr)) == NULL)
+		return (NULL);
   if ((ft_realloc_by_concat(*arena, ptr, size)) == EXIT_SUCCESS)
     return (ptr);
   return (ft_realloc_by_mmap(*arena, ptr, size));

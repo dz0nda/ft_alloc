@@ -76,6 +76,8 @@ typedef struct 	s_alloc_info
 typedef struct 	s_alloc_state
 {
 	FT_ALLOC_UINT mmap[ALLOC_NONE];
+	FT_ALLOC_UINT nbrchunks[ALLOC_NONE];
+	FT_ALLOC_UINT nbrarenas[ALLOC_NONE];
 	FT_ALLOC_UINT used[ALLOC_NONE];
 	FT_ALLOC_UINT freed[ALLOC_NONE];
 	FT_ALLOC_UINT	ovhead[ALLOC_NONE];
@@ -102,8 +104,11 @@ t_aindex  			ft_alloc_get_arena_index_by_size_request(size_t size);
 size_t					ft_alloc_get_map_size_by_size_request(size_t size);
 size_t					ft_alloc_get_size_aligned(size_t offset, size_t align);
 
-int   					ft_alloc_state_freed(t_aindex aindex, size_t size, t_bool free);
 int   					ft_alloc_state_mmap(t_aindex aindex, size_t size, t_bool mmap);
+int   					ft_alloc_state_nbrarenas(t_aindex aindex, t_bool add);
+int   					ft_alloc_state_nbrchunks(t_aindex aindex, t_bool add);
+
+int   					ft_alloc_state_freed(t_aindex aindex, size_t size, t_bool free);
 int   					ft_alloc_state_swap(t_aindex aindex, size_t size, t_bool free);
 int   					ft_alloc_state_used(t_aindex aindex, size_t size, t_bool free);
 int   					ft_alloc_state_ovhead(t_aindex aindex, size_t size, t_bool free);

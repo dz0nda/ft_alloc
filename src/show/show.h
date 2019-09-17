@@ -6,13 +6,15 @@
 # define FT_CRED      "\033[0;31m"
 # define FT_CGREEN    "\033[0;32m"
 # define FT_CYELLOW   "\033[0;33m"
+# define FT_CBOLD     "\033[1m"
 # define FT_CSTOP     "\033[0;m"
 
 typedef enum  e_alloc_color
 {
   COLOR_RED,
   COLOR_GREEN,
-  COLOR_YELLOW
+  COLOR_YELLOW,
+  COLOR_BOLD
 }             t_acolor;
 
 void		ft_puthexa(FT_ALLOC_UINT nb);

@@ -12,18 +12,6 @@ int   ft_alloc_state_freed(t_aindex aindex, size_t size, t_bool free)
   return (EXIT_SUCCESS);
 }
 
-int   ft_alloc_state_mmap(t_aindex aindex, size_t size, t_bool mmap)
-{
-  t_astate *state;
-
-  state = &(g_alloc).state;
-  if (mmap == TRUE)
-    state->mmap[aindex] += size;
-  else
-    state->mmap[aindex] -= size;
-  return (EXIT_SUCCESS);
-}
-
 int   ft_alloc_state_swap(t_aindex aindex, size_t size, t_bool free)
 {
   t_astate  *state;

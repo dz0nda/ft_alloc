@@ -1,0 +1,37 @@
+#include "alloc.h"
+
+int   ft_alloc_state_mmap(t_aindex aindex, size_t size, t_bool mmap)
+{
+  t_astate *state;
+
+  state = &(g_alloc).state;
+  if (mmap == TRUE)
+    state->mmap[aindex] += size;
+  else
+    state->mmap[aindex] -= size;
+  return (EXIT_SUCCESS);
+}
+
+int   ft_alloc_state_nbrarenas(t_aindex aindex, t_bool add)
+{
+  t_astate *state;
+
+  state = &(g_alloc).state;
+  if (add == TRUE)
+    state->nbrarenas[aindex] += 1;
+  else
+    state->nbrarenas[aindex] -= 1;
+  return (EXIT_SUCCESS);
+}
+
+int   ft_alloc_state_nbrchunks(t_aindex aindex, t_bool add)
+{
+  t_astate *state;
+
+  state = &(g_alloc).state;
+  if (add == TRUE)
+    state->nbrchunks[aindex] += 1;
+  else
+    state->nbrchunks[aindex] -= 1;
+  return (EXIT_SUCCESS);
+}

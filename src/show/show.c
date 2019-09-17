@@ -1,8 +1,20 @@
 # include "show.h"
 
+static void ft_show_alloc_state_detail(t_astate state, t_aindex i)
+{
+		const char *aindex[ALLOC_NONE] = { "[ TINY ] ", "[ SMALL ] ", "[ LARGE ] " };
+
+		ft_putstr(aindex[i]);
+		ft_putstr("\n");
+		ft_show_alloc_detail("arenas", state.nbrarenas[i], FALSE, COLOR_BOLD);
+		ft_show_alloc_detail("chunks", state.nbrchunks[i], TRUE, COLOR_BOLD);
+		ft_show_alloc_detail("used", state.used[i], FALSE, COLOR_RED);
+		ft_show_alloc_detail("freed", state.freed[i], FALSE, COLOR_GREEN);
+		ft_show_alloc_detail("overhead", state.ovhead[i], TRUE, COLOR_YELLOW);
+}
+
 static void ft_show_alloc(t_bool details)
 {
-	const char *aindex[ALLOC_NONE] = { "[ TINY ] ", "[ SMALL ] ", "[ LARGE ] " };
   t_aindex i;
   t_astate state;
 	t_aarena *arena;
@@ -12,13 +24,11 @@ static void ft_show_alloc(t_bool details)
 	ft_putstr("show_alloc_mem : \n\n");
 	while (++i < ALLOC_NONE)
 	{
-		ft_putstr(aindex[i]);
-		ft_show_alloc_detail(NULL, state.used[i], FALSE, FALSE);
-		ft_show_alloc_detail(NULL, state.freed[i], FALSE, TRUE);
-		ft_show_alloc_detail(NULL, state.ovhead[i], TRUE, -1);
+
 		if ((arena = state.arena[i]) != NULL)
 			while (arena)
 			{
+				ft_show_alloc_state_detail(state, i);
 				ft_putstr(" - ");
 				ft_show_alloc_addr((FT_ALLOC_UINT)arena->head, arena->size - (g_alloc.info.size_arena + g_alloc.info.size_chunk), -1);
 				if (details)

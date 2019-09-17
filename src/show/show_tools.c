@@ -17,6 +17,8 @@ void	ft_putstr_color(const char *s, t_acolor color)
     ft_putstr(FT_CGREEN);
   else if (color == COLOR_YELLOW)
     ft_putstr(FT_CYELLOW);
+  else if (color == COLOR_BOLD)
+    ft_putstr(FT_CBOLD);
   ft_putstr(s);
   ft_putstr(FT_CSTOP);
 }
@@ -52,23 +54,14 @@ void  ft_show_alloc_addr(FT_ALLOC_UINT ptr, FT_ALLOC_UINT size, t_bool free)
   }
 }
 
-void  ft_show_alloc_detail(const char *s, FT_ALLOC_UINT nb, t_bool dl, t_bool free)
+void  ft_show_alloc_detail(const char *s, FT_ALLOC_UINT nb, t_bool dl, t_bool color)
 {
   ft_putstr(" - ");
-  if (s == NULL)
-  {
-    if (free == FALSE)
-      ft_putstr_color("used", COLOR_RED);
-    else if (free == TRUE)
-      ft_putstr_color("freed", COLOR_GREEN);
-    else
-      ft_putstr_color("overhead", COLOR_YELLOW);
-  }
-  else
-    ft_putstr(s);
+  ft_putstr_color(s, color);
   ft_putstr(" : ");
   ft_putnbr(nb);
-	ft_putstr(" bytes ");
+  if (color != COLOR_BOLD)
+	  ft_putstr(" bytes ");
 	if (dl == TRUE)
 		ft_putstr("\n");
 }

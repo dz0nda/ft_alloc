@@ -76,6 +76,8 @@ t_achunk 		*ft_alloc_arena_new(t_aarena **arena, size_t size)
 	ft_alloc_state_mmap(new->aindex, new->size, TRUE);
 	ft_alloc_state_freed(new->aindex, new->head->size, TRUE);
 	ft_alloc_state_ovhead(new->aindex, (g_alloc.info.size_arena + g_alloc.info.size_chunk), FALSE);
+	ft_alloc_state_nbrarenas(new->aindex, TRUE);
+	ft_alloc_state_nbrchunks(new->aindex, TRUE);
 	return (new->head);
 }
 
@@ -87,6 +89,8 @@ int					ft_alloc_arena_del(t_aarena **arena)
 	ft_alloc_state_mmap(del->aindex, del->size, FALSE);
 	ft_alloc_state_freed(del->aindex, del->head->size, FALSE);
 	ft_alloc_state_ovhead(del->aindex, (g_alloc.info.size_arena + g_alloc.info.size_chunk), TRUE);
+	ft_alloc_state_nbrarenas(del->aindex, FALSE);
+	ft_alloc_state_nbrchunks(del->aindex, FALSE);
 	ft_alloc_arena_del_delete(arena, del);
 	if (munmap((void *)(del), del->size) == -1)
 		return (EXIT_FAILURE);

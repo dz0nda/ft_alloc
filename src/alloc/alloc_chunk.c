@@ -13,6 +13,7 @@ static int ft_alloc_chunk_concat_info(t_aindex aindex, t_achunk *node)
     ft_alloc_state_freed(aindex, g_alloc.info.size_chunk, TRUE);
     ft_alloc_state_ovhead(aindex, g_alloc.info.size_chunk, TRUE);
   }
+  ft_alloc_state_nbrchunks(aindex, FALSE);
   return (EXIT_SUCCESS);
 }
 
@@ -31,6 +32,7 @@ static int		ft_alloc_chunk_split_info(t_aindex aindex, t_achunk *node, size_t si
     ft_alloc_state_freed(aindex, g_alloc.info.size_chunk, FALSE);
     ft_alloc_state_ovhead(aindex, g_alloc.info.size_chunk, FALSE);
   }
+  ft_alloc_state_nbrchunks(aindex, TRUE);
   return (EXIT_SUCCESS);
 }
 
