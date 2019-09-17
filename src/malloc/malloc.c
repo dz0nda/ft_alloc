@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   malloc.c                                         .::    .:/ .      .::   */
+/*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/05 03:43:59 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/05 03:46:20 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/17 06:35:21 by dz0nda           ###   ########.fr       */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "malloc.h"
-#include "../show/show.h"
 
 void	*ft_malloc(size_t size)
 {
 	t_aarena	**arena;
 	t_achunk	*chunk;
-	void			*new;
+	void		*new;
 
 	arena = NULL;
 	chunk = NULL;
@@ -32,10 +31,10 @@ void	*ft_malloc(size_t size)
 			chunk = ft_alloc_arena_new(arena, size);
 		if (chunk != NULL)
 		{
-				ft_alloc_chunk_split(*arena, chunk, size);
-				ft_alloc_state_swap((*arena)->aindex, chunk->size, FALSE);
-				chunk->free = FALSE;
-				new = (void *)(chunk + 1);
+			ft_alloc_chunk_split(*arena, chunk, size);
+			ft_alloc_state_swap((*arena)->aindex, chunk->size, FALSE);
+			chunk->free = FALSE;
+			new = (void *)(chunk + 1);
 		}
 	}
 	pthread_mutex_unlock(&g_mutex);

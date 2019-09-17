@@ -4,6 +4,6 @@
 # include "../malloc/malloc.h"
 # include "../free/free.h"
 
-void    *ft_realloc(void *ptr, size_t size);
+void	*ft_realloc(void *ptr, size_t size);
 
 #endif

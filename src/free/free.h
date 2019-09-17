@@ -3,6 +3,6 @@
 
 # include "../alloc/alloc.h"
 
-void    ft_free(void *ptr);
+void	ft_free(void *ptr);
 
 #endif

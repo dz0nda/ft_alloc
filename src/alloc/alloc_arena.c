@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   alloc.c                                          .::    .:/ .      .::   */
+/*   alloc_arena.c                                      :+:      :+:    :+:   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/05 03:42:53 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/05 03:46:06 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/17 06:27:29 by dz0nda           ###   ########.fr       */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,6 @@
 
 static void		ft_alloc_arena_del_delete(t_aarena **arena, t_aarena *del)
 {
-
 	if (*arena == NULL || del == NULL)
 		return ;
 	if (del->prev == NULL)
@@ -28,7 +27,7 @@ static void		ft_alloc_arena_del_delete(t_aarena **arena, t_aarena *del)
 
 static void		ft_alloc_arena_new_append(t_aarena **arena, t_aarena *new)
 {
-	t_aarena 		*last;
+	t_aarena	*last;
 
 	last = *arena;
 	if (*arena == NULL)
@@ -43,15 +42,15 @@ static void		ft_alloc_arena_new_append(t_aarena **arena, t_aarena *new)
 	new->prev = last;
 }
 
-static t_aarena		*ft_alloc_arena_new_mmap(size_t size)
+static t_aarena	*ft_alloc_arena_new_mmap(size_t size)
 {
-	t_aarena 	*new;
-	size_t 		size_map;
+	t_aarena	*new;
+	size_t		size_map;
 
 	new = NULL;
 	size_map = ft_alloc_get_map_size_by_size_request(size);
 	if ((new = (t_aarena *)mmap(NULL, size_map,
-	PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_SHARED, -1, 0)) == MAP_FAILED)
+					PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_SHARED, -1, 0)) == MAP_FAILED)
 		return (NULL);
 	new->size = size_map;
 	new->aindex = ft_alloc_get_arena_index_by_size_request(size);
@@ -64,9 +63,9 @@ static t_aarena		*ft_alloc_arena_new_mmap(size_t size)
 	return (new);
 }
 
-t_achunk 		*ft_alloc_arena_new(t_aarena **arena, size_t size) 
-{ 
-	t_aarena 	*new;
+t_achunk		*ft_alloc_arena_new(t_aarena **arena, size_t size) 
+{
+	t_aarena	*new;
 
 	new = NULL;
 	if ((new = ft_alloc_arena_new_mmap(size)) == NULL)
@@ -80,9 +79,9 @@ t_achunk 		*ft_alloc_arena_new(t_aarena **arena, size_t size)
 	return (new->head);
 }
 
-int					ft_alloc_arena_del(t_aarena **arena) 
-{ 
-	t_aarena 	*del;
+int				ft_alloc_arena_del(t_aarena **arena)
+{
+	t_aarena	*del;
 
 	del = *arena;
 	ft_alloc_state_mmap(del->aindex, del->size, FALSE);
