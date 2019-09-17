@@ -21,6 +21,7 @@
 # include <sys/resource.h>
 # include <stdint.h>
 # include <sys/mman.h>
+# include <pthread.h>
 
 # define FT_ALLOC_UINT      		size_t
 # define FT_ALLOC_ALIGNMENT     sizeof(FT_ALLOC_UINT) * 2
@@ -31,6 +32,7 @@
 # define FT_ALLOC_M             (FT_ALLOC_UINT)100
 
 typedef struct rlimit 	t_limit;
+typedef pthread_mutex_t t_mutex;
 
 typedef enum	e_bool {
 	FALSE,
@@ -91,6 +93,7 @@ typedef struct			s_alloc {
 }						t_alloc;
 
 extern					t_alloc g_alloc;
+extern 					t_mutex g_mutex;
 
 t_achunk 				*ft_alloc_arena_new(t_aarena **arena, size_t size);
 int							ft_alloc_arena_del(t_aarena **arena);

@@ -55,6 +55,7 @@ int     ft_alloc_chunk_concat(t_aarena *arena, t_achunk *node)
     ft_alloc_chunk_copy((void *)(node->prev + 1), (void *)(node + 1), node->size);
     node = node->prev;
   }
+  return (EXIT_SUCCESS);
 }
 
 void		*ft_alloc_chunk_copy(void *dest, const void *src, size_t n)

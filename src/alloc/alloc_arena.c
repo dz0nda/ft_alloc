@@ -23,7 +23,7 @@ static void		ft_alloc_arena_del_delete(t_aarena **arena, t_aarena *del)
 	if (del->next != NULL)
 		del->next->prev = del->prev;
 	if (del->prev != NULL)
-		del->prev->next;
+		del->prev->next = del->next;
 }
 
 static void		ft_alloc_arena_new_append(t_aarena **arena, t_aarena *new)
@@ -56,7 +56,6 @@ static t_aarena		*ft_alloc_arena_new_mmap(size_t size)
 	new->size = size_map;
 	new->aindex = ft_alloc_get_arena_index_by_size_request(size);
 	new->head = (t_achunk *)(new + 1);
-	printf("- %p - %p - \n", new, new->head);
 	new->head->size = size_map - g_alloc.info.size_arena - g_alloc.info.size_chunk;
 	new->head->free = TRUE;
 	new->head->prev = new->head;

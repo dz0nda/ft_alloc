@@ -62,6 +62,8 @@ void  ft_show_alloc_detail(const char *s, FT_ALLOC_UINT nb, t_bool dl, t_bool co
   ft_putnbr(nb);
   if (color != COLOR_BOLD)
 	  ft_putstr(" bytes ");
+  else
+    ft_putstr(" ");
 	if (dl == TRUE)
 		ft_putstr("\n");
 }

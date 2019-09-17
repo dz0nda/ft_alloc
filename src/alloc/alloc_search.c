@@ -28,7 +28,6 @@ t_aarena    **ft_alloc_search_arena_by_address(void *ptr)
 {
     t_aindex index;
     t_aarena **arena;
-    t_aarena *p;
 
     index = -1;
     arena = NULL;

@@ -24,7 +24,6 @@ static void ft_show_alloc(t_bool details)
 	ft_putstr("show_alloc_mem : \n\n");
 	while (++i < ALLOC_NONE)
 	{
-
 		if ((arena = state.arena[i]) != NULL)
 			while (arena)
 			{

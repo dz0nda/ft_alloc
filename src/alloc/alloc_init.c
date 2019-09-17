@@ -1,6 +1,7 @@
 #include "alloc.h"
 
 t_alloc       g_alloc;
+t_mutex       g_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static void	        *ft_memset(void *b, int c, size_t len)
 {
