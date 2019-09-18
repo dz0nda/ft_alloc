@@ -17,41 +17,50 @@ OBJDIR = ./build
 MAKEFILE_NAME = Makefile-$(lastword $(subst /, ,$(TARGET)))
 
 CC = gcc
-CFLAGS = -fPIC
+CFLAGS = -g -fPIC -Wall -Werror -Wextra -pedantic
 LDFLAGS = -shared
-SUBDIR = alloc \
-malloc \
-
-SUBFILE = ./src/alloc/alloc.c \
-./src/malloc/malloc.c
+SUBDIR = \
+				alloc \
+				free \
+				malloc \
+				realloc \
+				show
+SUBFILE = \
+				alloc/alloc_get.c \
+				alloc/alloc_arena.c \
+				alloc/alloc_state_user.c \
+				alloc/alloc_state_system.c \
+				alloc/alloc_chunk.c \
+				alloc/alloc_init.c \
+				alloc/alloc_search.c \
+				malloc/malloc.c \
+				realloc/realloc.c \
+				free/free.c \
+				show/show_hexa.c \
+				show/show.c \
+				show/show_tools.c
 
 SRCDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(SRCDIR)/, $(dir)))
 OBJDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(OBJDIR)/, $(dir)))
 INCLUDES = $(foreach dir, $(SRCDIRS), $(addprefix -I, $(dir)))
 
 VPATH = $(SRCDIRS)
-SRCS = $(SUBFILE)
+SRCS = $(foreach file, $(SUBFILE), $(addprefix $(SRCDIR)/, $(file)))
 OBJS = $(subst $(SRCDIR),$(OBJDIR),$(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
 
 VERBOSE = false
 ifeq ($(VERBOSE),true)
-	HIDE =  
+	HIDE =
 else
 	HIDE = @
 endif 
-RM = rm -rf 
-RMDIR = rm -rf 
+RM = rm -rf
+RMDIR = rm -rf
 MKDIR = mkdir -p
 ERRIGNORE = 2>/dev/null
 SEP=/
 PSEP = $(strip $(SEP))
-
-define buildSource
-$(1)/%.o: %.c
-	@echo $(MAKEFILE_NAME): Building $$@
-	$(HIDE)$(CC) $(CFLAGS) -c $$(INCLUDES) -o $$(subst /,$$(PSEP),$$@) $$(subst /,$$(PSEP),$$<) -MMD
-endef
 
 .PHONY: all directories clean fclean re
 
@@ -62,9 +71,9 @@ $(TARGET): $(OBJS)
 	$(HIDE)$(CC) $(OBJS) $(LDFLAGS) -o $(TARGET)
 	$(HIDE)ln -s $(TARGET) $(LIBNAME)
 
--include $(DEPS)
-
-$(foreach targetdir, $(OBJDIRS), $(eval $(call buildSource, $(targetdir))))
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@echo $(MAKEFILE_NAME): Building $@
+	$(HIDE)$(CC) $(CFLAGS) -c $(INCLUDES) -o $@ $< -MMD
 
 directories:
 	$(HIDE)$(MKDIR) $(subst /,$(PSEP),$(OBJDIRS)) $(ERRIGNORE)

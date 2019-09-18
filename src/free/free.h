@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   liballoc.h                                       .::    .:/ .      .::   */
+/*   free.h                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/09/18 07:45:07 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/18 07:46:01 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Created: 2019/09/18 07:37:32 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2019/09/18 07:37:33 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef FT_LIBALLOC_H
-# define FT_LIBALLOC_H
+#ifndef FT_FREE_H
+# define FT_FREE_H
 
-# include "./src/malloc/malloc.h"
-# include "./src/free/free.h"
-# include "./src/realloc/realloc.h"
-# include "./src/show/show.h"
+# include "../alloc/alloc.h"
+
+void	ft_free(void *ptr);
 
 #endif
