@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   alloc.h                                            :+:      :+:    :+:   */
+/*   alloc.h                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/09/05 03:43:01 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/17 06:25:28 by dz0nda           ###   ########.fr       */
+/*   Created: 2019/09/18 04:47:46 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2019/09/18 07:54:18 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,46 +23,46 @@
 # include <sys/mman.h>
 # include <pthread.h>
 
-# define FT_ALLOC_UINT			size_t
-# define FT_ALLOC_ALIGNMENT		sizeof(FT_ALLOC_UINT) * 2
+# define FT_ALLOC_UINT		size_t
+# define FT_ALLOC_ALIGNMENT	sizeof(FT_ALLOC_UINT) * 2
 
-# define FT_ALLOC_TINY			(FT_ALLOC_UINT)256
-# define FT_ALLOC_SMALL			(FT_ALLOC_UINT)2048
-# define FT_ALLOC_N				(FT_ALLOC_UINT)100
-# define FT_ALLOC_M				(FT_ALLOC_UINT)100
+# define FT_ALLOC_TINY		(FT_ALLOC_UINT)256
+# define FT_ALLOC_SMALL		(FT_ALLOC_UINT)2048
+# define FT_ALLOC_N			(FT_ALLOC_UINT)100
+# define FT_ALLOC_M			(FT_ALLOC_UINT)100
 
-typedef struct rlimit			t_limit;
-typedef pthread_mutex_t			t_mutex;
+typedef struct rlimit		t_limit;
+typedef pthread_mutex_t		t_mutex;
 
-typedef enum	e_bool {
+typedef enum				e_bool {
 	FALSE,
 	TRUE
-}				t_bool;
+}							t_bool;
 
-typedef enum	e_alloc_index {
+typedef enum				e_alloc_index {
 	ALLOC_TINY,
 	ALLOC_SMALL,
 	ALLOC_LARGE,
 	ALLOC_NONE
-}				t_aindex;
+}							t_aindex;
 
-typedef struct					s_alloc_chunk {
+typedef struct				s_alloc_chunk {
 	size_t					size;
 	t_bool					free;
 	struct s_alloc_chunk	*next;
 	struct s_alloc_chunk	*prev;
-}								t_achunk;
+}							t_achunk;
 
-typedef struct					s_alloc_arena
+typedef struct				s_alloc_arena
 {
 	FT_ALLOC_UINT			size;
 	t_aindex				aindex;
 	t_achunk				*head;
 	struct s_alloc_arena	*next;
 	struct s_alloc_arena	*prev;
-}								t_aarena;
+}							t_aarena;
 
-typedef struct					s_alloc_info
+typedef struct				s_alloc_info
 {
 	FT_ALLOC_UINT			rlim_cur;
 	FT_ALLOC_UINT			rlim_max;
@@ -73,9 +73,9 @@ typedef struct					s_alloc_info
 	FT_ALLOC_UINT			small_size_request;
 	FT_ALLOC_UINT			tiny_size_map;
 	FT_ALLOC_UINT			small_size_map;
-}								t_ainfo;
+}							t_ainfo;
 
-typedef struct					s_alloc_state
+typedef struct				s_alloc_state
 {
 	FT_ALLOC_UINT			mmap[ALLOC_NONE];
 	FT_ALLOC_UINT			nbrchunks[ALLOC_NONE];
@@ -84,9 +84,9 @@ typedef struct					s_alloc_state
 	FT_ALLOC_UINT			freed[ALLOC_NONE];
 	FT_ALLOC_UINT			ovhead[ALLOC_NONE];
 	t_aarena				*arena[ALLOC_NONE];
-}								t_astate;
+}							t_astate;
 
-typedef struct					s_alloc {
+typedef struct				s_alloc {
 	t_ainfo					info;
 	t_astate				state;
 }							t_alloc;
@@ -119,6 +119,6 @@ int							ft_alloc_init(void);
 
 t_aarena					**ft_alloc_search_arena_by_address(void *ptr);
 t_achunk					*ft_alloc_search_chunk_by_address(t_aarena *arena, void *ptr);
-t_achunk				 	*ft_alloc_search_chunk_by_size(t_aarena *arena, size_t size);
+t_achunk					*ft_alloc_search_chunk_by_size(t_aarena *arena, size_t size);
 
 #endif

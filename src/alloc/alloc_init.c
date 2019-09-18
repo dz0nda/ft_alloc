@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   alloc_init.c                                     .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/09/18 07:08:04 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2019/09/18 07:56:32 by dzonda      ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
+
 #include "alloc.h"
 
 t_alloc				g_alloc;
@@ -18,7 +31,7 @@ static void			*ft_memset(void *b, int c, size_t len)
 	return (b);
 }
 
-static int			ft_alloc_init_info()
+static int			ft_alloc_init_info(void)
 {
 	t_limit			rlp;
 	t_ainfo			*info;

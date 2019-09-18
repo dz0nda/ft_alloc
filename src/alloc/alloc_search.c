@@ -1,4 +1,17 @@
-# include "alloc.h"
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   alloc_search.c                                   .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/09/18 07:07:58 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2019/09/18 07:57:04 by dzonda      ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
+
+#include "alloc.h"
 
 static int		ft_alloc_is_in_arena(t_aarena *arena, void *ptr)
 {
@@ -19,7 +32,7 @@ static int		ft_alloc_is_in_chunk(t_achunk *chunk, void *ptr)
 
 	addr_chunk = (FT_ALLOC_UINT)(chunk + 1);
 	addr_ptr = (FT_ALLOC_UINT)ptr;
-	if (addr_chunk  <= addr_ptr && addr_ptr <= (addr_chunk + chunk->size))
+	if (addr_chunk <= addr_ptr && addr_ptr <= (addr_chunk + chunk->size))
 		return (EXIT_SUCCESS);
 	return (EXIT_FAILURE);
 }
@@ -53,7 +66,7 @@ t_achunk		*ft_alloc_search_chunk_by_address(t_aarena *arena, void *ptr)
 	chunk = arena->head;
 	if (ft_alloc_is_in_chunk(chunk, ptr) == EXIT_SUCCESS)
 		return (chunk);
-	while((chunk = chunk->next) != arena->head)
+	while ((chunk = chunk->next) != arena->head)
 		if (ft_alloc_is_in_chunk(chunk, ptr) == EXIT_SUCCESS)
 			return (chunk);
 	return (NULL);
@@ -81,6 +94,6 @@ t_achunk		*ft_alloc_search_chunk_by_size(t_aarena *arena, size_t size)
 		}
 		chunk = NULL;
 		arena = arena->next;
-	}   
+	}
 	return (NULL);
 }

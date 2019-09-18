@@ -51,12 +51,12 @@ DEPS = $(OBJS:.o=.d)
 
 VERBOSE = false
 ifeq ($(VERBOSE),true)
-	HIDE =  
+	HIDE =
 else
 	HIDE = @
 endif 
-RM = rm -rf 
-RMDIR = rm -rf 
+RM = rm -rf
+RMDIR = rm -rf
 MKDIR = mkdir -p
 ERRIGNORE = 2>/dev/null
 SEP=/

@@ -1,8 +1,21 @@
-# include "show.h"
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   show.c                                           .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/09/18 07:38:17 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2019/09/18 07:58:35 by dzonda      ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
+
+#include "show.h"
 
 static void		ft_show_alloc_state_detail(t_astate state, t_aindex i)
 {
-	const char	*aindex[ALLOC_NONE] = { "[ TINY ] ", "[ SMALL ] ", "[ LARGE ] " };
+	const char	*aindex[ALLOC_NONE] = { "[ TINY ]", "[ SMALL ]", "[ LARGE ]" };
 
 	ft_putstr(aindex[i]);
 	ft_putstr("\n");

@@ -1,4 +1,17 @@
-# include "realloc.h"
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   realloc.c                                        .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/09/18 07:37:50 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2019/09/18 07:58:05 by dzonda      ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
+
+#include "realloc.h"
 
 static int		ft_realloc_by_concat(t_aarena *arena, void *ptr, size_t size)
 {
@@ -54,7 +67,7 @@ void			*ft_realloc(void *ptr, size_t size)
 			{
 				if ((ft_realloc_by_concat(*arena, ptr, size)) == EXIT_SUCCESS)
 					new = ptr;
-				else  
+				else
 					new = ft_realloc_by_mmap(*arena, ptr, size);
 			}
 		}
