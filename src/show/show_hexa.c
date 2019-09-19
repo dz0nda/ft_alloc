@@ -74,14 +74,25 @@ static char		*ft_itoa(int input, char *buffer, int radix)
 
 void			ft_puthexa(FT_ALLOC_UINT nb)
 {
-	char		s[12];
+	char		s[128];
+	size_t		i;
+	size_t		tmp;
 
 	ft_putstr("0x");
 	if (nb == 0)
 		ft_putstr("00");
 	else
 	{
-		ft_itoa(nb, s, 16);
+		i = 0;
+		tmp = 0;
+		while (nb > 0)
+		{
+			tmp = (nb % 16);
+			s[i++] = (tmp < 10) ? tmp + 48 : tmp + 87;
+			nb /= 16;
+		}
+		s[i] = '\0';
+		ft_strrev(s);
 		ft_putstr(s);
 	}
 }

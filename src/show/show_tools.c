@@ -12,6 +12,7 @@
 /* ************************************************************************** */
 
 #include "show.h"
+#include "stdio.h"
 
 void	ft_putstr(const char *s)
 {
@@ -64,6 +65,7 @@ void	ft_show_alloc_arena(t_aarena *arena)
 	while ((chunk = chunk->next) != arena->head)
 	{
 		ft_putstr("    - ");
+		printf("%p -> %p\n", (void *)(chunk), (void *)(chunk + 1));
 		ft_show_alloc_addr((FT_ALLOC_UINT)(chunk + 1), chunk->size,
 				chunk->free);
 	}
