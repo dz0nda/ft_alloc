@@ -41,14 +41,14 @@ static void		*ft_realloc_by_mmap(t_aarena *arena, void *ptr, size_t size)
 
 	if ((chunk = ft_alloc_search_chunk_by_address(arena, ptr)) == NULL)
 		return (NULL);
-	if ((new = ft_malloc(size)) == NULL)
+	if ((new = malloc(size)) == NULL)
 		return (NULL);
 	ft_alloc_chunk_copy(new, ptr, (chunk->size >= size) ? size : chunk->size);
-	ft_free(ptr);
+	free(ptr);
 	return (new);
 }
 
-void			*ft_realloc(void *ptr, size_t size)
+void			*realloc(void *ptr, size_t size)
 {
 	t_aarena	**arena;
 	void		*new;
@@ -60,7 +60,7 @@ void			*ft_realloc(void *ptr, size_t size)
 	{
 		size = ft_alloc_get_size_aligned(size, FT_ALLOC_ALIGNMENT);
 		if (ptr == NULL)
-			new = ft_malloc(size);
+			new = malloc(size);
 		else
 		{
 			if ((arena = ft_alloc_search_arena_by_address(ptr)) != NULL)
