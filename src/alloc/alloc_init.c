@@ -55,6 +55,7 @@ static int			ft_alloc_init_info(void)
 
 int					ft_alloc_init(void)
 {
+	write(1, "a", 1);
 	if (ft_alloc_init_info() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

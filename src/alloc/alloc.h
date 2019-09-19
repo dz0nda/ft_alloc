@@ -15,13 +15,15 @@
 # define FT_ALLOC_H
 
 # include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
+
 # include <sys/time.h>
 # include <sys/resource.h>
-# include <stdint.h>
+
 # include <sys/mman.h>
 # include <pthread.h>
+
+# define EXIT_SUCCESS			(int)0
+# define EXIT_FAILURE			(int)1
 
 # define FT_ALLOC_UINT		size_t
 # define FT_ALLOC_ALIGNMENT	sizeof(FT_ALLOC_UINT) * 2

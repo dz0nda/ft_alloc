@@ -13,7 +13,7 @@
 
 #include "free.h"
 
-void			ft_free(void *ptr)
+void			free(void *ptr)
 {
 	t_aarena	**arena;
 	t_achunk	*chunk;
@@ -21,7 +21,7 @@ void			ft_free(void *ptr)
 	arena = NULL;
 	chunk = NULL;
 	pthread_mutex_lock(&g_mutex);
-	if ((ptr != NULL) || ((arena = ft_alloc_search_arena_by_address(ptr)) != NULL))
+	if ((ptr != NULL) && ((arena = ft_alloc_search_arena_by_address(ptr)) != NULL))
 	{
 		if ((chunk = ft_alloc_search_chunk_by_address(*arena, ptr)) != NULL)
 		{
