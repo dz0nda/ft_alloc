@@ -51,13 +51,13 @@ static int		ft_alloc_chunk_split_info(t_aindex aindex, t_achunk *chunk, size_t s
 
 int				ft_alloc_chunk_concat(t_aarena *arena, t_achunk *chunk)
 {
-	FT_ALLOC_UINT	addr_chunk;
-	FT_ALLOC_UINT	addr_chunk_prev;
 	FT_ALLOC_UINT size_chunk;
+	FT_ALLOC_UINT	addr_chunkh;
+	FT_ALLOC_UINT	addr_prevh;
 
-	addr_chunk = (FT_ALLOC_UINT)chunk;
-	addr_chunk_prev = (FT_ALLOC_UINT)chunk->prev;
 	size_chunk = g_alloc.info.size_chunk;
+	addr_chunkh = (FT_ALLOC_UINT)chunk + size_chunk;
+	addr_prevh = (FT_ALLOC_UINT)chunk->prev + size_chunk;
 	if ((chunk->next->free == TRUE) && (chunk->next > chunk))
 	{
 		ft_alloc_chunk_concat_info(arena->aindex, chunk);
@@ -72,7 +72,7 @@ int				ft_alloc_chunk_concat(t_aarena *arena, t_achunk *chunk)
 		chunk->prev->free = chunk->free;
 		chunk->prev->next = chunk->next;
 		chunk->next->prev = chunk->prev;
-		ft_alloc_chunk_copy((void *)(addr_chunk_prev), (void *)(addr_chunk + size_chunk), chunk->size);
+		ft_alloc_chunk_copy((void *)(addr_prevh), (void *)(addr_chunkh), chunk->size);
 		chunk = chunk->prev;
 	}
 	return (EXIT_SUCCESS);

@@ -15,21 +15,21 @@
 
 static int		ft_realloc_by_concat(t_aarena *arena, void *ptr, size_t size)
 {
-	t_achunk	*node;
+	t_achunk	*chunk;
 	t_aindex	aindex;
 
-	node = NULL;
+	chunk = NULL;
 	aindex = ft_alloc_get_arena_index_by_size_request(size);
-	if ((aindex != arena->aindex) || ((node = ft_alloc_search_chunk_by_address(arena, ptr)) == NULL))
+	if ((aindex != arena->aindex) || ((chunk = ft_alloc_search_chunk_by_address(arena, ptr)) == NULL))
 		return (EXIT_FAILURE);
-	if (size > node->size)
+	if (size > chunk->size)
 	{
-		ft_alloc_chunk_concat(arena, node);
-		ptr = (void *)((FT_ALLOC_UINT)node + g_alloc.info.size_chunk);
+		ft_alloc_chunk_concat(arena, chunk);
+		ptr = (void *)((FT_ALLOC_UINT)chunk + g_alloc.info.size_chunk);
 	}
-	ft_alloc_chunk_split(arena, node, size);
-	ft_alloc_chunk_concat(arena, node->next);
-	if (size > node->size)
+	ft_alloc_chunk_split(arena, chunk, size);
+	ft_alloc_chunk_concat(arena, chunk->next);
+	if (size > chunk->size)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
