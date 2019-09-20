@@ -34,7 +34,7 @@ void	*malloc(size_t size)
 			ft_alloc_chunk_split(*arena, chunk, size);
 			ft_alloc_state_swap((*arena)->aindex, chunk->size, FALSE);
 			chunk->free = FALSE;
-			new = (void *)(chunk + 1);
+			new = (void *)((FT_ALLOC_UINT)chunk + g_alloc.info.size_chunk);
 		}
 	}
 	pthread_mutex_unlock(&g_mutex);

@@ -30,7 +30,7 @@ static int		ft_alloc_is_in_chunk(t_achunk *chunk, void *ptr)
 	FT_ALLOC_UINT addr_chunk;
 	FT_ALLOC_UINT addr_ptr;
 
-	addr_chunk = (FT_ALLOC_UINT)(chunk + 1);
+	addr_chunk = (FT_ALLOC_UINT)((FT_ALLOC_UINT)chunk + g_alloc.info.size_chunk);
 	addr_ptr = (FT_ALLOC_UINT)ptr;
 	if (addr_chunk <= addr_ptr && addr_ptr <= (addr_chunk + chunk->size))
 		return (EXIT_SUCCESS);

@@ -57,16 +57,20 @@ void	ft_show_alloc_addr(FT_ALLOC_UINT ptr, FT_ALLOC_UINT size, t_bool free)
 void	ft_show_alloc_arena(t_aarena *arena)
 {
 	t_achunk *chunk;
+	FT_ALLOC_UINT	addr_chunk;
+	FT_ALLOC_UINT size_chunk;
 
 	if (arena == NULL || (chunk = arena->head) == NULL)
 		return ;
+	addr_chunk = (FT_ALLOC_UINT)chunk;
+	size_chunk = g_alloc.info.size_chunk;
 	ft_putstr("    - ");
-	ft_show_alloc_addr((FT_ALLOC_UINT)(chunk + 1), chunk->size, chunk->free);
+	ft_show_alloc_addr((addr_chunk + size_chunk), chunk->size, chunk->free);
 	while ((chunk = chunk->next) != arena->head)
 	{
 		ft_putstr("    - ");
 		printf("%p -> %p\n", (void *)(chunk), (void *)(chunk + 1));
-		ft_show_alloc_addr((FT_ALLOC_UINT)(chunk + 1), chunk->size,
+		ft_show_alloc_addr((addr_chunk + size_chunk), chunk->size,
 				chunk->free);
 	}
 }

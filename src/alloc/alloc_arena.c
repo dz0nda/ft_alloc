@@ -12,6 +12,7 @@
 /* ************************************************************************** */
 
 #include "alloc.h"
+#include "../show/show.h"
 
 static void		ft_alloc_arena_del_delete(t_aarena **arena, t_aarena *del)
 {
@@ -54,7 +55,7 @@ static t_aarena	*ft_alloc_arena_new_mmap(size_t size)
 		return (NULL);
 	new->size = size_map;
 	new->aindex = ft_alloc_get_arena_index_by_size_request(size);
-	new->head = (t_achunk *)(new + 1);
+	new->head = (t_achunk *)((FT_ALLOC_UINT)new + g_alloc.info.size_arena);
 	new->head->size = size_map - g_alloc.info.size_arena - g_alloc.info.size_chunk;
 	new->head->free = TRUE;
 	new->head->prev = new->head;

@@ -25,7 +25,7 @@ static int		ft_realloc_by_concat(t_aarena *arena, void *ptr, size_t size)
 	if (size > node->size)
 	{
 		ft_alloc_chunk_concat(arena, node);
-		ptr = (void *)(node + 1);
+		ptr = (void *)((FT_ALLOC_UINT)node + g_alloc.info.size_chunk);
 	}
 	ft_alloc_chunk_split(arena, node, size);
 	ft_alloc_chunk_concat(arena, node->next);
