@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 04:47:46 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/18 07:54:18 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/22 08:10:52 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -89,12 +89,13 @@ typedef struct				s_alloc_state
 }							t_astate;
 
 typedef struct				s_alloc {
+	t_bool					init;
 	t_ainfo					info;
 	t_astate				state;
 }							t_alloc;
 
-extern						t_alloc g_alloc;
-extern						t_mutex g_mutex;
+extern t_alloc 				g_alloc;
+static t_mutex  			g_mutex;
 
 t_achunk					*ft_alloc_arena_new(t_aarena **arena, size_t size);
 int							ft_alloc_arena_del(t_aarena **arena);
@@ -118,6 +119,8 @@ int							ft_alloc_state_used(t_aindex aindex, size_t size, t_bool free);
 int							ft_alloc_state_ovhead(t_aindex aindex, size_t size, t_bool free);
 
 int							ft_alloc_init(void);
+int							ft_alloc_init_pthread_del(void);
+int							ft_alloc_init_pthread_new(void);
 
 t_aarena					**ft_alloc_search_arena_by_address(void *ptr);
 t_achunk					*ft_alloc_search_chunk_by_address(t_aarena *arena, void *ptr);

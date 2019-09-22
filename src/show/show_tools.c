@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   show_tools.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:40:08 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/18 07:41:59 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/22 04:40:58 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -70,7 +70,6 @@ void	ft_show_alloc_arena(t_aarena *arena)
 	{
 		addr_chunk = (FT_ALLOC_UINT)chunk;
 		ft_putstr("    - ");
-		printf("%p -> %p\n", (void *)(chunk), (void *)(chunk + 1));
 		ft_show_alloc_addr((addr_chunk + size_chunk), chunk->size,
 				chunk->free);
 	}

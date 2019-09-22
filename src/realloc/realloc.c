@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:37:50 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/18 07:58:05 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/22 06:34:31 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,7 +55,8 @@ void			*realloc(void *ptr, size_t size)
 
 	arena = NULL;
 	new = NULL;
-	pthread_mutex_lock(&g_mutex);
+	if (ft_alloc_init_pthread_new() == EXIT_FAILURE)
+		return (NULL);
 	if (g_alloc.info.pagesize != 0 || ft_alloc_init() == EXIT_SUCCESS)
 	{
 		size = ft_alloc_get_size_aligned(size, FT_ALLOC_ALIGNMENT);
@@ -72,6 +73,7 @@ void			*realloc(void *ptr, size_t size)
 			}
 		}
 	}
-	pthread_mutex_unlock(&g_mutex);
+	if (ft_alloc_init_pthread_del() == EXIT_FAILURE)
+		return (NULL); 
 	return (new);
 }
