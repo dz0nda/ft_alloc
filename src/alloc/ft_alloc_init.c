@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:08:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 21:12:13 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 22:05:08 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,7 +21,7 @@ static int			ft_alloc_init_info(void)
 	t_limit			rlp;
 	t_ainfo			*info;
 
-	ft_memset(&rlp, 0, sizeof(t_limit));
+	ft_alloc_memset(&rlp, 0, sizeof(t_limit));
 	info = &(g_alloc).info;
 	if (getrlimit(RLIMIT_MEMLOCK, &rlp) == -1)
 		return (EXIT_FAILURE);

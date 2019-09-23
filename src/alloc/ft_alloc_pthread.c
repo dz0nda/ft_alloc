@@ -18,6 +18,7 @@ int     ft_alloc_pthread_lock_by_parent(void)
 {
 	if (g_alloc.mutex == LOCKED)
         g_alloc.mutex = LOCKED_BY_PARENT;
+    return (EXIT_SUCCESS);
 }
 
 int     ft_alloc_pthread_unlock(void)
@@ -31,9 +32,10 @@ int     ft_alloc_pthread_unlock(void)
     return (EXIT_SUCCESS);
 }
 
-int     ft_alloc_pthread_unlock(void)
+int     ft_alloc_pthread_unlock_by_parent(void)
 {
 	if (g_alloc.mutex == LOCKED_BY_PARENT)
         g_alloc.mutex = LOCKED;
+    return (EXIT_SUCCESS);
 }
 
