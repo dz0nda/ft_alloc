@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:37:50 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/22 06:34:31 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 19:21:11 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,25 +55,26 @@ void			*realloc(void *ptr, size_t size)
 
 	arena = NULL;
 	new = NULL;
-	if (ft_alloc_init_pthread_new() == EXIT_FAILURE)
+	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
 		return (NULL);
 	if (g_alloc.info.pagesize != 0 || ft_alloc_init() == EXIT_SUCCESS)
 	{
 		size = ft_alloc_get_size_aligned(size, FT_ALLOC_ALIGNMENT);
 		if (ptr == NULL)
+		{
+			g_alloc.mutex = LOCKED_BY_PARENT;
 			new = malloc(size);
+			g_alloc.mutex = LOCKED;
+		}
 		else
 		{
-			if ((arena = ft_alloc_search_arena_by_address(ptr)) != NULL)
-			{
-				if ((ft_realloc_by_concat(*arena, ptr, size)) == EXIT_SUCCESS)
-					new = ptr;
-				else
-					new = ft_realloc_by_mmap(*arena, ptr, size);
-			}
+			if ((arena = ft_alloc_search_arena_by_address(ptr)) != NULL && ft_realloc_by_concat(*arena, ptr, size) == EXIT_SUCCESS)
+				new = ptr;
+			else if (arena != NULL)
+				new = ft_realloc_by_mmap(*arena, ptr, size);
 		}
 	}
-	if (ft_alloc_init_pthread_del() == EXIT_FAILURE)
-		return (NULL); 
+	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
+		return (NULL);
 	return (new);
 }

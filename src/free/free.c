@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:36:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/22 06:35:00 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 19:32:34 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,7 +20,7 @@ void			free(void *ptr)
 
 	arena = NULL;
 	chunk = NULL;
-	if (ft_alloc_init_pthread_new() == EXIT_FAILURE)
+	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
 		return ;
 	if ((ptr != NULL) && ((arena = ft_alloc_search_arena_by_address(ptr)) != NULL))
 	{
@@ -33,6 +33,6 @@ void			free(void *ptr)
 				ft_alloc_arena_del(arena);
 		}
 	}
-	if (ft_alloc_init_pthread_del() == EXIT_FAILURE)
+	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
 		return ;
 }

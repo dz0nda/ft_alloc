@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 04:47:46 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/22 08:10:52 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 19:10:50 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,6 +40,12 @@ typedef enum				e_bool {
 	FALSE,
 	TRUE
 }							t_bool;
+
+typedef enum				e_mutex_status {
+	UNLOCKED,
+	LOCKED,
+	LOCKED_BY_PARENT
+}							t_mutex_status;
 
 typedef enum				e_alloc_index {
 	ALLOC_TINY,
@@ -89,13 +95,13 @@ typedef struct				s_alloc_state
 }							t_astate;
 
 typedef struct				s_alloc {
-	t_bool					init;
+	t_mutex_status			mutex;
 	t_ainfo					info;
 	t_astate				state;
 }							t_alloc;
 
-extern t_alloc 				g_alloc;
-static t_mutex  			g_mutex;
+extern t_alloc				g_alloc;
+extern t_mutex				g_mutex;
 
 t_achunk					*ft_alloc_arena_new(t_aarena **arena, size_t size);
 int							ft_alloc_arena_del(t_aarena **arena);
@@ -109,6 +115,15 @@ t_aindex					ft_alloc_get_arena_index_by_size_request(size_t size);
 size_t						ft_alloc_get_map_size_by_size_request(size_t size);
 size_t						ft_alloc_get_size_aligned(size_t offset, size_t align);
 
+int							ft_alloc_init(void);
+
+int     					ft_alloc_pthread_lock(void);
+int     					ft_alloc_pthread_unlock(void);
+
+t_aarena					**ft_alloc_search_arena_by_address(void *ptr);
+t_achunk					*ft_alloc_search_chunk_by_address(t_aarena *arena, void *ptr);
+t_achunk					*ft_alloc_search_chunk_by_size(t_aarena *arena, size_t size);
+
 int							ft_alloc_state_mmap(t_aindex aindex, size_t size, t_bool mmap);
 int							ft_alloc_state_nbrarenas(t_aindex aindex, t_bool add);
 int							ft_alloc_state_nbrchunks(t_aindex aindex, t_bool add);
@@ -118,12 +133,6 @@ int							ft_alloc_state_swap(t_aindex aindex, size_t size, t_bool free);
 int							ft_alloc_state_used(t_aindex aindex, size_t size, t_bool free);
 int							ft_alloc_state_ovhead(t_aindex aindex, size_t size, t_bool free);
 
-int							ft_alloc_init(void);
-int							ft_alloc_init_pthread_del(void);
-int							ft_alloc_init_pthread_new(void);
 
-t_aarena					**ft_alloc_search_arena_by_address(void *ptr);
-t_achunk					*ft_alloc_search_chunk_by_address(t_aarena *arena, void *ptr);
-t_achunk					*ft_alloc_search_chunk_by_size(t_aarena *arena, size_t size);
 
 #endif

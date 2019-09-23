@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:08:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/22 10:10:58 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 18:42:35 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,7 +14,7 @@
 #include "alloc.h"
 
 t_alloc				g_alloc;
-static t_mutex  			g_mutex = PTHREAD_MUTEX_INITIALIZER;
+t_mutex				g_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static void			*ft_memset(void *b, int c, size_t len)
 {
@@ -38,7 +38,6 @@ static int			ft_alloc_init_info(void)
 
 	ft_memset(&rlp, 0, sizeof(t_limit));
 	info = &(g_alloc).info;
-
 	if (getrlimit(RLIMIT_MEMLOCK, &rlp) == -1)
 		return (EXIT_FAILURE);
 	info->rlim_cur = (FT_ALLOC_UINT)rlp.rlim_cur;
@@ -59,21 +58,4 @@ int					ft_alloc_init(void)
 	if (ft_alloc_init_info() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
-}
-
-int					ft_alloc_init_pthread_del(void)
-{
-	if (pthread_mutex_unlock(&g_mutex) == 0)
-	// if (pthread_mutex_destroy(&g_mutex) == 0)
-		return (EXIT_SUCCESS);
-	return (EXIT_FAILURE);
-}
-
-int					ft_alloc_init_pthread_new(void)
-{
-	if (pthread_mutex_init(&g_mutex, NULL) != 0)
-		return (EXIT_FAILURE);
-	if (pthread_mutex_lock(&g_mutex) == 0)
-		return (EXIT_SUCCESS);
-	return (EXIT_FAILURE);
 }

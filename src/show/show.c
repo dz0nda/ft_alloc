@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:38:17 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 14:32:40 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 19:32:23 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -64,6 +64,8 @@ void			show_alloc_info(void)
 	t_ainfo		info;
 
 	info = g_alloc.info;
+	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
+		return ;
 	ft_putstr("show_alloc_info : \n\n");
 	ft_show_alloc_detail("Soft limit max allocated bytes", info.rlim_cur, TRUE, -1);
 	ft_show_alloc_detail("Hard limit max allocated bytes", info.rlim_max, TRUE, -1);
@@ -74,22 +76,25 @@ void			show_alloc_info(void)
 	ft_show_alloc_detail("Small size request", info.small_size_request, TRUE, -1);
 	ft_show_alloc_detail("Tiny size arena", info.tiny_size_map, TRUE, -1);
 	ft_show_alloc_detail("Small size arena", info.small_size_map, TRUE, -1);
+	ft_putstr("\n");
+	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
+		return ;
 }
 
 void			show_alloc_mem(void)
 {
-	if (ft_alloc_init_pthread_new() == EXIT_FAILURE)
+	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
 		return ;
 	ft_show_alloc(TRUE);
-	if (ft_alloc_init_pthread_del() == EXIT_FAILURE)
+	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
 		return ;
 }
 
 void			show_alloc_state(void)
 {
-	if (ft_alloc_init_pthread_new() == EXIT_FAILURE)
+	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
 		return ;
 	ft_show_alloc(FALSE);
-	if (ft_alloc_init_pthread_del() == EXIT_FAILURE)
+	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
 		return ;
 }
