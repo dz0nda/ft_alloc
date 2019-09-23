@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   alloc_chunk.c                                    .::    .:/ .      .::   */
+/*   ft_alloc_chunk.c                                 .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:05:40 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/18 07:55:38 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 21:10:55 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "alloc.h"
+#include "ft_alloc.h"
 
 static int		ft_alloc_chunk_concat_info(t_aindex aindex, t_achunk *chunk)
 {

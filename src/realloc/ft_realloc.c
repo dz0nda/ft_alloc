@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:37:50 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 21:01:52 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 21:25:06 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,10 +41,15 @@ static void		*ft_realloc_by_mmap(t_aarena *arena, void *ptr, size_t size)
 
 	if ((chunk = ft_alloc_search_chunk_by_address(arena, ptr)) == NULL)
 		return (NULL);
-	if ((new = malloc(size)) == NULL)
+	ft_alloc_pthread_lock_by_parent();
+	new = malloc(size);
+	ft_alloc_pthread_unlock_by_parent();
+	if (new == NULL) 
 		return (NULL);
 	ft_alloc_chunk_copy(new, ptr, (chunk->size >= size) ? size : chunk->size);
+	ft_alloc_pthread_lock_by_parent();
 	free(ptr);
+	ft_alloc_pthread_unlock_by_parent();
 	return (new);
 }
 
@@ -62,9 +67,9 @@ void			*realloc(void *ptr, size_t size)
 		size = ft_alloc_get_size_aligned(size, FT_ALLOC_ALIGNMENT);
 		if (ptr == NULL)
 		{
-			g_alloc.mutex = LOCKED_BY_PARENT;
+			ft_alloc_pthread_lock_by_parent();
 			new = malloc(size);
-			g_alloc.mutex = LOCKED;
+			ft_alloc_pthread_unlock_by_parent();
 		}
 		else
 		{

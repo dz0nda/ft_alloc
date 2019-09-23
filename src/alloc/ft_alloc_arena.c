@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   alloc_arena.c                                    .::    .:/ .      .::   */
+/*   ft_alloc_arena.c                                 .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/05 03:42:53 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/18 07:53:05 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 21:10:51 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "alloc.h"
-#include "../show/show.h"
+#include "ft_alloc.h"
 
 static void		ft_alloc_arena_del_delete(t_aarena **arena, t_aarena *del)
 {

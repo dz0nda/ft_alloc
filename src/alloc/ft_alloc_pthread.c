@@ -1,6 +1,6 @@
-#include "alloc.h"
+#include "ft_alloc.h"
 
-int     ft_alloc_pthread_lock()
+int     ft_alloc_pthread_lock(void)
 {
     if (g_alloc.info.pagesize == 0)
 		if (pthread_mutex_init(&g_mutex, NULL) != 0)
@@ -14,7 +14,13 @@ int     ft_alloc_pthread_lock()
     return (EXIT_SUCCESS);
 }
 
-int     ft_alloc_pthread_unlock()
+int     ft_alloc_pthread_lock_by_parent(void)
+{
+	if (g_alloc.mutex == LOCKED)
+        g_alloc.mutex = LOCKED_BY_PARENT;
+}
+
+int     ft_alloc_pthread_unlock(void)
 {
     if (g_alloc.mutex == LOCKED)
     {
@@ -24,3 +30,10 @@ int     ft_alloc_pthread_unlock()
     }
     return (EXIT_SUCCESS);
 }
+
+int     ft_alloc_pthread_unlock(void)
+{
+	if (g_alloc.mutex == LOCKED_BY_PARENT)
+        g_alloc.mutex = LOCKED;
+}
+

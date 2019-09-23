@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   alloc.h                                          .::    .:/ .      .::   */
+/*   ft_alloc.h                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 04:47:46 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 19:10:50 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 21:22:32 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -116,9 +116,12 @@ size_t						ft_alloc_get_map_size_by_size_request(size_t size);
 size_t						ft_alloc_get_size_aligned(size_t offset, size_t align);
 
 int							ft_alloc_init(void);
+void						*ft_alloc_memset(void *b, int c, size_t len);
 
 int     					ft_alloc_pthread_lock(void);
+int     					ft_alloc_pthread_lock_by_parent(void);
 int     					ft_alloc_pthread_unlock(void);
+int     					ft_alloc_pthread_unlock_by_parent(void);
 
 t_aarena					**ft_alloc_search_arena_by_address(void *ptr);
 t_achunk					*ft_alloc_search_chunk_by_address(t_aarena *arena, void *ptr);

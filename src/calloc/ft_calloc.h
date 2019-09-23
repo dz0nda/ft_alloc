@@ -1,8 +1,8 @@
-#ifndef CALLOC_H
-# define CALLOC_H
+#ifndef FT_CALLOC_H
+# define FT_CALLOC_H
 
-# include "../alloc/alloc.h"
+# include "../malloc/ft_malloc.h"
 
-void	*malloc(size_t size);
+void	*calloc(size_t count, size_t size);
 
 #endif

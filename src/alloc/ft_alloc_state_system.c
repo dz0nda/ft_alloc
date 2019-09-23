@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   alloc_state_system.c                             .::    .:/ .      .::   */
+/*   ft_alloc_state_system.c                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:07:53 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/18 07:07:56 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 21:11:09 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "alloc.h"
+#include "ft_alloc.h"
 
 int				ft_alloc_state_mmap(t_aindex aindex, size_t size, t_bool mmap)
 {
