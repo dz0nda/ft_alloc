@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:37:50 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 19:21:11 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 20:28:58 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,14 +41,14 @@ static void		*ft_realloc_by_mmap(t_aarena *arena, void *ptr, size_t size)
 
 	if ((chunk = ft_alloc_search_chunk_by_address(arena, ptr)) == NULL)
 		return (NULL);
-	if ((new = malloc(size)) == NULL)
+	if ((new = ft_malloc(size)) == NULL)
 		return (NULL);
 	ft_alloc_chunk_copy(new, ptr, (chunk->size >= size) ? size : chunk->size);
-	free(ptr);
+	ft_free(ptr);
 	return (new);
 }
 
-void			*realloc(void *ptr, size_t size)
+void			*ft_realloc(void *ptr, size_t size)
 {
 	t_aarena	**arena;
 	void		*new;
@@ -63,7 +63,7 @@ void			*realloc(void *ptr, size_t size)
 		if (ptr == NULL)
 		{
 			g_alloc.mutex = LOCKED_BY_PARENT;
-			new = malloc(size);
+			new = ft_malloc(size);
 			g_alloc.mutex = LOCKED;
 		}
 		else

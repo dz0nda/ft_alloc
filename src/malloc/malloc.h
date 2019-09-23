@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   malloc.h                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:42:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/18 07:42:28 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 20:25:49 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,6 +16,6 @@
 
 # include "../alloc/alloc.h"
 
-void	*malloc(size_t size);
+void	*ft_malloc(size_t size);
 
 #endif
