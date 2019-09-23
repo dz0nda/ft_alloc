@@ -6,24 +6,29 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:38:17 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/22 06:40:45 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 14:32:40 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "show.h"
 
-static void		ft_show_alloc_state_detail(t_astate state, t_aindex i)
+static void		ft_show_alloc_state_detail(t_astate state, t_aindex i, int det)
 {
 	const char	*aindex[ALLOC_NONE] = { "[ TINY ]", "[ SMALL ]", "[ LARGE ]" };
 
-	ft_putstr(aindex[i]);
-	ft_putstr("\n");
-	ft_show_alloc_detail("arenas", state.nbrarenas[i], FALSE, COLOR_BOLD);
-	ft_show_alloc_detail("chunks", state.nbrchunks[i], TRUE, COLOR_BOLD);
-	ft_show_alloc_detail("used", state.used[i], FALSE, COLOR_RED);
-	ft_show_alloc_detail("freed", state.freed[i], FALSE, COLOR_GREEN);
-	ft_show_alloc_detail("overhead", state.ovhead[i], TRUE, COLOR_YELLOW);
+	if (det == 0)
+	{
+		ft_putstr(aindex[i]);
+		ft_show_alloc_detail("arenas", state.nbrarenas[i], FALSE, COLOR_BOLD);
+		ft_show_alloc_detail("chunks", state.nbrchunks[i], TRUE, COLOR_BOLD);
+	}
+	else
+	{
+		ft_show_alloc_detail("used", state.used[i], FALSE, COLOR_RED);
+		ft_show_alloc_detail("freed", state.freed[i], FALSE, COLOR_GREEN);
+		ft_show_alloc_detail("overhead", state.ovhead[i], TRUE, COLOR_YELLOW);
+	}
 }
 
 static void		ft_show_alloc(t_bool details)
@@ -38,9 +43,11 @@ static void		ft_show_alloc(t_bool details)
 	while (++i < ALLOC_NONE)
 	{
 		if ((arena = state.arena[i]) != NULL)
+		{
+			ft_show_alloc_state_detail(state, i, 0);
 			while (arena)
 			{
-				ft_show_alloc_state_detail(state, i);
+				ft_show_alloc_state_detail(state, i, 1);
 				ft_putstr(" - ");
 				ft_show_alloc_addr((FT_ALLOC_UINT)arena->head, arena->size - (g_alloc.info.size_arena + g_alloc.info.size_chunk), -1);
 				if (details)
@@ -48,6 +55,7 @@ static void		ft_show_alloc(t_bool details)
 				ft_putstr("\n");
 				arena = arena->next;
 			}
+		}
 	}
 }
 
