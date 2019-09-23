@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:37:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 20:27:25 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 20:50:13 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,6 +17,6 @@
 # include "../malloc/malloc.h"
 # include "../free/free.h"
 
-void	*ft_realloc(void *ptr, size_t size);
+void	*realloc(void *ptr, size_t size);
 
 #endif

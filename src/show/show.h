@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:40:49 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 20:28:40 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 20:53:01 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,9 +33,9 @@ typedef enum	e_alloc_color
 void			ft_puthexa(FT_ALLOC_UINT nb);
 void			ft_putnbr(int nb);
 
-void			ft_show_alloc_mem(void);
-void			ft_show_alloc_info(void);
-void			ft_show_alloc_state(void);
+void			show_alloc_mem(void);
+void			show_alloc_info(void);
+void			show_alloc_state(void);
 
 void			ft_putstr(const char *s);
 void			ft_putstr_color(const char *s, t_acolor color);

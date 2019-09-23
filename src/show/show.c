@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:38:17 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 20:28:42 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 20:53:01 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,7 +59,7 @@ static void		ft_show_alloc(t_bool details)
 	}
 }
 
-void			ft_show_alloc_info(void)
+void			show_alloc_info(void)
 {
 	t_ainfo		info;
 
@@ -81,7 +81,7 @@ void			ft_show_alloc_info(void)
 		return ;
 }
 
-void			ft_show_alloc_mem(void)
+void			show_alloc_mem(void)
 {
 	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
 		return ;
@@ -90,7 +90,7 @@ void			ft_show_alloc_mem(void)
 		return ;
 }
 
-void			ft_show_alloc_state(void)
+void			show_alloc_state(void)
 {
 	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
 		return ;

@@ -6,14 +6,14 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:42:48 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 20:25:49 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 20:51:17 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-void	*ft_malloc(size_t size)
+void	*malloc(size_t size)
 {
 	t_aarena	**arena;
 	t_achunk	*chunk;

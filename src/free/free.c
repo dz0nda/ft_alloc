@@ -6,14 +6,14 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:36:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 20:26:46 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 20:50:41 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "free.h"
 
-void			ft_free(void *ptr)
+void			free(void *ptr)
 {
 	t_aarena	**arena;
 	t_achunk	*chunk;

@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:37:32 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 20:26:46 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 20:50:41 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,6 +16,6 @@
 
 # include "../alloc/alloc.h"
 
-void	ft_free(void *ptr);
+void	free(void *ptr);
 
 #endif
