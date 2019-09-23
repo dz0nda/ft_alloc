@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   realloc.c                                        .::    .:/ .      .::   */
+/*   ft_realloc.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:37:50 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 20:51:17 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 21:01:52 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "realloc.h"
+#include "ft_realloc.h"
 
 static int		ft_realloc_by_concat(t_aarena *arena, void *ptr, size_t size)
 {

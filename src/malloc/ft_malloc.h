@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   free.h                                           .::    .:/ .      .::   */
+/*   ft_malloc.h                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/09/18 07:37:32 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 20:50:41 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Created: 2019/09/18 07:42:23 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2019/09/23 21:02:44 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef FT_FREE_H
-# define FT_FREE_H
+#ifndef FT_MALLOC_H
+# define FT_MALLOC_H
 
-# include "../alloc/alloc.h"
+# include "../alloc/ft_alloc.h"
 
-void	free(void *ptr);
+void	*malloc(size_t size);
 
 #endif
