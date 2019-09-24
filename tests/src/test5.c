@@ -1,6 +1,6 @@
 #include <unistd.h>
 #include <string.h>
-#include "../../liballoc.h"
+#include "../../ft_liballoc.h"
 
 int		main(void)
 {
@@ -10,4 +10,5 @@ int		main(void)
 		malloc(1024 * 1024 * 16);
 		malloc(1024 * 1024 * 128);
 		show_alloc_mem();
+		show_alloc_info();
 }

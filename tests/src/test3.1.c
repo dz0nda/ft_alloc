@@ -1,7 +1,6 @@
 #include <unistd.h>
 #include <string.h>
-#include <stdlib.h>
-//#include "../../ft_liballoc.h"
+#include "../../ft_liballoc.h"
 
 #define M (1024 * 1024)
 
@@ -23,7 +22,6 @@ int		main(void)
 	addr3 = (char *)realloc(addr1, 128 * M);
 	addr3[127 * M] = 42;
 	print(addr3);
-	//show_alloc_mem();
-
+	show_alloc_mem();
 	return (0);
 }
