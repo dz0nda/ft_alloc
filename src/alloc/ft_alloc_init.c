@@ -1,42 +1,27 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   alloc_init.c                                     .::    .:/ .      .::   */
+/*   ft_alloc_init.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:08:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/18 07:56:32 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/24 06:07:01 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "alloc.h"
+#include "ft_alloc.h"
 
 t_alloc				g_alloc;
-t_mutex				g_mutex = PTHREAD_MUTEX_INITIALIZER;
-
-static void			*ft_memset(void *b, int c, size_t len)
-{
-	unsigned char	*s;
-	unsigned char	set;
-
-	s = (unsigned char *)b;
-	set = (unsigned char)c;
-	while (len-- > 0)
-	{
-		*s = set;
-		s++;
-	}
-	return (b);
-}
+t_mutex				g_mutex;
 
 static int			ft_alloc_init_info(void)
 {
 	t_limit			rlp;
 	t_ainfo			*info;
 
-	ft_memset(&rlp, 0, sizeof(t_limit));
+	ft_alloc_memset(&rlp, 0, sizeof(t_limit));
 	info = &(g_alloc).info;
 	if (getrlimit(RLIMIT_MEMLOCK, &rlp) == -1)
 		return (EXIT_FAILURE);
@@ -58,4 +43,19 @@ int					ft_alloc_init(void)
 	if (ft_alloc_init_info() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
+}
+
+void				*ft_alloc_memset(void *b, int c, size_t len)
+{
+	unsigned char	*s;
+	unsigned char	set;
+
+	s = (unsigned char *)b;
+	set = (unsigned char)c;
+	while (len-- > 0)
+	{
+		*s = set;
+		s++;
+	}
+	return (b);
 }

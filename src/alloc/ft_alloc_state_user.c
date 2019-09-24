@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   alloc_state_user.c                               .::    .:/ .      .::   */
+/*   ft_alloc_state_user.c                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:07:42 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/18 07:07:44 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 21:11:11 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "alloc.h"
+#include "ft_alloc.h"
 
 int				ft_alloc_state_freed(t_aindex aindex, size_t size, t_bool free)
 {

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   show_tools.c                                     .::    .:/ .      .::   */
+/*   ft_show_tools.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:40:08 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/18 07:41:59 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 21:02:12 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "show.h"
+#include "ft_show.h"
 
 void	ft_putstr(const char *s)
 {
@@ -56,15 +56,20 @@ void	ft_show_alloc_addr(FT_ALLOC_UINT ptr, FT_ALLOC_UINT size, t_bool free)
 void	ft_show_alloc_arena(t_aarena *arena)
 {
 	t_achunk *chunk;
+	FT_ALLOC_UINT size_chunk;
+	FT_ALLOC_UINT	addr_chunk;
 
 	if (arena == NULL || (chunk = arena->head) == NULL)
 		return ;
+	size_chunk = g_alloc.info.size_chunk;
+	addr_chunk = (FT_ALLOC_UINT)chunk;
 	ft_putstr("    - ");
-	ft_show_alloc_addr((FT_ALLOC_UINT)(chunk + 1), chunk->size, chunk->free);
+	ft_show_alloc_addr((addr_chunk + size_chunk), chunk->size, chunk->free);
 	while ((chunk = chunk->next) != arena->head)
 	{
+		addr_chunk = (FT_ALLOC_UINT)chunk;
 		ft_putstr("    - ");
-		ft_show_alloc_addr((FT_ALLOC_UINT)(chunk + 1), chunk->size,
+		ft_show_alloc_addr((addr_chunk + size_chunk), chunk->size,
 				chunk->free);
 	}
 }

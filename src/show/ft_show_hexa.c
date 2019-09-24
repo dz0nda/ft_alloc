@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   show_hexa.c                                      .::    .:/ .      .::   */
+/*   ft_show_hexa.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:39:56 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/18 07:40:06 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 21:02:05 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "show.h"
+#include "ft_show.h"
 
 static size_t	ft_strlen(const char *s)
 {
@@ -74,16 +74,11 @@ static char		*ft_itoa(int input, char *buffer, int radix)
 
 void			ft_puthexa(FT_ALLOC_UINT nb)
 {
-	char		s[12];
+	char		s[128];
 
 	ft_putstr("0x");
-	if (nb == 0)
-		ft_putstr("00");
-	else
-	{
-		ft_itoa(nb, s, 16);
-		ft_putstr(s);
-	}
+	ft_itoa(nb, s, 16);
+	ft_putstr(s);
 }
 
 void			ft_putnbr(int nb)

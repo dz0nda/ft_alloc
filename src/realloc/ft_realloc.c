@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   realloc.c                                        .::    .:/ .      .::   */
+/*   ft_realloc.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:37:50 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/18 07:58:05 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 21:25:06 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "realloc.h"
+#include "ft_realloc.h"
 
 static int		ft_realloc_by_concat(t_aarena *arena, void *ptr, size_t size)
 {
-	t_achunk	*node;
+	t_achunk	*chunk;
 	t_aindex	aindex;
 
-	node = NULL;
+	chunk = NULL;
 	aindex = ft_alloc_get_arena_index_by_size_request(size);
-	if ((aindex != arena->aindex) || ((node = ft_alloc_search_chunk_by_address(arena, ptr)) == NULL))
+	if ((aindex != arena->aindex) || ((chunk = ft_alloc_search_chunk_by_address(arena, ptr)) == NULL))
 		return (EXIT_FAILURE);
-	if (size > node->size)
+	if (size > chunk->size)
 	{
-		ft_alloc_chunk_concat(arena, node);
-		ptr = (void *)(node + 1);
+		ft_alloc_chunk_concat(arena, chunk);
+		ptr = (void *)((FT_ALLOC_UINT)chunk + g_alloc.info.size_chunk);
 	}
-	ft_alloc_chunk_split(arena, node, size);
-	ft_alloc_chunk_concat(arena, node->next);
-	if (size > node->size)
+	ft_alloc_chunk_split(arena, chunk, size);
+	ft_alloc_chunk_concat(arena, chunk->next);
+	if (size > chunk->size)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
@@ -41,37 +41,45 @@ static void		*ft_realloc_by_mmap(t_aarena *arena, void *ptr, size_t size)
 
 	if ((chunk = ft_alloc_search_chunk_by_address(arena, ptr)) == NULL)
 		return (NULL);
-	if ((new = ft_malloc(size)) == NULL)
+	ft_alloc_pthread_lock_by_parent();
+	new = malloc(size);
+	ft_alloc_pthread_unlock_by_parent();
+	if (new == NULL) 
 		return (NULL);
 	ft_alloc_chunk_copy(new, ptr, (chunk->size >= size) ? size : chunk->size);
-	ft_free(ptr);
+	ft_alloc_pthread_lock_by_parent();
+	free(ptr);
+	ft_alloc_pthread_unlock_by_parent();
 	return (new);
 }
 
-void			*ft_realloc(void *ptr, size_t size)
+void			*realloc(void *ptr, size_t size)
 {
 	t_aarena	**arena;
 	void		*new;
 
 	arena = NULL;
 	new = NULL;
-	pthread_mutex_lock(&g_mutex);
+	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
+		return (NULL);
 	if (g_alloc.info.pagesize != 0 || ft_alloc_init() == EXIT_SUCCESS)
 	{
 		size = ft_alloc_get_size_aligned(size, FT_ALLOC_ALIGNMENT);
 		if (ptr == NULL)
-			new = ft_malloc(size);
+		{
+			ft_alloc_pthread_lock_by_parent();
+			new = malloc(size);
+			ft_alloc_pthread_unlock_by_parent();
+		}
 		else
 		{
-			if ((arena = ft_alloc_search_arena_by_address(ptr)) != NULL)
-			{
-				if ((ft_realloc_by_concat(*arena, ptr, size)) == EXIT_SUCCESS)
-					new = ptr;
-				else
-					new = ft_realloc_by_mmap(*arena, ptr, size);
-			}
+			if ((arena = ft_alloc_search_arena_by_address(ptr)) != NULL && ft_realloc_by_concat(*arena, ptr, size) == EXIT_SUCCESS)
+				new = ptr;
+			else if (arena != NULL)
+				new = ft_realloc_by_mmap(*arena, ptr, size);
 		}
 	}
-	pthread_mutex_unlock(&g_mutex);
+	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
+		return (NULL);
 	return (new);
 }

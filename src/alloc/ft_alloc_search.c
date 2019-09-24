@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   alloc_search.c                                   .::    .:/ .      .::   */
+/*   ft_alloc_search.c                                .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:07:58 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/18 07:57:04 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/23 21:11:06 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "alloc.h"
+#include "ft_alloc.h"
 
 static int		ft_alloc_is_in_arena(t_aarena *arena, void *ptr)
 {
@@ -30,7 +30,7 @@ static int		ft_alloc_is_in_chunk(t_achunk *chunk, void *ptr)
 	FT_ALLOC_UINT addr_chunk;
 	FT_ALLOC_UINT addr_ptr;
 
-	addr_chunk = (FT_ALLOC_UINT)(chunk + 1);
+	addr_chunk = (FT_ALLOC_UINT)((FT_ALLOC_UINT)chunk + g_alloc.info.size_chunk);
 	addr_ptr = (FT_ALLOC_UINT)ptr;
 	if (addr_chunk <= addr_ptr && addr_ptr <= (addr_chunk + chunk->size))
 		return (EXIT_SUCCESS);

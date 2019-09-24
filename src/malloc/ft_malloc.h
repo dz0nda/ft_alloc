@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   realloc.h                                        .::    .:/ .      .::   */
+/*   ft_malloc.h                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/09/18 07:37:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/18 07:37:55 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Created: 2019/09/18 07:42:23 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2019/09/24 06:07:04 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef FT_REALLOC_H
-# define FT_REALLOC_H
+#ifndef FT_MALLOC_H
+# define FT_MALLOC_H
 
-# include "../malloc/malloc.h"
-# include "../free/free.h"
+# include "../alloc/ft_alloc.h"
 
-void	*ft_realloc(void *ptr, size_t size);
+void	*malloc(size_t size);
 
 #endif
