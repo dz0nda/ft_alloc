@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:40:08 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 21:02:12 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/24 06:24:44 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,8 +55,8 @@ void	ft_show_alloc_addr(FT_ALLOC_UINT ptr, FT_ALLOC_UINT size, t_bool free)
 
 void	ft_show_alloc_arena(t_aarena *arena)
 {
-	t_achunk *chunk;
-	FT_ALLOC_UINT size_chunk;
+	t_achunk		*chunk;
+	FT_ALLOC_UINT	size_chunk;
 	FT_ALLOC_UINT	addr_chunk;
 
 	if (arena == NULL || (chunk = arena->head) == NULL)

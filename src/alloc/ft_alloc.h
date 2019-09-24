@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 04:47:46 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/24 05:58:22 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/24 06:19:06 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -119,10 +119,10 @@ size_t						ft_alloc_get_size_aligned(size_t offset, size_t align);
 int							ft_alloc_init(void);
 void						*ft_alloc_memset(void *b, int c, size_t len);
 
-int     					ft_alloc_pthread_lock(void);
-int     					ft_alloc_pthread_lock_by_parent(void);
-int     					ft_alloc_pthread_unlock(void);
-int     					ft_alloc_pthread_unlock_by_parent(void);
+int							ft_alloc_pthread_lock(void);
+int							ft_alloc_pthread_lock_by_parent(void);
+int							ft_alloc_pthread_unlock(void);
+int							ft_alloc_pthread_unlock_by_parent(void);
 
 t_aarena					**ft_alloc_search_arena_by_address(void *ptr);
 t_achunk					*ft_alloc_search_chunk_by_address(t_aarena *arena, void *ptr);
@@ -136,7 +136,5 @@ int							ft_alloc_state_freed(t_aindex aindex, size_t size, t_bool free);
 int							ft_alloc_state_swap(t_aindex aindex, size_t size, t_bool free);
 int							ft_alloc_state_used(t_aindex aindex, size_t size, t_bool free);
 int							ft_alloc_state_ovhead(t_aindex aindex, size_t size, t_bool free);
-
-
 
 #endif

@@ -3,14 +3,10 @@
 /*                                                              /             */
 /*   ft_alloc_get.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
+/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/09/18 07:08:39 by dzonda       #+#   ##    ##    #+#       */
-<<<<<<< HEAD:src/alloc/alloc_get.c
-/*   Updated: 2019/09/18 08:10:59 by dzonda      ###    #+. /#+    ###.fr     */
-=======
-/*   Updated: 2019/09/23 21:10:58 by dzonda      ###    #+. /#+    ###.fr     */
->>>>>>> ft_alloc-v2:src/alloc/ft_alloc_get.c
+/*   Created: 2019/09/24 06:14:33 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2019/09/24 06:14:39 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */

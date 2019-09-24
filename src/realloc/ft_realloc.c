@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:37:50 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 21:25:06 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/24 06:23:10 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,7 +44,7 @@ static void		*ft_realloc_by_mmap(t_aarena *arena, void *ptr, size_t size)
 	ft_alloc_pthread_lock_by_parent();
 	new = malloc(size);
 	ft_alloc_pthread_unlock_by_parent();
-	if (new == NULL) 
+	if (new == NULL)
 		return (NULL);
 	ft_alloc_chunk_copy(new, ptr, (chunk->size >= size) ? size : chunk->size);
 	ft_alloc_pthread_lock_by_parent();

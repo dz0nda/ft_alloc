@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:05:40 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 21:10:55 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/24 06:20:40 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,7 +51,7 @@ static int		ft_alloc_chunk_split_info(t_aindex aindex, t_achunk *chunk, size_t s
 
 int				ft_alloc_chunk_concat(t_aarena *arena, t_achunk *chunk)
 {
-	FT_ALLOC_UINT size_chunk;
+	FT_ALLOC_UINT	size_chunk;
 	FT_ALLOC_UINT	addr_chunkh;
 	FT_ALLOC_UINT	addr_prevh;
 
