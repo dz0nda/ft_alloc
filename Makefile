@@ -17,28 +17,33 @@ OBJDIR = ./build
 MAKEFILE_NAME = Makefile-$(lastword $(subst /, ,$(TARGET)))
 
 CC = gcc
-CFLAGS = -g -fPIC -Wall -Werror -Wextra -pedantic
+CFLAGS = -fPIC
 LDFLAGS = -shared
 SUBDIR = \
 				alloc \
+				calloc \
 				free \
 				malloc \
 				realloc \
+				reallocf \
 				show
 SUBFILE = \
-				alloc/alloc_get.c \
-				alloc/alloc_arena.c \
-				alloc/alloc_state_user.c \
-				alloc/alloc_state_system.c \
-				alloc/alloc_chunk.c \
-				alloc/alloc_init.c \
-				alloc/alloc_search.c \
-				malloc/malloc.c \
-				realloc/realloc.c \
-				free/free.c \
-				show/show_hexa.c \
-				show/show.c \
-				show/show_tools.c
+				alloc/ft_alloc_arena.c \
+				alloc/ft_alloc_chunk.c \
+				alloc/ft_alloc_get.c \
+				alloc/ft_alloc_init.c \
+				alloc/ft_alloc_pthread.c \
+				alloc/ft_alloc_search.c \
+				alloc/ft_alloc_state_system.c \
+				alloc/ft_alloc_state_user.c \
+				calloc/ft_calloc.c \
+				free/ft_free.c \
+				malloc/ft_malloc.c \
+				realloc/ft_realloc.c \
+				reallocf/ft_reallocf.c \
+				show/ft_show.c \
+				show/ft_show_hexa.c \
+				show/ft_show_tools.c
 
 SRCDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(SRCDIR)/, $(dir)))
 OBJDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(OBJDIR)/, $(dir)))
@@ -51,12 +56,12 @@ DEPS = $(OBJS:.o=.d)
 
 VERBOSE = false
 ifeq ($(VERBOSE),true)
-	HIDE =
+	HIDE =  
 else
 	HIDE = @
 endif 
-RM = rm -rf
-RMDIR = rm -rf
+RM = rm -rf 
+RMDIR = rm -rf 
 MKDIR = mkdir -p
 ERRIGNORE = 2>/dev/null
 SEP=/
