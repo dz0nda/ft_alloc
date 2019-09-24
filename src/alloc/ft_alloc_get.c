@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   ft_alloc_get.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/24 06:14:33 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/24 06:14:39 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/24 19:33:03 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,7 +18,7 @@ t_aarena		**ft_alloc_get_arena_by_size_request(size_t size)
 	t_ainfo		info;
 	t_astate	*state;
 
-	info = g_alloc.info;
+	ft_alloc_memcpy(&info, &(g_alloc).info, sizeof(t_ainfo));
 	state = &(g_alloc).state;
 	if (size <= info.tiny_size_request)
 		return (&(state->arena)[ALLOC_TINY]);
@@ -31,7 +31,7 @@ t_aindex		ft_alloc_get_arena_index_by_size_request(size_t size)
 {
 	t_ainfo		info;
 
-	info = g_alloc.info;
+	ft_alloc_memcpy(&info, &(g_alloc).info, sizeof(t_ainfo));
 	if (size <= info.tiny_size_request)
 		return (ALLOC_TINY);
 	else if (size > info.tiny_size_request && size <= info.small_size_request)
@@ -43,7 +43,7 @@ size_t			ft_alloc_get_map_size_by_size_request(size_t size)
 {
 	t_ainfo		info;
 
-	info = g_alloc.info;
+	ft_alloc_memcpy(&info, &(g_alloc).info, sizeof(t_ainfo));
 	if (size <= info.tiny_size_request)
 		return (info.tiny_size_map);
 	else if (size > info.tiny_size_request && size <= info.small_size_request)

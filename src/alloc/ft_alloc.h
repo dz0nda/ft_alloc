@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 04:47:46 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/24 06:19:06 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/24 19:29:51 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -117,7 +117,9 @@ size_t						ft_alloc_get_map_size_by_size_request(size_t size);
 size_t						ft_alloc_get_size_aligned(size_t offset, size_t align);
 
 int							ft_alloc_init(void);
+
 void						*ft_alloc_memset(void *b, int c, size_t len);
+void		        		*ft_alloc_memcpy(void *dest, const void *src, size_t n);
 
 int							ft_alloc_pthread_lock(void);
 int							ft_alloc_pthread_lock_by_parent(void);

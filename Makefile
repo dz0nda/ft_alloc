@@ -32,6 +32,7 @@ SUBFILE = \
 				alloc/ft_alloc_chunk.c \
 				alloc/ft_alloc_get.c \
 				alloc/ft_alloc_init.c \
+				alloc/ft_alloc_mem.c \
 				alloc/ft_alloc_pthread.c \
 				alloc/ft_alloc_search.c \
 				alloc/ft_alloc_state_system.c \

@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:38:17 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/24 06:16:26 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/24 19:32:37 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,7 +38,7 @@ static void		ft_show_alloc(t_bool details)
 	t_aarena	*arena;
 
 	i = -1;
-	state = g_alloc.state;
+	ft_alloc_memcpy(&state, &(g_alloc).state, sizeof(t_astate));
 	ft_putstr("ft_show_alloc_mem : \n\n");
 	while (++i < ALLOC_NONE)
 	{
@@ -63,7 +63,7 @@ void			show_alloc_info(void)
 {
 	t_ainfo		info;
 
-	info = g_alloc.info;
+	ft_alloc_memcpy(&info, &(g_alloc).info, sizeof(t_ainfo));
 	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
 		return ;
 	ft_putstr("ft_show_alloc_info : \n\n");

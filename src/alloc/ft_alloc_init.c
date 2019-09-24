@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:08:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/24 06:07:01 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/24 19:29:18 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,19 +43,4 @@ int					ft_alloc_init(void)
 	if (ft_alloc_init_info() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
-}
-
-void				*ft_alloc_memset(void *b, int c, size_t len)
-{
-	unsigned char	*s;
-	unsigned char	set;
-
-	s = (unsigned char *)b;
-	set = (unsigned char)c;
-	while (len-- > 0)
-	{
-		*s = set;
-		s++;
-	}
-	return (b);
 }
