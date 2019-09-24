@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:08:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 22:05:08 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/24 06:07:01 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,7 +14,7 @@
 #include "ft_alloc.h"
 
 t_alloc				g_alloc;
-t_mutex				g_mutex = PTHREAD_MUTEX_INITIALIZER;
+t_mutex				g_mutex;
 
 static int			ft_alloc_init_info(void)
 {

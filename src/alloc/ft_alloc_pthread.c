@@ -2,9 +2,12 @@
 
 int     ft_alloc_pthread_lock(void)
 {
-    if (g_alloc.info.pagesize == 0)
+    if (g_alloc.mutex == UNINITIALIZED)
+    {
 		if (pthread_mutex_init(&g_mutex, NULL) != 0)
             return (EXIT_FAILURE);
+        g_alloc.mutex = UNLOCKED;
+    }
     if (g_alloc.mutex == UNLOCKED)
     {
 	    if (pthread_mutex_lock(&g_mutex) != 0)
@@ -38,4 +41,3 @@ int     ft_alloc_pthread_unlock_by_parent(void)
         g_alloc.mutex = LOCKED;
     return (EXIT_SUCCESS);
 }
-

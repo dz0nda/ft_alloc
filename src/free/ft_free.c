@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:36:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 21:02:30 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/24 06:07:07 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,7 +30,8 @@ void			free(void *ptr)
 			ft_alloc_state_swap((*arena)->aindex, chunk->size, TRUE);
 			ft_alloc_chunk_concat(*arena, chunk);
 			if (((*arena)->head->size + g_alloc.info.size_arena + g_alloc.info.size_chunk) == (*arena)->size)
-				ft_alloc_arena_del(arena);
+				if ((*arena)->prev != NULL || (*arena)->aindex == ALLOC_LARGE)
+					ft_alloc_arena_del(arena);
 		}
 	}
 	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
