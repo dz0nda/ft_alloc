@@ -49,7 +49,7 @@ static void		ft_show_alloc(t_bool details)
 			{
 				ft_ft_show_alloc_state_detail(state, i, 1);
 				ft_putstr(" - ");
-				ft_show_alloc_addr((FT_ALLOC_UINT)arena->head, arena->size - (g_alloc.info.size_arena + g_alloc.info.size_chunk), -1);
+				ft_show_alloc_addr((FT_ALLOC_UINT)arena->head, arena->size - g_alloc.info.size_arena, -1);
 				if (details)
 					ft_show_alloc_arena(arena);
 				ft_putstr("\n");
