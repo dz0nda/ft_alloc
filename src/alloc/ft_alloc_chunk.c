@@ -15,18 +15,18 @@
 
 static int		ft_alloc_chunk_concat_info(t_aindex aindex, t_achunk *chunk)
 {
-	if (chunk->free == FALSE)
+	if (chunk->free == FT_FALSE)
 	{
-		ft_alloc_state_used(aindex, g_alloc.info.size_chunk, FALSE);
-		ft_alloc_state_ovhead(aindex, g_alloc.info.size_chunk, TRUE);
-		ft_alloc_state_swap(aindex, chunk->size, FALSE);
+		ft_alloc_state_used(aindex, g_alloc.info.size_chunk, FT_FALSE);
+		ft_alloc_state_ovhead(aindex, g_alloc.info.size_chunk, FT_TRUE);
+		ft_alloc_state_swap(aindex, chunk->size, FT_FALSE);
 	}
 	else
 	{
-		ft_alloc_state_freed(aindex, g_alloc.info.size_chunk, TRUE);
-		ft_alloc_state_ovhead(aindex, g_alloc.info.size_chunk, TRUE);
+		ft_alloc_state_freed(aindex, g_alloc.info.size_chunk, FT_TRUE);
+		ft_alloc_state_ovhead(aindex, g_alloc.info.size_chunk, FT_TRUE);
 	}
-	ft_alloc_state_nbrchunks(aindex, FALSE);
+	ft_alloc_state_nbrchunks(aindex, FT_FALSE);
 	return (EXIT_SUCCESS);
 }
 
@@ -34,38 +34,38 @@ static int		ft_alloc_chunk_split_info(t_aindex aindex, t_achunk *chunk, size_t s
 {
 	if (size > g_alloc.info.small_size_request || !(chunk->size > (size + g_alloc.info.size_chunk)))
 		return (EXIT_FAILURE);
-	if (chunk->free == FALSE)
+	if (chunk->free == FT_FALSE)
 	{
-		ft_alloc_state_used(aindex, g_alloc.info.size_chunk, TRUE);
-		ft_alloc_state_ovhead(aindex, g_alloc.info.size_chunk, FALSE);
-		ft_alloc_state_swap(aindex, chunk->size - (g_alloc.info.size_chunk + size), TRUE);
+		ft_alloc_state_used(aindex, g_alloc.info.size_chunk, FT_TRUE);
+		ft_alloc_state_ovhead(aindex, g_alloc.info.size_chunk, FT_FALSE);
+		ft_alloc_state_swap(aindex, chunk->size - (g_alloc.info.size_chunk + size), FT_TRUE);
 	}
 	else
 	{
-		ft_alloc_state_freed(aindex, g_alloc.info.size_chunk, FALSE);
-		ft_alloc_state_ovhead(aindex, g_alloc.info.size_chunk, FALSE);
+		ft_alloc_state_freed(aindex, g_alloc.info.size_chunk, FT_FALSE);
+		ft_alloc_state_ovhead(aindex, g_alloc.info.size_chunk, FT_FALSE);
 	}
-	ft_alloc_state_nbrchunks(aindex, TRUE);
+	ft_alloc_state_nbrchunks(aindex, FT_TRUE);
 	return (EXIT_SUCCESS);
 }
 
 int				ft_alloc_chunk_concat(t_aarena *arena, t_achunk *chunk)
 {
-	FT_ALLOC_UINT	size_chunk;
-	FT_ALLOC_UINT	addr_chunkh;
-	FT_ALLOC_UINT	addr_prevh;
+	FT_AUINT	size_chunk;
+	FT_AUINT	addr_chunkh;
+	FT_AUINT	addr_prevh;
 
 	size_chunk = g_alloc.info.size_chunk;
-	addr_chunkh = (FT_ALLOC_UINT)chunk + size_chunk;
-	addr_prevh = (FT_ALLOC_UINT)chunk->prev + size_chunk;
-	if ((chunk->next != NULL) && (chunk->next->free == TRUE))
+	addr_chunkh = (FT_AUINT)chunk + size_chunk;
+	addr_prevh = (FT_AUINT)chunk->prev + size_chunk;
+	if ((chunk->next != NULL) && (chunk->next->free == FT_TRUE))
 	{
 		ft_alloc_chunk_concat_info(arena->aindex, chunk);
 		chunk->size += chunk->next->size + size_chunk;
 		chunk->next = chunk->next->next;
 		chunk->next->prev = chunk;
 	}
-	if ((chunk->prev != NULL) && (chunk->prev->free == TRUE))
+	if ((chunk->prev != NULL) && (chunk->prev->free == FT_TRUE))
 	{
 		ft_alloc_chunk_concat_info(arena->aindex, chunk);
 		chunk->prev->size += chunk->size + size_chunk;
@@ -101,9 +101,9 @@ int				ft_alloc_chunk_split(t_aarena *arena, t_achunk *chunk, size_t size)
 	new = NULL;
 	if (ft_alloc_chunk_split_info(arena->aindex, chunk, size) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	new = (t_achunk *)((FT_ALLOC_UINT)chunk + g_alloc.info.size_chunk + size);
+	new = (t_achunk *)((FT_AUINT)chunk + g_alloc.info.size_chunk + size);
 	new->size = chunk->size - (g_alloc.info.size_chunk + size);
-	new->free = TRUE;
+	new->free = FT_TRUE;
 	new->next = chunk->next;
 	if (new->next != NULL)
 		new->next->prev = new;

@@ -25,13 +25,13 @@
 # define EXIT_SUCCESS			(int)0
 # define EXIT_FAILURE			(int)1
 
-# define FT_ALLOC_UINT		size_t
-# define FT_ALLOC_ALIGNMENT	sizeof(FT_ALLOC_UINT) * 2
+# define FT_AUINT		size_t
+# define FT_AALIGNMENT	sizeof(FT_AUINT) * 2
 
-# define FT_ALLOC_TINY		(FT_ALLOC_UINT)256
-# define FT_ALLOC_SMALL		(FT_ALLOC_UINT)2048
-# define FT_ALLOC_N				(FT_ALLOC_UINT)110
-# define FT_ALLOC_M				(FT_ALLOC_UINT)110
+# define FT_ATINY		(FT_AUINT)256
+# define FT_ASMALL		(FT_AUINT)2048
+# define FT_AN				(FT_AUINT)110
+# define FT_AM				(FT_AUINT)110
 
 # define FT_ALLOC_HIST		(int)150
 
@@ -39,8 +39,8 @@ typedef struct rlimit		t_limit;
 typedef pthread_mutex_t		t_mutex;
 
 typedef enum				e_bool {
-	FALSE,
-	TRUE
+	FT_FALSE,
+	FT_TRUE
 }							t_bool;
 
 typedef enum				e_mutex_status {
@@ -66,7 +66,7 @@ typedef struct				s_alloc_chunk {
 
 typedef struct				s_alloc_arena
 {
-	FT_ALLOC_UINT			size;
+	FT_AUINT			size;
 	t_aindex				aindex;
 	t_achunk				*head;
 	struct s_alloc_arena	*next;
@@ -75,21 +75,21 @@ typedef struct				s_alloc_arena
 
 typedef struct				s_alloc_info
 {
-	FT_ALLOC_UINT			rlim_cur;
-	FT_ALLOC_UINT			rlim_max;
-	FT_ALLOC_UINT			size_chunk;
-	FT_ALLOC_UINT			size_arena;
-	FT_ALLOC_UINT			pagesize;
-	FT_ALLOC_UINT			tiny_size_request;
-	FT_ALLOC_UINT			small_size_request;
-	FT_ALLOC_UINT			tiny_size_map;
-	FT_ALLOC_UINT			small_size_map;
+	FT_AUINT			rlim_cur;
+	FT_AUINT			rlim_max;
+	FT_AUINT			size_chunk;
+	FT_AUINT			size_arena;
+	FT_AUINT			pagesize;
+	FT_AUINT			tiny_size_request;
+	FT_AUINT			small_size_request;
+	FT_AUINT			tiny_size_map;
+	FT_AUINT			small_size_map;
 }							t_ainfo;
 
 typedef struct 				s_alloc_hist
 {
-		FT_ALLOC_UINT		addr;
-		FT_ALLOC_UINT		size;
+		FT_AUINT		addr;
+		FT_AUINT		size;
 		t_bool					free;
 		t_aindex				index;
 
@@ -97,12 +97,12 @@ typedef struct 				s_alloc_hist
 
 typedef struct				s_alloc_state
 {
-	FT_ALLOC_UINT			mmap[ALLOC_NONE];
-	FT_ALLOC_UINT			nbrchunks[ALLOC_NONE];
-	FT_ALLOC_UINT			nbrarenas[ALLOC_NONE];
-	FT_ALLOC_UINT			used[ALLOC_NONE];
-	FT_ALLOC_UINT			freed[ALLOC_NONE];
-	FT_ALLOC_UINT			ovhead[ALLOC_NONE];
+	FT_AUINT			mmap[ALLOC_NONE];
+	FT_AUINT			nbrchunks[ALLOC_NONE];
+	FT_AUINT			nbrarenas[ALLOC_NONE];
+	FT_AUINT			used[ALLOC_NONE];
+	FT_AUINT			freed[ALLOC_NONE];
+	FT_AUINT			ovhead[ALLOC_NONE];
 }							t_astate;
 
 typedef struct				s_alloc {

@@ -15,11 +15,11 @@
 
 static int		ft_alloc_is_in_arena(t_aarena *arena, void *ptr)
 {
-	FT_ALLOC_UINT addr_arena;
-	FT_ALLOC_UINT addr_ptr;
+	FT_AUINT addr_arena;
+	FT_AUINT addr_ptr;
 
-	addr_arena = (FT_ALLOC_UINT)arena;
-	addr_ptr = (FT_ALLOC_UINT)ptr;
+	addr_arena = (FT_AUINT)arena;
+	addr_ptr = (FT_AUINT)ptr;
 	if ((addr_arena) <= addr_ptr && addr_ptr <= (addr_arena + arena->size))
 		return (EXIT_SUCCESS);
 	return (EXIT_FAILURE);
@@ -27,11 +27,11 @@ static int		ft_alloc_is_in_arena(t_aarena *arena, void *ptr)
 
 static int		ft_alloc_is_in_chunk(t_achunk *chunk, void *ptr)
 {
-	FT_ALLOC_UINT addr_chunk;
-	FT_ALLOC_UINT addr_ptr;
+	FT_AUINT addr_chunk;
+	FT_AUINT addr_ptr;
 
-	addr_chunk = (FT_ALLOC_UINT)((FT_ALLOC_UINT)chunk + g_alloc.info.size_chunk);
-	addr_ptr = (FT_ALLOC_UINT)ptr;
+	addr_chunk = (FT_AUINT)((FT_AUINT)chunk + g_alloc.info.size_chunk);
+	addr_ptr = (FT_AUINT)ptr;
 	// if (addr_chunk <= addr_ptr && addr_ptr <= (addr_chunk + chunk->size))
 	// 	return (EXIT_SUCCESS);
 	if (addr_chunk == addr_ptr)
@@ -87,7 +87,7 @@ t_achunk		*ft_alloc_search_chunk_by_size(t_aarena *arena, size_t size)
 		{
 			while (chunk != NULL)
 			{
-					if (chunk->size >= size && chunk->free == TRUE)
+					if (chunk->size >= size && chunk->free == FT_TRUE)
 						return (chunk);
 				chunk = chunk->next;
 			}

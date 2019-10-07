@@ -9,7 +9,7 @@ void         ft_alloc_history_add(t_achunk *chunk, t_aindex index)
 
   i = -1;
   history = g_alloc.history;
-  newhistory.addr = (FT_ALLOC_UINT)chunk + sizeof(t_achunk);
+  newhistory.addr = (FT_AUINT)chunk + sizeof(t_achunk);
   newhistory.size = chunk->size;
   newhistory.free = chunk->free;
   newhistory.index = index;
