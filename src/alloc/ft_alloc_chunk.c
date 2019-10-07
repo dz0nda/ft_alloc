@@ -58,14 +58,14 @@ int				ft_alloc_chunk_concat(t_aarena *arena, t_achunk *chunk)
 	size_chunk = g_alloc.info.size_chunk;
 	addr_chunkh = (FT_ALLOC_UINT)chunk + size_chunk;
 	addr_prevh = (FT_ALLOC_UINT)chunk->prev + size_chunk;
-	if ((chunk->next->free == TRUE) && (chunk->next > chunk))
+	if ((chunk->next != NULL) && (chunk->next->free == TRUE))
 	{
 		ft_alloc_chunk_concat_info(arena->aindex, chunk);
 		chunk->size += chunk->next->size + size_chunk;
 		chunk->next = chunk->next->next;
 		chunk->next->prev = chunk;
 	}
-	if ((chunk->prev->free == TRUE) && (chunk->prev < chunk))
+	if ((chunk->prev != NULL) && (chunk->prev->free == TRUE))
 	{
 		ft_alloc_chunk_concat_info(arena->aindex, chunk);
 		chunk->prev->size += chunk->size + size_chunk;
@@ -104,10 +104,11 @@ int				ft_alloc_chunk_split(t_aarena *arena, t_achunk *chunk, size_t size)
 	new = (t_achunk *)((FT_ALLOC_UINT)chunk + g_alloc.info.size_chunk + size);
 	new->size = chunk->size - (g_alloc.info.size_chunk + size);
 	new->free = TRUE;
-	chunk->size = size;
 	new->next = chunk->next;
+	if (new->next != NULL)
+		new->next->prev = new;
 	new->prev = chunk;
-	chunk->next->prev = new;
+	chunk->size = size;
 	chunk->next = new;
 	return (EXIT_SUCCESS);
 }

@@ -16,22 +16,20 @@
 t_aarena		**ft_alloc_get_arena_by_size_request(size_t size)
 {
 	t_ainfo		info;
-	t_astate	*state;
 
-	ft_alloc_memcpy(&info, &(g_alloc).info, sizeof(t_ainfo));
-	state = &(g_alloc).state;
+	ft_alloc_memcpy(&info, &g_alloc.info, sizeof(t_ainfo));
 	if (size <= info.tiny_size_request)
-		return (&(state->arena)[ALLOC_TINY]);
+		return (&g_alloc.arena[ALLOC_TINY]);
 	else if (size > info.tiny_size_request && size <= info.small_size_request)
-		return (&(state->arena)[ALLOC_SMALL]);
-	return (&(state->arena)[ALLOC_LARGE]);
+		return (&g_alloc.arena[ALLOC_SMALL]);
+	return (&g_alloc.arena[ALLOC_LARGE]);
 }
 
 t_aindex		ft_alloc_get_arena_index_by_size_request(size_t size)
 {
 	t_ainfo		info;
 
-	ft_alloc_memcpy(&info, &(g_alloc).info, sizeof(t_ainfo));
+	ft_alloc_memcpy(&info, &g_alloc.info, sizeof(t_ainfo));
 	if (size <= info.tiny_size_request)
 		return (ALLOC_TINY);
 	else if (size > info.tiny_size_request && size <= info.small_size_request)
@@ -43,7 +41,7 @@ size_t			ft_alloc_get_map_size_by_size_request(size_t size)
 {
 	t_ainfo		info;
 
-	ft_alloc_memcpy(&info, &(g_alloc).info, sizeof(t_ainfo));
+	ft_alloc_memcpy(&info, &g_alloc.info, sizeof(t_ainfo));
 	if (size <= info.tiny_size_request)
 		return (info.tiny_size_map);
 	else if (size > info.tiny_size_request && size <= info.small_size_request)

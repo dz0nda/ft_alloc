@@ -30,8 +30,10 @@
 
 # define FT_ALLOC_TINY		(FT_ALLOC_UINT)256
 # define FT_ALLOC_SMALL		(FT_ALLOC_UINT)2048
-# define FT_ALLOC_N			(FT_ALLOC_UINT)110
-# define FT_ALLOC_M			(FT_ALLOC_UINT)110
+# define FT_ALLOC_N				(FT_ALLOC_UINT)110
+# define FT_ALLOC_M				(FT_ALLOC_UINT)110
+
+# define FT_ALLOC_HIST		(int)150
 
 typedef struct rlimit		t_limit;
 typedef pthread_mutex_t		t_mutex;
@@ -84,6 +86,15 @@ typedef struct				s_alloc_info
 	FT_ALLOC_UINT			small_size_map;
 }							t_ainfo;
 
+typedef struct 				s_alloc_hist
+{
+		FT_ALLOC_UINT		addr;
+		FT_ALLOC_UINT		size;
+		t_bool					free;
+		t_aindex				index;
+
+}											t_ahist;
+
 typedef struct				s_alloc_state
 {
 	FT_ALLOC_UINT			mmap[ALLOC_NONE];
@@ -92,13 +103,14 @@ typedef struct				s_alloc_state
 	FT_ALLOC_UINT			used[ALLOC_NONE];
 	FT_ALLOC_UINT			freed[ALLOC_NONE];
 	FT_ALLOC_UINT			ovhead[ALLOC_NONE];
-	t_aarena				*arena[ALLOC_NONE];
 }							t_astate;
 
 typedef struct				s_alloc {
 	t_mutex_status			mutex;
 	t_ainfo					info;
 	t_astate				state;
+	t_aarena				*arena[ALLOC_NONE];
+	t_ahist					history[FT_ALLOC_HIST];
 }							t_alloc;
 
 extern t_alloc				g_alloc;
@@ -115,6 +127,9 @@ t_aarena					**ft_alloc_get_arena_by_size_request(size_t size);
 t_aindex					ft_alloc_get_arena_index_by_size_request(size_t size);
 size_t						ft_alloc_get_map_size_by_size_request(size_t size);
 size_t						ft_alloc_get_size_aligned(size_t offset, size_t align);
+
+int   						ft_alloc_histadd(t_aindex aindex, size_t addr, size_t size, t_bool free);
+void         			ft_alloc_history_add(t_achunk *chunk, t_aindex index);
 
 int							ft_alloc_init(void);
 

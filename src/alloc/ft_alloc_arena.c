@@ -57,8 +57,8 @@ static t_aarena	*ft_alloc_arena_new_mmap(size_t size)
 	new->head = (t_achunk *)((FT_ALLOC_UINT)new + g_alloc.info.size_arena);
 	new->head->size = size_map - g_alloc.info.size_arena - g_alloc.info.size_chunk;
 	new->head->free = TRUE;
-	new->head->prev = new->head;
-	new->head->next = new->head;
+	new->head->prev = NULL;
+	new->head->next = NULL;
 	new->next = NULL;
 	return (new);
 }
