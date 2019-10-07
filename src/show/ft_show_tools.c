@@ -30,13 +30,15 @@ void	ft_putstr_color(const char *s, t_acolor color)
 		ft_putstr(FT_CGREEN);
 	else if (color == COLOR_YELLOW)
 		ft_putstr(FT_CYELLOW);
+	else if (color == COLOR_BLUE)
+		ft_putstr(FT_CBLUE);
 	else if (color == COLOR_BOLD)
 		ft_putstr(FT_CBOLD);
 	ft_putstr(s);
 	ft_putstr(FT_CSTOP);
 }
 
-void	ft_show_alloc_addr(FT_ALLOC_UINT ptr, FT_ALLOC_UINT size, t_bool free)
+void	ft_show_alloc_addr(FT_AUINT ptr, FT_AUINT size, t_bool free)
 {
 	ft_puthexa(ptr);
 	ft_putstr(" - ");
@@ -44,37 +46,16 @@ void	ft_show_alloc_addr(FT_ALLOC_UINT ptr, FT_ALLOC_UINT size, t_bool free)
 	ft_putstr(" : ");
 	ft_putnbr(size);
 	ft_putstr(" bytes");
-	if (free == FALSE || free == TRUE)
+	if (free == FT_FALSE || free == FT_TRUE)
 	{
-		ft_putstr(" - ");
-		(free == FALSE) ? ft_putstr_color("used", COLOR_RED) :
+		ft_putstr(" -> ");
+		(free == FT_FALSE) ? ft_putstr_color("used", COLOR_RED) :
 			ft_putstr_color("freed", COLOR_GREEN);
 	}
 	ft_putstr("\n");
 }
 
-void	ft_show_alloc_arena(t_aarena *arena)
-{
-	t_achunk		*chunk;
-	FT_ALLOC_UINT	size_chunk;
-	FT_ALLOC_UINT	addr_chunk;
-
-	if (arena == NULL || (chunk = arena->head) == NULL)
-		return ;
-	size_chunk = g_alloc.info.size_chunk;
-	addr_chunk = (FT_ALLOC_UINT)chunk;
-	ft_putstr("    - ");
-	ft_show_alloc_addr((addr_chunk + size_chunk), chunk->size, chunk->free);
-	while ((chunk = chunk->next) != arena->head)
-	{
-		addr_chunk = (FT_ALLOC_UINT)chunk;
-		ft_putstr("    - ");
-		ft_show_alloc_addr((addr_chunk + size_chunk), chunk->size,
-				chunk->free);
-	}
-}
-
-void	ft_show_alloc_detail(const char *s, FT_ALLOC_UINT nb, t_bool dl,
+void	ft_show_alloc_detail(const char *s, FT_AUINT nb, t_bool dl,
 		t_acolor color)
 {
 	ft_putstr(" - ");
@@ -85,6 +66,6 @@ void	ft_show_alloc_detail(const char *s, FT_ALLOC_UINT nb, t_bool dl,
 		ft_putstr(" bytes ");
 	else
 		ft_putstr(" ");
-	if (dl == TRUE)
+	if (dl == FT_TRUE)
 		ft_putstr("\n");
 }

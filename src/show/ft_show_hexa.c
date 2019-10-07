@@ -72,7 +72,7 @@ static char		*ft_itoa(int input, char *buffer, int radix)
 	return (ft_strrev(buffer));
 }
 
-void			ft_puthexa(FT_ALLOC_UINT nb)
+void			ft_puthexa(FT_AUINT nb)
 {
 	char	s[17];
 	int		i;
