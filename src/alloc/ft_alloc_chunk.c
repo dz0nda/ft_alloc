@@ -62,8 +62,8 @@ int				ft_alloc_chunk_concat(t_aarena *arena, t_achunk *chunk)
 	{
 		ft_alloc_chunk_concat_info(arena->aindex, chunk);
 		chunk->size += chunk->next->size + size_chunk;
-		chunk->next = chunk->next->next;
-		chunk->next->prev = chunk;
+		if ((chunk->next = chunk->next->next) != NULL)
+			chunk->next->prev = chunk;
 	}
 	if ((chunk->prev != NULL) && (chunk->prev->free == FT_TRUE))
 	{
@@ -71,7 +71,8 @@ int				ft_alloc_chunk_concat(t_aarena *arena, t_achunk *chunk)
 		chunk->prev->size += chunk->size + size_chunk;
 		chunk->prev->free = chunk->free;
 		chunk->prev->next = chunk->next;
-		chunk->next->prev = chunk->prev;
+		if (chunk->next != NULL)
+			chunk->next->prev = chunk->prev;
 		ft_alloc_chunk_copy((void *)(addr_prevh), (void *)(addr_chunkh), chunk->size);
 		chunk = chunk->prev;
 	}
