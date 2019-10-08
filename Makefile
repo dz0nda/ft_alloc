@@ -8,16 +8,15 @@ ifeq ($(HOSTTYPE), )
 	HOSTTYPE = $(shell uname -m)_$(shell uname -s)
 endif
 
-LIBNAME = ./libft_malloc.so
-TARGET = ./libft_malloc_$(HOSTTYPE).so
-PROJDIR = .
-SRCDIR = ./src
-OBJDIR = ./build
+LIBNAME = libft_malloc.so
+TARGET = libft_malloc_$(HOSTTYPE).so
+SRCDIR = src
+OBJDIR = build
 
 MAKEFILE_NAME = Makefile-$(lastword $(subst /, ,$(TARGET)))
 
 CC = gcc
-CFLAGS = -fPIC
+CFLAGS = -fPIC 
 LDFLAGS = -shared
 SUBDIR = \
 				alloc \
@@ -28,22 +27,25 @@ SUBDIR = \
 				reallocf \
 				show
 SUBFILE = \
-				alloc/ft_alloc_arena.c \
+				calloc/ft_calloc.c \
+				alloc/ft_alloc_mem.c \
+				alloc/ft_alloc_search.c \
+				alloc/ft_alloc_state_user.c \
+				alloc/ft_alloc_hist.c \
+				alloc/ft_alloc_init.c \
 				alloc/ft_alloc_chunk.c \
 				alloc/ft_alloc_get.c \
-				alloc/ft_alloc_init.c \
-				alloc/ft_alloc_mem.c \
+				alloc/ft_alloc_arena.c \
 				alloc/ft_alloc_pthread.c \
-				alloc/ft_alloc_search.c \
 				alloc/ft_alloc_state_system.c \
-				alloc/ft_alloc_state_user.c \
-				calloc/ft_calloc.c \
-				free/ft_free.c \
 				malloc/ft_malloc.c \
-				realloc/ft_realloc.c \
 				reallocf/ft_reallocf.c \
-				show/ft_show.c \
+				realloc/ft_realloc.c \
+				free/ft_free.c \
 				show/ft_show_hexa.c \
+				show/ft_show_info.c \
+				show/ft_show_mem.c \
+				show/ft_show_history.c \
 				show/ft_show_tools.c
 
 SRCDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(SRCDIR)/, $(dir)))
