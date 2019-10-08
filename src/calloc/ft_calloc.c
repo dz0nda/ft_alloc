@@ -13,13 +13,11 @@
 
 #include "ft_calloc.h"
 
-void		*calloc(size_t count, size_t size)
+static void *ft_calloc(size_t count, size_t size)
 {
 	void	*new;
 
 	new = NULL;
-	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
-		return (NULL);
 	size *= count;
 	ft_alloc_pthread_lock_by_parent();
 	new = malloc(size);
@@ -27,6 +25,16 @@ void		*calloc(size_t count, size_t size)
 	if (new == NULL)
 		return (NULL);
 	ft_alloc_memset(new, 0, size);
+}
+
+void		*calloc(size_t count, size_t size)
+{
+	void	*new;
+
+	new = NULL;
+	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
+		return (NULL);
+	new = ft_calloc(count, size);
 	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
 		return (NULL);
 	return (new);
