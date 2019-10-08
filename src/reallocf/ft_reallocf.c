@@ -13,6 +13,19 @@
 
 #include "ft_reallocf.h"
 
+static void		*ft_reallocf(void *ptr, size_t size)
+{
+	void	*new;
+
+	new = NULL;
+	ft_alloc_pthread_lock_by_parent();
+	new = realloc(ptr, size);
+	ft_alloc_pthread_unlock_by_parent();
+	if (new == NULL)
+		free(ptr);
+	return (new);
+}
+
 void		*reallocf(void *ptr, size_t size)
 {
 	void	*new;
@@ -20,11 +33,7 @@ void		*reallocf(void *ptr, size_t size)
 	new = NULL;
 	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
 		return (NULL);
-	ft_alloc_pthread_lock_by_parent();
-	new = realloc(ptr, size);
-	ft_alloc_pthread_unlock_by_parent();
-	if (new == NULL)
-		free(ptr);
+	new = ft_reallocf(ptr, size);
 	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
 		return (NULL);
 	return (new);
