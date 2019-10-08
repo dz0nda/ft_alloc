@@ -25,7 +25,7 @@ static int			ft_alloc_init_info(void)
 	ft_alloc_memset(&rlp, 0, sizeof(t_limit));
 	info = &(g_alloc).info;
 	size_map = 0;
-	if (getrlimit(RLIMIT_MEMLOCK, &rlp) == -1)
+	if (getrlimit(RLIMIT_AS, &rlp) == -1)
 		return (EXIT_FAILURE);
 	info->rlim_cur = (FT_AUINT)rlp.rlim_cur;
 	info->rlim_max = (FT_AUINT)rlp.rlim_max;
