@@ -13,7 +13,7 @@
 
 #include "ft_malloc.h"
 
-void	*ft_malloc(size_t size)
+static void	*ft_malloc(size_t size)
 {
 	t_aarena	**arena;
 	t_achunk	*chunk;
