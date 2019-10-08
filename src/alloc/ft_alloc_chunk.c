@@ -70,29 +70,12 @@ int				ft_alloc_chunk_concat(t_aarena *arena, t_achunk *chunk)
 		ft_alloc_chunk_concat_info(arena->aindex, chunk);
 		chunk->prev->size += chunk->size + size_chunk;
 		chunk->prev->free = chunk->free;
-		chunk->prev->next = chunk->next;
-		if (chunk->next != NULL)
+		if ((chunk->prev->next = chunk->next) != NULL)
 			chunk->next->prev = chunk->prev;
-		ft_alloc_chunk_copy((void *)(addr_prevh), (void *)(addr_chunkh), chunk->size);
+		ft_alloc_memcpy((void *)(addr_prevh), (void *)(addr_chunkh), chunk->size);
 		chunk = chunk->prev;
 	}
 	return (EXIT_SUCCESS);
-}
-
-void			*ft_alloc_chunk_copy(void *dest, const void *src, size_t n)
-{
-	char		*d;
-	char		*s;
-
-	d = (char *)dest;
-	s = (char *)src;
-	while (n-- > 0)
-	{
-		*d = *s;
-		d++;
-		s++;
-	}
-	return (dest);
 }
 
 int				ft_alloc_chunk_split(t_aarena *arena, t_achunk *chunk, size_t size)

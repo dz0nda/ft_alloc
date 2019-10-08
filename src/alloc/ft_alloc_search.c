@@ -63,14 +63,15 @@ t_achunk		*ft_alloc_search_chunk_by_address(t_aarena *arena, void *ptr)
 {
 	t_achunk *chunk;
 
-	if (arena == NULL || (chunk = arena->head) == NULL)
-		return (NULL);
-	while (chunk != NULL)
-	{
-		if (ft_alloc_is_in_chunk(chunk, ptr) == EXIT_SUCCESS)
-			return (chunk);
-		chunk = chunk->next;
-	}
+	// chunk = NULL;
+	// if (arena == NULL) //|| (chunk = arena->head) == NULL)
+	// 	return (NULL);
+	// while (chunk != NULL)
+	// {
+	// 	if (ft_alloc_is_in_chunk(chunk, ptr) == EXIT_SUCCESS)
+	// 		return (chunk);
+	// 	chunk = chunk->next;
+	// }
 	return (NULL);
 }
 
