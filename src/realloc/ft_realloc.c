@@ -20,7 +20,7 @@ static int		ft_realloc_by_concat(t_aarena *arena, void *ptr, size_t size)
 
 	chunk = NULL;
 	aindex = ft_alloc_get_arena_index_by_size_request(size);
-	if ((aindex != arena->aindex) || ((chunk = ft_alloc_search_chunk_by_address(arena, ptr)) == NULL))
+	if (aindex != arena->aindex || (chunk = ft_alloc_search_chunk_by_address(arena, ptr)) == NULL)
 		return (EXIT_FAILURE);
 	if (size > chunk->size)
 	{
@@ -32,7 +32,7 @@ static int		ft_realloc_by_concat(t_aarena *arena, void *ptr, size_t size)
 		ft_alloc_chunk_concat(arena, chunk->next);
 	if (size > chunk->size)
 		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
 
 static void		*ft_realloc_by_mmap(t_aarena *arena, void *ptr, size_t size)
@@ -40,17 +40,18 @@ static void		*ft_realloc_by_mmap(t_aarena *arena, void *ptr, size_t size)
 	t_achunk	*chunk;
 	void		*new;
 
-	if ((chunk = ft_alloc_search_chunk_by_address(arena, ptr)) == NULL)
-		return (NULL);
-	ft_alloc_pthread_lock_by_parent();
-	new = malloc(size);
-	ft_alloc_pthread_unlock_by_parent();
-	if (new == NULL)
-		return (NULL);
-	ft_alloc_chunk_copy(new, ptr, (chunk->size >= size) ? size : chunk->size);
-	ft_alloc_pthread_lock_by_parent();
-	free(ptr);
-	ft_alloc_pthread_unlock_by_parent();
+	new = NULL;
+	// if ((chunk = ft_alloc_search_chunk_by_address(arena, ptr)) == NULL)
+	// 	return (NULL);
+	// ft_alloc_pthread_lock_by_parent();
+	// new = malloc(size);
+	// ft_alloc_pthread_unlock_by_parent();
+	// if (new == NULL)
+	// 	return (NULL);
+	// ft_alloc_memcpy(new, ptr, (chunk->size >= size) ? size : chunk->size);
+	// ft_alloc_pthread_lock_by_parent();
+	// free(ptr);
+	// ft_alloc_pthread_unlock_by_parent();
 	return (new);
 }
 
@@ -68,19 +69,20 @@ static void			*ft_realloc(void *ptr, size_t size)
 		new = malloc(size);
 		ft_alloc_pthread_unlock_by_parent();
 	}
-	else
+	else if ((arena = ft_alloc_search_arena_by_address(ptr)) != NULL)
 	{
-		if ((arena = ft_alloc_search_arena_by_address(ptr)) != NULL && ft_realloc_by_concat(*arena, ptr, size) == EXIT_SUCCESS)
-			new = ptr;
-		else if (arena != NULL)
+		// if (ft_realloc_by_concat(*arena, ptr, size) == EXIT_SUCCESS)
+		// 	new = ptr;
+		// else
 			new = ft_realloc_by_mmap(*arena, ptr, size);
 	}
+
 	return (new);
 }
 
 void			*realloc(void *ptr, size_t size)
 {
-	void		**new;
+	void		*new;
 
 	new = NULL;
 	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
@@ -89,5 +91,5 @@ void			*realloc(void *ptr, size_t size)
 		new = ft_realloc(ptr, size);
 	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
 		return (NULL);
-	return (*new);
+	return (new);
 }
