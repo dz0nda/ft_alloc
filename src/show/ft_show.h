@@ -39,7 +39,6 @@ void			show_alloc_mem(void);
 void			show_alloc_mem_details(void);
 void			show_alloc_info(void);
 void			ft_show_alloc_history(void);
-void 			ft_show_alloc(t_aarena *arena, t_bool free);
 
 void			ft_putstr(const char *s);
 void			ft_putstr_color(const char *s, t_acolor color);

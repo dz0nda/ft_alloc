@@ -36,7 +36,7 @@ static void			ft_show_anames(t_aarena *arena, t_aindex i, t_bool free)
 	ft_putstr("\n");
 }
 
-void 			ft_show_alloc(t_aarena *arena, t_bool free)
+static void 			ft_show_alloc(t_aarena *arena, t_bool free)
 {
 	t_achunk		*chunk;
 	FT_AUINT	size;
