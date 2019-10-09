@@ -1,6 +1,6 @@
 #include "ft_alloc.h"
 
-void         ft_alloc_history_add(t_achunk *chunk, t_aindex index)
+void         ft_alloc_history(t_achunk *chunk, t_aindex index, t_alloc_ft aft)
 {
   int i;
   t_ahist   *history;
@@ -13,7 +13,8 @@ void         ft_alloc_history_add(t_achunk *chunk, t_aindex index)
   newhistory.size = chunk->size;
   newhistory.free = chunk->free;
   newhistory.index = index;
-  while (++i < FT_ALLOC_HIST)
+  newhistory.aft = aft;
+  while (++i < FT_AHIST)
   {
     ft_alloc_memcpy(&nexthistory, &history[i], sizeof(t_ahist));
     ft_alloc_memcpy(&history[i], &newhistory, sizeof(t_ahist));

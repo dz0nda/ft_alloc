@@ -15,10 +15,8 @@
 # define FT_ALLOC_H
 
 # include <unistd.h>
-
 # include <sys/time.h>
 # include <sys/resource.h>
-
 # include <sys/mman.h>
 # include <pthread.h>
 
@@ -33,7 +31,7 @@
 # define FT_AN				(FT_AUINT)110
 # define FT_AM				(FT_AUINT)110
 
-# define FT_ALLOC_HIST		(int)150
+# define FT_AHIST		(int)150
 
 typedef struct rlimit		t_limit;
 typedef pthread_mutex_t		t_mutex;
@@ -42,6 +40,13 @@ typedef enum				e_bool {
 	FT_FALSE,
 	FT_TRUE
 }							t_bool;
+
+typedef enum				e_alloc_ft {
+	FT_MALLOC,
+	FT_FREE,
+	FT_REALLOC,
+	FT_NONE
+}							t_alloc_ft;
 
 typedef enum				e_mutex_status {
 	UNINITIALIZED,
@@ -92,7 +97,7 @@ typedef struct 				s_alloc_hist
 		FT_AUINT		size;
 		t_bool					free;
 		t_aindex				index;
-
+		t_alloc_ft aft;
 }											t_ahist;
 
 typedef struct				s_alloc_state
@@ -110,7 +115,7 @@ typedef struct				s_alloc {
 	t_ainfo					info;
 	t_astate				state;
 	t_aarena				*arena[ALLOC_NONE];
-	t_ahist					history[FT_ALLOC_HIST];
+	t_ahist					history[FT_AHIST];
 }							t_alloc;
 
 extern t_alloc				g_alloc;
@@ -128,8 +133,7 @@ t_aindex					ft_alloc_get_arena_index_by_size_request(size_t size);
 size_t						ft_alloc_get_map_size_by_size_request(size_t size);
 size_t						ft_alloc_get_size_aligned(size_t offset, size_t align);
 
-int   						ft_alloc_histadd(t_aindex aindex, size_t addr, size_t size, t_bool free);
-void         			ft_alloc_history_add(t_achunk *chunk, t_aindex index);
+void         			ft_alloc_history(t_achunk *chunk, t_aindex index, t_alloc_ft aft);
 
 int							ft_alloc_init(void);
 

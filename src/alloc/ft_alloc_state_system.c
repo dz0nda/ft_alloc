@@ -48,3 +48,15 @@ int				ft_alloc_state_nbrchunks(t_aindex aindex, t_bool add)
 		state->nbrchunks[aindex] -= 1;
 	return (EXIT_SUCCESS);
 }
+
+int				ft_alloc_state_ovhead(t_aindex aindex, size_t size, t_bool free)
+{
+	t_astate	*state;
+
+	state = &(g_alloc).state;
+	if (free == FT_TRUE)
+		state->ovhead[aindex] -= size;
+	else
+		state->ovhead[aindex] += size;
+	return (EXIT_SUCCESS);
+}

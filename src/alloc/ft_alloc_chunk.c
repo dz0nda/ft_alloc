@@ -13,7 +13,7 @@
 
 #include "ft_alloc.h"
 
-static int		ft_alloc_chunk_concat_info(t_aindex aindex, t_achunk *chunk)
+static void		ft_alloc_chunk_concat_info(t_aindex aindex, t_achunk *chunk)
 {
 	if (chunk->free == FT_FALSE)
 	{
@@ -27,13 +27,10 @@ static int		ft_alloc_chunk_concat_info(t_aindex aindex, t_achunk *chunk)
 		ft_alloc_state_ovhead(aindex, g_alloc.info.size_chunk, FT_TRUE);
 	}
 	ft_alloc_state_nbrchunks(aindex, FT_FALSE);
-	return (EXIT_SUCCESS);
 }
 
-static int		ft_alloc_chunk_split_info(t_aindex aindex, t_achunk *chunk, size_t size)
+static void		ft_alloc_chunk_split_info(t_aindex aindex, t_achunk *chunk, size_t size)
 {
-	if (size > g_alloc.info.small_size_request || !(chunk->size > (size + g_alloc.info.size_chunk)))
-		return (EXIT_FAILURE);
 	if (chunk->free == FT_FALSE)
 	{
 		ft_alloc_state_used(aindex, g_alloc.info.size_chunk, FT_TRUE);
@@ -46,7 +43,6 @@ static int		ft_alloc_chunk_split_info(t_aindex aindex, t_achunk *chunk, size_t s
 		ft_alloc_state_ovhead(aindex, g_alloc.info.size_chunk, FT_FALSE);
 	}
 	ft_alloc_state_nbrchunks(aindex, FT_TRUE);
-	return (EXIT_SUCCESS);
 }
 
 int				ft_alloc_chunk_concat(t_aarena *arena, t_achunk *chunk)
@@ -83,8 +79,9 @@ int				ft_alloc_chunk_split(t_aarena *arena, t_achunk *chunk, size_t size)
 	t_achunk	*new;
 
 	new = NULL;
-	if (ft_alloc_chunk_split_info(arena->aindex, chunk, size) == EXIT_FAILURE)
+	if (size > g_alloc.info.small_size_request || !(chunk->size > (size + g_alloc.info.size_chunk)))
 		return (EXIT_FAILURE);
+	ft_alloc_chunk_split_info(arena->aindex, chunk, size);
 	new = (t_achunk *)((FT_AUINT)chunk + g_alloc.info.size_chunk + size);
 	new->size = chunk->size - (g_alloc.info.size_chunk + size);
 	new->free = FT_TRUE;
