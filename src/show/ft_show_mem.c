@@ -100,7 +100,7 @@ void			show_alloc_mem_details(void)
 	arena = NULL;
 	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
 		return ;
-	ft_putstr("|| show_alloc_state ||\n\n");
+	ft_putstr("|| show_alloc_mem_details ||\n\n");
 	while (++i < ALLOC_NONE)
 		if ((arena = g_alloc.arena[i]) != NULL)
 		{
