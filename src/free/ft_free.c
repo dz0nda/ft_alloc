@@ -25,6 +25,7 @@ static void			ft_free(void *ptr)
 		if ((chunk = ft_alloc_search_chunk_by_address(*arena, ptr)) != NULL)
 		{
 			chunk->free = FT_TRUE;
+			ft_alloc_history(chunk, (*arena)->aindex, FT_FREE);
 			ft_alloc_state_swap((*arena)->aindex, chunk->size, FT_TRUE);
 			ft_alloc_chunk_concat(*arena, chunk);
 			if (((*arena)->head->size + g_alloc.info.size_arena + g_alloc.info.size_chunk) == (*arena)->size)
