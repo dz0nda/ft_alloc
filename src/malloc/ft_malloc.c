@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_malloc.c                                      .::    .:/ .      .::   */
+/*   ft_malloc.c                                        :+:      :+:    :+:   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:42:48 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/24 06:22:48 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/09 02:48:02 by dz0nda           ###   ########.fr       */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_malloc.h"
 
-static void	*ft_malloc(size_t size)
+static void		*ft_malloc(size_t size)
 {
 	t_aarena	**arena;
 	t_achunk	*chunk;
@@ -32,9 +32,9 @@ static void	*ft_malloc(size_t size)
 	return ((void *)((FT_AUINT)chunk + g_alloc.info.size_chunk));
 }
 
-void	*malloc(size_t size)
+void			*malloc(size_t size)
 {
-	void		*new;
+	void	*new;
 
 	new = NULL;
 	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
