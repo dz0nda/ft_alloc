@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_alloc.h                                       .::    .:/ .      .::   */
+/*   ft_alloc.h                                         :+:      :+:    :+:   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 04:47:46 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/27 02:05:43 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/09 02:46:06 by dz0nda           ###   ########.fr       */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -133,7 +133,7 @@ t_aindex					ft_alloc_get_arena_index_by_size_request(size_t size);
 size_t						ft_alloc_get_map_size_by_size_request(size_t size);
 size_t						ft_alloc_get_size_aligned(size_t offset, size_t align);
 
-void         			ft_alloc_history(t_achunk *chunk, t_aindex index, t_alloc_ft aft);
+void						ft_alloc_history(t_achunk *chunk, t_aindex index, t_alloc_ft aft);
 
 int							ft_alloc_init(void);
 
