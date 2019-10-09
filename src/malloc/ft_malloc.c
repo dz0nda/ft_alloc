@@ -28,7 +28,7 @@ static void	*ft_malloc(size_t size)
 	ft_alloc_chunk_split(*arena, chunk, size);
 	ft_alloc_state_swap((*arena)->aindex, chunk->size, FT_FALSE);
 	chunk->free = FT_FALSE;
-	ft_alloc_history_add(chunk, (*arena)->aindex);
+	ft_alloc_history(chunk, (*arena)->aindex, FT_MALLOC);
 	return ((void *)((FT_AUINT)chunk + g_alloc.info.size_chunk));
 }
 
