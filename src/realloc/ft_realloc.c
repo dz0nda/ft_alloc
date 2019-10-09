@@ -32,6 +32,7 @@ static int		ft_realloc_by_concat(t_aarena *arena, void *ptr, size_t size)
 		ft_alloc_chunk_concat(arena, chunk->next);
 	if (size > chunk->size)
 		return (EXIT_FAILURE);
+	ft_alloc_history(chunk, aindex, FT_REALLOC);
 	return (EXIT_SUCCESS);
 }
 
@@ -76,7 +77,6 @@ static void			*ft_realloc(void *ptr, size_t size)
 		else
 			new = ft_realloc_by_mmap(*arena, ptr, size);
 	}
-
 	return (new);
 }
 
