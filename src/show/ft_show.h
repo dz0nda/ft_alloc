@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:40:49 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/23 21:02:53 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/11 22:49:11 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,7 +38,7 @@ void			ft_putnbr(int nb);
 void			show_alloc_mem(void);
 void			show_alloc_mem_details(void);
 void			show_alloc_info(void);
-void			ft_show_alloc_history(void);
+void			show_alloc_history(void);
 
 void			ft_putstr(const char *s);
 void			ft_putstr_color(const char *s, t_acolor color);

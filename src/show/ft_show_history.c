@@ -3,17 +3,17 @@
 /*                                                              /             */
 /*   ft_show_history.c                                .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 21:22:20 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 21:42:02 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/11 23:03:51 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_show.h"
 
-void			ft_show_alloc_history(void)
+void			show_alloc_history(void)
 {
 	const char	*anames[ALLOC_NONE] = { "TINY", "SMALL", "LARGE" };
 	const char	*ftnames[FT_NONE] = { "MALLOC", "FREE", "REALLOC" };
@@ -31,10 +31,10 @@ void			ft_show_alloc_history(void)
 		{
 			ft_putnbr(++ij[1]);
 			ft_putstr(". ");
-			ft_putstr(anames[history[ij[1]].index]);
+			ft_putstr(anames[history[ij[0]].index]);
 			ft_putstr("\t");
-			ft_putstr(ftnames[history[ij[1]].aft]);
+			ft_putstr(ftnames[history[ij[0]].aft]);
 			ft_putstr("\t\t");
-			ft_show_alloc_addr(history[ij[1]].addr, history[ij[1]].size, history[ij[1]].free);
+			ft_show_alloc_addr(history[ij[0]].addr, history[ij[0]].size, history[ij[0]].free);
 		}
 }
