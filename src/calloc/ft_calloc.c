@@ -6,14 +6,14 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:42:48 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 20:50:43 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/11 21:13:19 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_calloc.h"
 
-static void *ft_calloc(size_t count, size_t size)
+static void		*ft_calloc(size_t count, size_t size)
 {
 	void	*new;
 
@@ -28,7 +28,7 @@ static void *ft_calloc(size_t count, size_t size)
 	return (new);
 }
 
-void		*calloc(size_t count, size_t size)
+void			*calloc(size_t count, size_t size)
 {
 	void	*new;
 

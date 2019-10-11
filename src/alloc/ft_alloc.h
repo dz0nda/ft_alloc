@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_alloc.h                                         :+:      :+:    :+:   */
+/*   ft_alloc.h                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
+/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/09/18 04:47:46 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/09 02:46:06 by dz0nda           ###   ########.fr       */
+/*   Created: 2019/10/11 20:57:59 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/11 21:41:03 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,7 +71,7 @@ typedef struct				s_alloc_chunk {
 
 typedef struct				s_alloc_arena
 {
-	FT_AUINT			size;
+	FT_AUINT				size;
 	t_aindex				aindex;
 	t_achunk				*head;
 	struct s_alloc_arena	*next;
@@ -91,14 +91,14 @@ typedef struct				s_alloc_info
 	FT_AUINT			small_size_map;
 }							t_ainfo;
 
-typedef struct 				s_alloc_hist
+typedef struct				s_alloc_hist
 {
-		FT_AUINT		addr;
-		FT_AUINT		size;
-		t_bool					free;
-		t_aindex				index;
-		t_alloc_ft aft;
-}											t_ahist;
+	FT_AUINT			addr;
+	FT_AUINT			size;
+	t_bool				free;
+	t_aindex			index;
+	t_alloc_ft			aft;
+}							t_ahist;
 
 typedef struct				s_alloc_state
 {

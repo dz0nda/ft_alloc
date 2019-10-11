@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_show.c                                        .::    .:/ .      .::   */
+/*   ft_show_mem.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:38:17 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/24 19:32:37 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/11 21:51:39 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,42 +32,42 @@ static void			ft_show_anames(t_aarena *arena, t_aindex i, t_bool free)
 		ft_show_alloc_detail("overhead", g_alloc.state.ovhead[i], FT_FALSE, COLOR_YELLOW);
 	}
 	else
-			ft_puthexa(addr + size);
+		ft_puthexa(addr + size);
 	ft_putstr("\n");
 }
 
-static void 			ft_show_alloc(t_aarena *arena, t_bool free)
+static void			ft_show_alloc(t_aarena *arena, t_bool free)
 {
-	t_achunk		*chunk;
+	t_achunk	*chunk;
 	FT_AUINT	size;
 	FT_AUINT	addr;
 
 	chunk = NULL;
 	while (arena)
 	{
-			size = g_alloc.info.size_arena;
-			addr = (FT_AUINT)arena;
-			if (free == FT_TRUE)
-				ft_show_alloc_addr((addr + size), arena->size - size, -1);
-			if ((chunk = arena->head) != NULL)
-				while (chunk != NULL)
+		size = g_alloc.info.size_arena;
+		addr = (FT_AUINT)arena;
+		if (free == FT_TRUE)
+			ft_show_alloc_addr((addr + size), arena->size - size, -1);
+		if ((chunk = arena->head) != NULL)
+			while (chunk != NULL)
+			{
+				if (free == chunk->free || free == FT_TRUE)
 				{
-					if (free == chunk->free || free == FT_TRUE)
-					{
-							size = g_alloc.info.size_chunk;
-							addr = (FT_AUINT)chunk;
-							ft_putstr(" - ");
-							ft_show_alloc_addr((addr + size), chunk->size, chunk->free);
-					}
-					chunk = chunk->next;
+					size = g_alloc.info.size_chunk;
+					addr = (FT_AUINT)chunk;
+					ft_putstr(" - ");
+					ft_show_alloc_addr((addr + size), chunk->size, chunk->free);
 				}
-			arena = arena->next;
+				chunk = chunk->next;
+			}
+		arena = arena->next;
 	}
 }
 
-void			show_alloc_mem(void)
+void				show_alloc_mem(void)
 {
-	size_t 		total;
+	size_t		total;
 	t_aindex	i;
 	t_aarena	*arena;
 
@@ -91,7 +91,7 @@ void			show_alloc_mem(void)
 		return ;
 }
 
-void			show_alloc_mem_details(void)
+void				show_alloc_mem_details(void)
 {
 	t_aindex	i;
 	t_aarena	*arena;

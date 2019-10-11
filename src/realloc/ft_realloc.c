@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   ft_realloc.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
+/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/09/18 07:37:50 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/24 06:23:10 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Created: 2019/10/11 21:16:55 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2019/10/11 21:17:01 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,7 +56,7 @@ static void		*ft_realloc_by_mmap(t_aarena *arena, void *ptr, size_t size)
 	return (new);
 }
 
-static void			*ft_realloc(void *ptr, size_t size)
+static void		*ft_realloc(void *ptr, size_t size)
 {
 	void		*new;
 	t_aarena	**arena;

@@ -6,20 +6,20 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:08:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/27 01:51:39 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/11 21:04:02 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_alloc.h"
 
-t_alloc				g_alloc;
-t_mutex				g_mutex;
+t_alloc			g_alloc;
+t_mutex			g_mutex;
 
-static int			ft_alloc_init_info(void)
+static int		ft_alloc_init_info(void)
 {
-	t_limit			rlp;
-	t_ainfo			*info;
+	t_limit		rlp;
+	t_ainfo		*info;
 	FT_AUINT	size_map;
 
 	ft_alloc_memset(&rlp, 0, sizeof(t_limit));
@@ -42,7 +42,7 @@ static int			ft_alloc_init_info(void)
 	return (EXIT_SUCCESS);
 }
 
-int					ft_alloc_init(void)
+int				ft_alloc_init(void)
 {
 	if (ft_alloc_init_info() == EXIT_FAILURE)
 		return (EXIT_FAILURE);

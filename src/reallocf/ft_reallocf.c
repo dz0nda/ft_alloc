@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/24 06:16:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/24 06:23:51 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/11 21:17:34 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,7 @@ static void		*ft_reallocf(void *ptr, size_t size)
 	return (new);
 }
 
-void		*reallocf(void *ptr, size_t size)
+void			*reallocf(void *ptr, size_t size)
 {
 	void	*new;
 
