@@ -31,7 +31,7 @@ SUBFILE = \
 				alloc/ft_alloc_mem.c \
 				alloc/ft_alloc_search.c \
 				alloc/ft_alloc_state_user.c \
-				alloc/ft_alloc_hist.c \
+				alloc/ft_alloc_history.c \
 				alloc/ft_alloc_init.c \
 				alloc/ft_alloc_chunk.c \
 				alloc/ft_alloc_get.c \
@@ -50,12 +50,9 @@ SUBFILE = \
 
 SRCDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(SRCDIR)/, $(dir)))
 OBJDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(OBJDIR)/, $(dir)))
-INCLUDES = $(foreach dir, $(SRCDIRS), $(addprefix -I, $(dir)))
 
-VPATH = $(SRCDIRS)
 SRCS = $(foreach file, $(SUBFILE), $(addprefix $(SRCDIR)/, $(file)))
 OBJS = $(subst $(SRCDIR),$(OBJDIR),$(SRCS:.c=.o))
-DEPS = $(OBJS:.o=.d)
 
 VERBOSE = false
 ifeq ($(VERBOSE),true)
