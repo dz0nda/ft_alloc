@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:42:48 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/24 06:20:15 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/10/11 20:50:43 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,6 +25,7 @@ static void *ft_calloc(size_t count, size_t size)
 	if (new == NULL)
 		return (NULL);
 	ft_alloc_memset(new, 0, size);
+	return (new);
 }
 
 void		*calloc(size_t count, size_t size)
