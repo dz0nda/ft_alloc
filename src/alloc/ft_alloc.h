@@ -24,7 +24,7 @@
 # define EXIT_FAILURE			(int)1
 
 # define FT_AUINT		size_t
-# define FT_AALIGNMENT	sizeof(FT_AUINT) * 2
+# define FT_AALIGN	sizeof(FT_AUINT) * 2
 
 # define FT_ATINY		(FT_AUINT)256
 # define FT_ASMALL		(FT_AUINT)2048
@@ -37,8 +37,8 @@ typedef struct rlimit		t_limit;
 typedef pthread_mutex_t		t_mutex;
 
 typedef enum				e_bool {
-	FT_FALSE,
-	FT_TRUE
+	FT_TRUE = 0,
+	FT_FALSE
 }							t_bool;
 
 typedef enum				e_alloc_ft {
@@ -48,18 +48,18 @@ typedef enum				e_alloc_ft {
 	FT_NONE
 }							t_alloc_ft;
 
-typedef enum				e_mutex_status {
-	UNINITIALIZED,
-	UNLOCKED,
-	LOCKED,
-	LOCKED_BY_PARENT
-}							t_mutex_status;
+typedef enum				e_alloc_mutex {
+	FT_UNINITIALIZED = 0,
+	FT_UNLOCKED,
+	FT_LOCKED,
+	FT_LOCKED_BY_ALLOC
+}							t_amutex;
 
 typedef enum				e_alloc_index {
-	ALLOC_TINY,
-	ALLOC_SMALL,
-	ALLOC_LARGE,
-	ALLOC_NONE
+	FT_ALLOC_TINY,
+	FT_ALLOC_SMALL,
+	FT_ALLOC_LARGE,
+	FT_ALLOC_NONE
 }							t_aindex;
 
 typedef struct				s_alloc_chunk {
@@ -82,9 +82,9 @@ typedef struct				s_alloc_info
 {
 	FT_AUINT			rlim_cur;
 	FT_AUINT			rlim_max;
+	FT_AUINT			pagesize;
 	FT_AUINT			size_chunk;
 	FT_AUINT			size_arena;
-	FT_AUINT			pagesize;
 	FT_AUINT			tiny_size_request;
 	FT_AUINT			small_size_request;
 	FT_AUINT			tiny_size_map;
@@ -102,36 +102,34 @@ typedef struct				s_alloc_hist
 
 typedef struct				s_alloc_state
 {
-	FT_AUINT			mmap[ALLOC_NONE];
-	FT_AUINT			nbrchunks[ALLOC_NONE];
-	FT_AUINT			nbrarenas[ALLOC_NONE];
-	FT_AUINT			used[ALLOC_NONE];
-	FT_AUINT			freed[ALLOC_NONE];
-	FT_AUINT			ovhead[ALLOC_NONE];
+	FT_AUINT			mmap[FT_ALLOC_NONE];
+	FT_AUINT			nbrchunks[FT_ALLOC_NONE];
+	FT_AUINT			nbrarenas[FT_ALLOC_NONE];
+	FT_AUINT			used[FT_ALLOC_NONE];
+	FT_AUINT			freed[FT_ALLOC_NONE];
+	FT_AUINT			ovhead[FT_ALLOC_NONE];
 }							t_astate;
 
 typedef struct				s_alloc {
-	t_mutex_status			mutex;
+	t_amutex			mutex;
 	t_ainfo					info;
 	t_astate				state;
-	t_aarena				*arena[ALLOC_NONE];
+	t_aarena				*arena[FT_ALLOC_NONE];
 	t_ahist					history[FT_AHIST];
 }							t_alloc;
 
 extern t_alloc				g_alloc;
 extern t_mutex				g_mutex;
 
-t_achunk					*ft_alloc_arena_new(t_aarena **arena, size_t size);
-int							ft_alloc_arena_del(t_aarena **arena);
+t_achunk					*ft_alloc_arena_new(size_t size);
+int							ft_alloc_arena_del(t_achunk *chunk);
 
-int							ft_alloc_chunk_concat(t_aarena *arena, t_achunk *node);
-void						*ft_alloc_chunk_copy(void *dest, const void *src, size_t n);
-int							ft_alloc_chunk_split(t_aarena *arena, t_achunk *node, size_t size);
+t_achunk					*ft_alloc_chunk_concat(t_achunk *chunk);
+t_achunk					*ft_alloc_chunk_split(t_achunk *chunk, size_t size);
 
 t_aarena					**ft_alloc_get_arena_by_size_request(size_t size);
 t_aindex					ft_alloc_get_arena_index_by_size_request(size_t size);
-size_t						ft_alloc_get_map_size_by_size_request(size_t size);
-size_t						ft_alloc_get_size_aligned(size_t offset, size_t align);
+size_t						ft_alloc_size_aligned(size_t offset, size_t align);
 
 void						ft_alloc_history(t_achunk *chunk, t_aindex index, t_alloc_ft aft);
 
@@ -141,13 +139,14 @@ void						*ft_alloc_memset(void *b, int c, size_t len);
 void						*ft_alloc_memcpy(void *dest, const void *src, size_t n);
 
 int							ft_alloc_pthread_lock(void);
-int							ft_alloc_pthread_lock_by_parent(void);
+int							ft_alloc_pthread_lock_by_alloc(void);
 int							ft_alloc_pthread_unlock(void);
-int							ft_alloc_pthread_unlock_by_parent(void);
+int							ft_alloc_pthread_unlock_by_alloc(void);
 
 t_aarena					**ft_alloc_search_arena_by_address(void *ptr);
-t_achunk					*ft_alloc_search_chunk_by_address(t_aarena *arena, void *ptr);
-t_achunk					*ft_alloc_search_chunk_by_size(t_aarena *arena, size_t size);
+t_achunk					*ft_alloc_search_chunk_by_address(void *ptr);
+t_achunk					*ft_alloc_search_chunk_by_size(size_t size);
+
 
 int							ft_alloc_state_mmap(t_aindex aindex, size_t size, t_bool mmap);
 int							ft_alloc_state_nbrarenas(t_aindex aindex, t_bool add);

@@ -15,24 +15,14 @@
 
 static void		ft_free(void *ptr)
 {
-	t_aarena	**arena;
 	t_achunk	*chunk;
 
-	arena = NULL;
 	chunk = NULL;
-	if ((ptr != NULL) && ((arena = ft_alloc_search_arena_by_address(ptr)) != NULL))
-	{
-		if ((chunk = ft_alloc_search_chunk_by_address(*arena, ptr)) != NULL)
-		{
-			chunk->free = FT_TRUE;
-			ft_alloc_history(chunk, (*arena)->aindex, FT_FREE);
-			ft_alloc_state_swap((*arena)->aindex, chunk->size, FT_TRUE);
-			ft_alloc_chunk_concat(*arena, chunk);
-			if (((*arena)->head->size + g_alloc.info.size_arena + g_alloc.info.size_chunk) == (*arena)->size)
-				if ((*arena)->prev != NULL || (*arena)->aindex == ALLOC_LARGE)
-					ft_alloc_arena_del(arena);
-		}
-	}
+	if (ptr == NULL || ((chunk = ft_alloc_search_chunk_by_address(ptr)) == NULL))
+		return ;
+	chunk->free = FT_TRUE;
+	chunk = ft_alloc_chunk_concat(chunk);
+	ft_alloc_arena_del(chunk);
 }
 
 void			free(void *ptr)

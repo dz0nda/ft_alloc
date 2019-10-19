@@ -15,20 +15,15 @@
 
 static void		*ft_malloc(size_t size)
 {
-	t_aarena	**arena;
 	t_achunk	*chunk;
 
-	arena = NULL;
 	chunk = NULL;
-	size = ft_alloc_get_size_aligned(size, FT_AALIGNMENT);
-	arena = ft_alloc_get_arena_by_size_request(size);
-	if (arena == NULL || (chunk = ft_alloc_search_chunk_by_size(*arena, size)) == NULL)
-		if ((chunk = ft_alloc_arena_new(arena, size)) == NULL)
+	size = ft_alloc_size_aligned(size, FT_AALIGN);
+	if ((chunk = ft_alloc_search_chunk_by_size(size)) == NULL)
+		if ((chunk = ft_alloc_arena_new(size)) == NULL)
 			return (NULL);
-	ft_alloc_chunk_split(*arena, chunk, size);
-	ft_alloc_state_swap((*arena)->aindex, chunk->size, FT_FALSE);
+	ft_alloc_chunk_split(chunk, size);
 	chunk->free = FT_FALSE;
-	ft_alloc_history(chunk, (*arena)->aindex, FT_MALLOC);
 	return ((void *)((FT_AUINT)chunk + g_alloc.info.size_chunk));
 }
 

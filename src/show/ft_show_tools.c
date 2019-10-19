@@ -49,8 +49,10 @@ void	ft_show_alloc_addr(FT_AUINT ptr, FT_AUINT size, t_bool free)
 	if (free == FT_FALSE || free == FT_TRUE)
 	{
 		ft_putstr(" -> ");
-		(free == FT_FALSE) ? ft_putstr_color("used", COLOR_RED) :
-			ft_putstr_color("freed", COLOR_GREEN);
+		(free == FT_FALSE) ? ft_putstr_color("used", COLOR_RED) : 
+			ft_putstr_color("freed", COLOR_GREEN); 
+			
+			
 	}
 	ft_putstr("\n");
 }

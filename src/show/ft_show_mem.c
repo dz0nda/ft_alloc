@@ -15,7 +15,7 @@
 
 static void			ft_show_anames(t_aarena *arena, t_aindex i, t_bool free)
 {
-	const char	*anames[ALLOC_NONE] = { "TINY : ", "SMALL : ", "LARGE : " };
+	const char	*anames[FT_ALLOC_NONE] = { "TINY : ", "SMALL : ", "LARGE : " };
 	FT_AUINT	size;
 	FT_AUINT	addr;
 
@@ -57,6 +57,7 @@ static void			ft_show_alloc(t_aarena *arena, t_bool free)
 					size = g_alloc.info.size_chunk;
 					addr = (FT_AUINT)chunk;
 					ft_putstr(" - ");
+					ft_putnbr(chunk->free);
 					ft_show_alloc_addr((addr + size), chunk->size, chunk->free);
 				}
 				chunk = chunk->next;
@@ -77,7 +78,7 @@ void				show_alloc_mem(void)
 	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
 		return ;
 	ft_putstr("|| show_alloc_mem ||\n\n");
-	while (++i < ALLOC_NONE)
+	while (++i < FT_ALLOC_NONE)
 		if ((arena = g_alloc.arena[i]) != NULL)
 		{
 			ft_show_anames(arena, i, FT_FALSE);
@@ -87,6 +88,7 @@ void				show_alloc_mem(void)
 	ft_putstr("Total : ");
 	ft_putnbr(total);
 	ft_putstr(" bytes\n");
+	ft_putstr("\n");
 	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
 		return ;
 }
@@ -101,12 +103,13 @@ void				show_alloc_mem_details(void)
 	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
 		return ;
 	ft_putstr("|| show_alloc_mem_details ||\n\n");
-	while (++i < ALLOC_NONE)
+	while (++i < FT_ALLOC_NONE)
 		if ((arena = g_alloc.arena[i]) != NULL)
 		{
 			ft_show_anames(arena, i, FT_TRUE);
 			ft_show_alloc(arena, FT_TRUE);
 		}
+	ft_putstr("\n");
 	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
 		return ;
 }

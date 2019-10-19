@@ -15,7 +15,7 @@
 
 void			show_alloc_history(void)
 {
-	const char	*anames[ALLOC_NONE] = { "TINY", "SMALL", "LARGE" };
+	const char	*anames[FT_ALLOC_NONE] = { "TINY", "SMALL", "LARGE" };
 	const char	*ftnames[FT_NONE] = { "MALLOC", "FREE", "REALLOC" };
 	t_aindex	aindex;
 	t_ahist		*history;
