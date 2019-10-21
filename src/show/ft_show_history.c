@@ -15,7 +15,7 @@
 
 void			show_alloc_history(void)
 {
-	const char	*anames[FT_ALLOC_NONE] = { "TINY", "SMALL", "LARGE" };
+	const char	*anames[FT_ALLOC_AINDEX_MAX] = { "TINY", "SMALL", "LARGE" };
 	const char	*ftnames[FT_NONE] = { "MALLOC", "FREE", "REALLOC" };
 	t_aindex	aindex;
 	t_ahist		*history;
@@ -35,6 +35,6 @@ void			show_alloc_history(void)
 			ft_putstr("\t");
 			ft_putstr(ftnames[history[ij[0]].aft]);
 			ft_putstr("\t\t");
-			ft_show_alloc_addr(history[ij[0]].addr, history[ij[0]].size, history[ij[0]].free);
+			// ft_show_alloc_addr(history[ij[0]].addr, history[ij[0]].size, history[ij[0]].free);
 		}
 }

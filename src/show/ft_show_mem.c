@@ -13,102 +13,117 @@
 
 #include "ft_show.h"
 
-static void			ft_show_anames(t_aarena *arena, t_aindex i, t_bool free)
+static size_t 	ft_show_addr(FT_AUINT ptr, FT_AUINT size, t_bool details, int i)
 {
-	const char	*anames[FT_ALLOC_NONE] = { "TINY : ", "SMALL : ", "LARGE : " };
-	FT_AUINT	size;
-	FT_AUINT	addr;
+	const char		*state[4] = { "mmap", "used", "freed", "overhead" };
+	const t_acolor	color[4] = { COLOR_BLUE, COLOR_RED, COLOR_GREEN, COLOR_YELLOW };
 
-	size = g_alloc.info.size_arena;
-	addr = (FT_AUINT)arena;
-	ft_putstr(anames[i]);
-	if (free == FT_TRUE)
+	if (ptr != 0)
 	{
-		ft_show_alloc_detail("arenas", g_alloc.state.nbrarenas[i], FT_FALSE, COLOR_BOLD);
-		ft_show_alloc_detail("chunks", g_alloc.state.nbrchunks[i], FT_FALSE, COLOR_BOLD);
-		ft_show_alloc_detail("mmap", g_alloc.state.mmap[i], FT_FALSE, COLOR_BLUE);
-		ft_show_alloc_detail("used", g_alloc.state.used[i], FT_FALSE, COLOR_RED);
-		ft_show_alloc_detail("freed", g_alloc.state.freed[i], FT_FALSE, COLOR_GREEN);
-		ft_show_alloc_detail("overhead", g_alloc.state.ovhead[i], FT_FALSE, COLOR_YELLOW);
+		ft_puthexa(ptr);
+		ft_putstr(" - ");
+		ft_puthexa(ptr + size);
+		ft_putstr(" : ");
 	}
-	else
-		ft_puthexa(addr + size);
+	ft_putnbr(size);
+	ft_putstr(" bytes");
+	if (details == FT_TRUE)
+	{
+		ft_putstr(" -> ");
+		ft_putstr_color(state[i], color[i]);
+	}
 	ft_putstr("\n");
+	return (size);
 }
 
-static void			ft_show_alloc(t_aarena *arena, t_bool free)
+static void 		ft_show_alloc_chunks(size_t total[4], t_achunk *chunk, t_bool details)
 {
-	t_achunk	*chunk;
-	FT_AUINT	size;
-	FT_AUINT	addr;
+	size_t 	size;
 
-	chunk = NULL;
-	while (arena)
+	size = g_alloc.info.size_chunk;
+	if (details == FT_TRUE || (details == FT_FALSE && chunk->free == FT_FALSE))
+		ft_putstr(" - ");
+	if (details == FT_TRUE)
 	{
-		size = g_alloc.info.size_arena;
-		addr = (FT_AUINT)arena;
-		if (free == FT_TRUE)
-			ft_show_alloc_addr((addr + size), arena->size - size, -1);
-		if ((chunk = arena->head) != NULL)
-			while (chunk != NULL)
-			{
-				if (free == chunk->free || free == FT_TRUE)
-				{
-					size = g_alloc.info.size_chunk;
-					addr = (FT_AUINT)chunk;
-					ft_putstr(" - ");
-					ft_putnbr(chunk->free);
-					ft_show_alloc_addr((addr + size), chunk->size, chunk->free);
-				}
-				chunk = chunk->next;
-			}
+		total[3] += ft_show_addr((FT_AUINT)chunk, size, FT_TRUE, 3);
+		ft_putstr(" - ");
+		if (chunk->free == FT_TRUE)
+			total[2] += ft_show_addr((FT_AUINT)chunk + size, chunk->size, FT_TRUE, 2);
+		else
+			total[1] += ft_show_addr((FT_AUINT)chunk + size, chunk->size, FT_TRUE, 1);
+	}
+	if (details == FT_FALSE && chunk->free == FT_FALSE)
+		total[1] += ft_show_addr((FT_AUINT)chunk + size, chunk->size, FT_FALSE, -1);
+}
+
+static void			ft_show_alloc(size_t total[4], t_aarena *arena, t_bool details)
+{
+	const char	*anames[FT_ALLOC_AINDEX_MAX] = { "TINY : ", "SMALL : ", "LARGE : " };
+	size_t size;
+	t_achunk	*chunk;
+
+	size = g_alloc.info.size_arena;
+	while (arena && arena->head != NULL)
+	{
+		ft_putstr(anames[arena->aindex]);
+		if (details == FT_TRUE)
+		{
+			total[0] += ft_show_addr((FT_AUINT)arena, arena->size, FT_TRUE, 0);
+			total[3] += ft_show_addr((FT_AUINT)arena, size, FT_TRUE, 3);
+		}
+		else
+		{
+			ft_puthexa((FT_AUINT)arena);
+			ft_putstr("\n");
+		}
+		chunk = arena->head;
+		while (chunk != NULL)
+		{
+			ft_show_alloc_chunks(total, chunk, details);
+			chunk = chunk->next;
+		}
 		arena = arena->next;
 	}
 }
 
 void				show_alloc_mem(void)
 {
-	size_t		total;
+	size_t		total[4];
 	t_aindex	i;
 	t_aarena	*arena;
 
-	total = 0;
 	i = -1;
 	arena = NULL;
 	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
 		return ;
 	ft_putstr("|| show_alloc_mem ||\n\n");
-	while (++i < FT_ALLOC_NONE)
+	while (++i < FT_ALLOC_AINDEX_MAX)
 		if ((arena = g_alloc.arena[i]) != NULL)
-		{
-			ft_show_anames(arena, i, FT_FALSE);
-			total += g_alloc.state.used[i];
-			ft_show_alloc(arena, FT_FALSE);
-		}
+			ft_show_alloc(total, arena, FT_FALSE);
 	ft_putstr("Total : ");
-	ft_putnbr(total);
-	ft_putstr(" bytes\n");
-	ft_putstr("\n");
+	ft_show_addr(0, total[1], FT_FALSE, -1);
 	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
 		return ;
 }
 
-void				show_alloc_mem_details(void)
+void				show_alloc_mem_state(void)
 {
-	t_aindex	i;
+	size_t		total[4];
+	int	i;
 	t_aarena	*arena;
 
 	i = -1;
 	arena = NULL;
 	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
 		return ;
-	ft_putstr("|| show_alloc_mem_details ||\n\n");
-	while (++i < FT_ALLOC_NONE)
+	ft_putstr("|| show_alloc_mem ||\n\n");
+	while (++i < FT_ALLOC_AINDEX_MAX)
 		if ((arena = g_alloc.arena[i]) != NULL)
-		{
-			ft_show_anames(arena, i, FT_TRUE);
-			ft_show_alloc(arena, FT_TRUE);
-		}
+			ft_show_alloc(total, arena, FT_TRUE);
+	i = -1;
+	ft_putstr("Total :\n");
+	while (++i < 4)
+		ft_show_addr(0, total[i], FT_TRUE, i);
 	ft_putstr("\n");
 	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
 		return ;
