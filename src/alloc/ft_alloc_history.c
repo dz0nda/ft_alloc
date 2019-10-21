@@ -29,8 +29,8 @@ void			ft_alloc_history(t_achunk *chunk, t_aindex index, t_alloc_ft aft)
 	newhistory.aft = aft;
 	while (++i < FT_AHIST)
 	{
-		ft_alloc_memcpy(&nexthistory, &history[i], sizeof(t_ahist));
-		ft_alloc_memcpy(&history[i], &newhistory, sizeof(t_ahist));
-		ft_alloc_memcpy(&newhistory, &nexthistory, sizeof(t_ahist));
+		ft_memcpy(&nexthistory, &history[i], sizeof(t_ahist));
+		ft_memcpy(&history[i], &newhistory, sizeof(t_ahist));
+		ft_memcpy(&newhistory, &nexthistory, sizeof(t_ahist));
 	}
 }

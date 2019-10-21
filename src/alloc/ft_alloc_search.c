@@ -23,7 +23,7 @@ t_aarena		**ft_alloc_search_arena_by_address(void *ptr)
 	index = -1;
 	arena = NULL;
 	addr_ptr = (FT_AUINT)ptr;
-	while (++index < FT_ALLOC_NONE)
+	while (++index < FT_ALLOC_AINDEX_MAX)
 	{
 		arena = &g_alloc.arena[index];
 		while (*arena != NULL)
@@ -68,7 +68,7 @@ t_achunk		*ft_alloc_search_chunk_by_size(size_t size)
 	chunk = NULL;
 	if (size > g_alloc.info.small_size_request)
 		return (NULL);
-	arena = ft_alloc_get_arena_by_size_request(size);
+	arena = ft_alloc_get_arena_by_size(size);
 	while (*arena && chunk == NULL)
 	{
 		if ((chunk = (*arena)->head) != NULL)

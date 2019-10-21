@@ -18,12 +18,36 @@ static size_t	ft_alloc_get_map_size_by_size_request(size_t size)
 {
 	t_ainfo		info;
 
-	ft_alloc_memcpy(&info, &g_alloc.info, sizeof(t_ainfo));
+	ft_memcpy(&info, &g_alloc.info, sizeof(t_ainfo));
 	if (size <= info.tiny_size_request)
 		return (info.tiny_size_map);
 	else if (size > info.tiny_size_request && size <= info.small_size_request)
 		return (info.small_size_map);
-	return (ft_alloc_size_aligned((size + info.size_arena + info.size_chunk), info.pagesize));
+	return (ft_alloc_init_size((size + info.size_arena + info.size_chunk), info.pagesize));
+}
+
+t_aarena		**ft_alloc_get_arena_by_size(size_t size)
+{
+	t_ainfo		info;
+
+	ft_memcpy(&info, &g_alloc.info, sizeof(t_ainfo));
+	if (size <= info.tiny_size_request)
+		return (&g_alloc.arena[FT_ALLOC_TINY]);
+	else if (size > info.tiny_size_request && size <= info.small_size_request)
+		return (&g_alloc.arena[FT_ALLOC_SMALL]);
+	return (&g_alloc.arena[FT_ALLOC_LARGE]);
+}
+
+t_aindex		ft_alloc_get_aindex_by_size(size_t size)
+{
+	t_ainfo		info;
+
+	ft_memcpy(&info, &g_alloc.info, sizeof(t_ainfo));
+	if (size <= info.tiny_size_request)
+		return (FT_ALLOC_TINY);
+	else if (size > info.tiny_size_request && size <= info.small_size_request)
+		return (FT_ALLOC_SMALL);
+	return (FT_ALLOC_LARGE);
 }
 
 t_achunk		*ft_alloc_arena_new(size_t size)
@@ -33,13 +57,13 @@ t_achunk		*ft_alloc_arena_new(size_t size)
 	t_aarena	*new;
 
 	size_map = ft_alloc_get_map_size_by_size_request(size);
-	last = ft_alloc_get_arena_by_size_request(size);
+	last = ft_alloc_get_arena_by_size(size);
 	if ((new = (t_aarena *)mmap(NULL, size_map,
 	PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0)) == MAP_FAILED)
 		return (NULL);
-	ft_alloc_memset(new, 0, sizeof(t_aarena));
+	ft_memset(new, 0, sizeof(t_aarena));
 	new->size = size_map;
-	new->aindex = ft_alloc_get_arena_index_by_size_request(size);
+	new->aindex = ft_alloc_get_aindex_by_size(size);
 	new->head = (t_achunk *)((FT_AUINT)new + g_alloc.info.size_arena);
 	new->head->size = size_map - g_alloc.info.size_arena - g_alloc.info.size_chunk;
 	if (*last == NULL)
