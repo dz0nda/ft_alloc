@@ -24,7 +24,7 @@
 // 	ft_alloc_pthread_unlock_by_alloc();
 // 	if (new == NULL)
 // 		return (NULL);
-// 	ft_alloc_memset(new, 0, size);
+// 	ft_memset(new, 0, size);
 // 	return (new);
 // }
 
