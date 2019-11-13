@@ -20,13 +20,8 @@ static void     *ft_realloc_by_concat(t_achunk *chunk, void *ptr, size_t size)
 
 	aindex_req = ft_alloc_get_aindex_by_size(size);
 	aindex_chunk = ft_alloc_get_aindex_by_size(chunk->size);
-	if (aindex_req != aindex_chunk)
+	if ((aindex_req != aindex_chunk) || size > chunk->size)
 		return (NULL);
-	if (size > chunk->size)
-		ft_alloc_chunk_concat(chunk);
-	ft_alloc_chunk_split(chunk, size);
-	if (size > chunk->size)
-		return NULL;
 	ft_memcpy((void *)((FT_AUINT)chunk + g_alloc.info.s_chunk), ptr, size);
 	return ((void *)((FT_AUINT)chunk + g_alloc.info.s_chunk));
 }
@@ -69,15 +64,11 @@ static void		*ft_realloc(void *ptr, size_t size)
 	{
 		ft_alloc_chunk_concat(chunk);
 		ft_alloc_chunk_split(chunk, size);
-		// ft_putstr("\n");
-		new = ft_realloc_by_mmap(chunk, ptr, size); // if ((new = ft_realloc_by_concat(chunk, ptr, size)) == NULL)
+		if ((new = ft_realloc_by_concat(chunk, ptr, size)) == NULL)
+			new = ft_realloc_by_mmap(chunk, ptr, size); // if ((new = ft_realloc_by_concat(chunk, ptr, size)) == NULL)
 	}
 	if (new != NULL)
-		ft_alloc_history(new - g_alloc.info.s_chunk, FT_REALLOC);
-	// if ((n0ew = ft_realloc_by_concat(chunk, ptr, size)) == NULL)
-	// if (chunk)
-	// if (new != NULL)
-	// 	
+		ft_alloc_history(new - g_alloc.info.s_chunk, FT_REALLOC);	
 	return (new);
 }
 

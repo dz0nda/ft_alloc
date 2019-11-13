@@ -108,12 +108,13 @@ void				show_alloc_mem(void)
 
 void				show_alloc_mem_state(void)
 {
-	size_t		total[4];
 	int	i;
 	t_aarena	*arena;
+	size_t		total[4];
 
 	i = -1;
 	arena = NULL;
+	ft_memset(total, 0, sizeof(total));	
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return ;
 	ft_putstr("|| show_alloc_mem ||\n\n");
