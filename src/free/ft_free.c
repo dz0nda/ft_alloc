@@ -27,10 +27,10 @@ static void		ft_free(void *ptr)
 
 void			free(void *ptr)
 {
-	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
-		return ;
+	if (pthread_mutex_lock(&g_mutex) != 0)
+		return (EXIT_FAILURE);
 	if (ft_alloc_init() == EXIT_SUCCESS)
 		ft_free(ptr);
-	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
-		return ;
+	if (pthread_mutex_unlock(&g_mutex) != 0)
+		return (EXIT_FAILURE);
 }

@@ -32,11 +32,11 @@ void			*malloc(size_t size)
 	void	*new;
 
 	new = NULL;
-	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
-		return (NULL);
+	if (pthread_mutex_lock(&g_mutex) != 0)
+		return (EXIT_FAILURE);
 	if (ft_alloc_init() == EXIT_SUCCESS)
 		new = ft_malloc(size);
-	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
-		return (NULL);
+	if (pthread_mutex_unlock(&g_mutex) != 0)
+		return (EXIT_FAILURE);
 	return (new);
 }
