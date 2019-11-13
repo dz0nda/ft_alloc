@@ -49,13 +49,6 @@ typedef enum				e_alloc_ft {
 	FT_NONE
 }							t_alloc_ft;
 
-typedef enum				e_alloc_mutex {
-	FT_UNINITIALIZED = 0,
-	FT_UNLOCKED,
-	FT_LOCKED,
-	FT_LOCKED_BY_ALLOC
-}							t_amutex;
-
 typedef enum				e_alloc_index {
 	FT_ALLOC_TINY,
 	FT_ALLOC_SMALL,
@@ -83,13 +76,13 @@ typedef struct				s_alloc_info
 {
 	FT_AUINT			rlim_cur;
 	FT_AUINT			rlim_max;
-	FT_AUINT			pagesize;
-	FT_AUINT			size_chunk;
-	FT_AUINT			size_arena;
-	FT_AUINT			tiny_size_request;
-	FT_AUINT			small_size_request;
-	FT_AUINT			tiny_size_map;
-	FT_AUINT			small_size_map;
+	FT_AUINT			s_page;
+	FT_AUINT			s_chunk;
+	FT_AUINT			s_arena;
+	FT_AUINT			s_tiny_request;
+	FT_AUINT			s_small_request;
+	FT_AUINT			s_tiny_map;
+	FT_AUINT			s_small_map;
 }							t_ainfo;
 
 typedef struct				s_alloc_hist
@@ -101,20 +94,8 @@ typedef struct				s_alloc_hist
 	t_alloc_ft			aft;
 }							t_ahist;
 
-typedef struct				s_alloc_state
-{
-	FT_AUINT			mmap[FT_ALLOC_AINDEX_MAX];
-	FT_AUINT			nbrchunks[FT_ALLOC_AINDEX_MAX];
-	FT_AUINT			nbrarenas[FT_ALLOC_AINDEX_MAX];
-	FT_AUINT			used[FT_ALLOC_AINDEX_MAX];
-	FT_AUINT			freed[FT_ALLOC_AINDEX_MAX];
-	FT_AUINT			ovhead[FT_ALLOC_AINDEX_MAX];
-}							t_astate;
-
 typedef struct				s_alloc {
-	t_amutex			mutex;
 	t_ainfo					info;
-	t_astate				state;
 	t_aarena				*arena[FT_ALLOC_AINDEX_MAX];
 	t_ahist					history[FT_AHIST];
 }							t_alloc;
@@ -132,7 +113,7 @@ t_achunk					*ft_alloc_chunk_split(t_achunk *chunk, size_t size);
 
 void						ft_alloc_history(t_achunk *chunk, t_aindex index, t_alloc_ft aft);
 
-size_t						ft_alloc_init_size(size_t offset, size_t align);
+size_t						ft_alloc_align_size(size_t offset, size_t align);
 int							ft_alloc_init(void);
 
 int							ft_alloc_pthread_lock(void);

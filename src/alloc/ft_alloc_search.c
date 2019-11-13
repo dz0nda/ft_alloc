@@ -51,7 +51,7 @@ t_achunk		*ft_alloc_search_chunk_by_address(void *ptr)
 	if (arena != NULL && (chunk = (*arena)->head) != NULL)
 		while (chunk != NULL)
 		{
-			addr_chunk = (FT_AUINT)((FT_AUINT)chunk + g_alloc.info.size_chunk);
+			addr_chunk = (FT_AUINT)((FT_AUINT)chunk + g_alloc.info.s_chunk);
 			if (addr_chunk == addr_ptr)
 				return (chunk);
 			chunk = chunk->next;
@@ -66,7 +66,7 @@ t_achunk		*ft_alloc_search_chunk_by_size(size_t size)
 
 	arena = NULL;
 	chunk = NULL;
-	if (size > g_alloc.info.small_size_request)
+	if (size > g_alloc.info.s_small_request)
 		return (NULL);
 	arena = ft_alloc_get_arena_by_size(size);
 	while (*arena && chunk == NULL)

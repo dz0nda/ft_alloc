@@ -12,18 +12,18 @@
 /* ************************************************************************** */
 
 #include "ft_alloc.h"
-#include "../show/ft_show.h"
+// #include "../show/ft_show.h"
 
 static size_t	ft_alloc_get_map_size_by_size_request(size_t size)
 {
 	t_ainfo		info;
 
 	ft_memcpy(&info, &g_alloc.info, sizeof(t_ainfo));
-	if (size <= info.tiny_size_request)
-		return (info.tiny_size_map);
-	else if (size > info.tiny_size_request && size <= info.small_size_request)
-		return (info.small_size_map);
-	return (ft_alloc_init_size((size + info.size_arena + info.size_chunk), info.pagesize));
+	if (size <= info.s_tiny_request)
+		return (info.s_tiny_map);
+	else if (size > info.s_tiny_request && size <= info.s_small_request)
+		return (info.s_small_map);
+	return (ft_alloc_align_size((size + info.s_arena + info.s_chunk), info.s_page));
 }
 
 t_aarena		**ft_alloc_get_arena_by_size(size_t size)
@@ -31,9 +31,9 @@ t_aarena		**ft_alloc_get_arena_by_size(size_t size)
 	t_ainfo		info;
 
 	ft_memcpy(&info, &g_alloc.info, sizeof(t_ainfo));
-	if (size <= info.tiny_size_request)
+	if (size <= info.s_tiny_request)
 		return (&g_alloc.arena[FT_ALLOC_TINY]);
-	else if (size > info.tiny_size_request && size <= info.small_size_request)
+	else if (size > info.s_tiny_request && size <= info.s_small_request)
 		return (&g_alloc.arena[FT_ALLOC_SMALL]);
 	return (&g_alloc.arena[FT_ALLOC_LARGE]);
 }
@@ -43,9 +43,9 @@ t_aindex		ft_alloc_get_aindex_by_size(size_t size)
 	t_ainfo		info;
 
 	ft_memcpy(&info, &g_alloc.info, sizeof(t_ainfo));
-	if (size <= info.tiny_size_request)
+	if (size <= info.s_tiny_request)
 		return (FT_ALLOC_TINY);
-	else if (size > info.tiny_size_request && size <= info.small_size_request)
+	else if (size > info.s_tiny_request && size <= info.s_small_request)
 		return (FT_ALLOC_SMALL);
 	return (FT_ALLOC_LARGE);
 }
@@ -64,8 +64,8 @@ t_achunk		*ft_alloc_arena_new(size_t size)
 	ft_memset(new, 0, sizeof(t_aarena));
 	new->size = size_map;
 	new->aindex = ft_alloc_get_aindex_by_size(size);
-	new->head = (t_achunk *)((FT_AUINT)new + g_alloc.info.size_arena);
-	new->head->size = size_map - g_alloc.info.size_arena - g_alloc.info.size_chunk;
+	new->head = (t_achunk *)((FT_AUINT)new + g_alloc.info.s_arena);
+	new->head->size = size_map - g_alloc.info.s_arena - g_alloc.info.s_chunk;
 	if (*last == NULL)
 		*last = new;
 	else
@@ -86,7 +86,7 @@ int				ft_alloc_arena_del(t_achunk *chunk)
 	if ((arena = ft_alloc_search_arena_by_address((void *)chunk)) == NULL)
 		return (EXIT_FAILURE);
 	del = (*arena);
-	if ((*arena)->size == (chunk->size + g_alloc.info.size_arena + g_alloc.info.size_chunk))
+	if ((*arena)->size == (chunk->size + g_alloc.info.s_arena + g_alloc.info.s_chunk))
 	{
 		if (del->prev == NULL)
 			*arena = del->next;
