@@ -13,7 +13,7 @@
 
 #include "ft_alloc.h"
 
-t_alloc			g_alloc = { 0 };
+t_alloc			g_alloc;
 t_mutex			g_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 static int		ft_alloc_init_info(void)

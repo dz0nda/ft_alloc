@@ -15,9 +15,6 @@
 
 static size_t 	ft_show_addr(FT_AUINT ptr, FT_AUINT size)
 {
-	const char		*state[4] = { "mmap", "used", "freed", "overhead" };
-	const t_acolor	color[4] = { COLOR_BLUE, COLOR_RED, COLOR_GREEN, COLOR_YELLOW };
-
 	if (ptr != 0)
 	{
 		ft_puthexa(ptr);
