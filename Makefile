@@ -9,81 +9,88 @@ ifeq ($(HOSTTYPE), )
 endif
 
 LIBNAME = libft_malloc.so
-TARGET = libft_malloc_$(HOSTTYPE).so
+NAME = libft_malloc_$(HOSTTYPE).so
 SRCDIR = src
 OBJDIR = build
 
-MAKEFILE_NAME = Makefile-$(lastword $(subst /, ,$(TARGET)))
+MAKEFILE_NAME = Makefile-$(lastword $(subst /, ,$(LIBNAME)))
 
 CC = gcc
-CFLAGS = -fPIC 
+CFLAGS = -Wall -Wextra -Werror -fPIC -pthread
 LDFLAGS = -shared
 SUBDIR = \
-				alloc \
-				free \
-				malloc \
-				libft
+			alloc \
+			free \
+			malloc \
+			calloc \
+			realloc \
+			reallocf \
+			show \
+			libft
 SUBFILE = \
-				alloc/ft_alloc_search.c \
-				alloc/ft_alloc_history.c \
-				alloc/ft_alloc_init.c \
-				alloc/ft_alloc_chunk.c \
-				alloc/ft_alloc_arena.c \
-				malloc/ft_malloc.c \
-				free/ft_free.c \
-				realloc/ft_realloc.c \
-				calloc/ft_calloc.c \
-				reallocf/ft_reallocf.c \
-				show/ft_show_history.c \
-				show/ft_show_mem.c \
-				libft/ft_memcpy.c \
-				libft/ft_memset.c \
-				libft/ft_putnbr.c \
-				libft/ft_putstr.c \
-				libft/ft_memmove.c
+			alloc/ft_alloc_search.c \
+			alloc/ft_alloc_history.c \
+			alloc/ft_alloc_init.c \
+			alloc/ft_alloc_chunk.c \
+			alloc/ft_alloc_arena.c \
+			malloc/ft_malloc.c \
+			free/ft_free.c \
+			realloc/ft_realloc.c \
+			calloc/ft_calloc.c \
+			reallocf/ft_reallocf.c \
+			show/ft_show_history.c \
+			show/ft_show_mem.c \
+			libft/ft_memcpy.c \
+			libft/ft_memset.c \
+			libft/ft_putnbr.c \
+			libft/ft_putstr.c \
+			libft/ft_memmove.c
 
 SRCDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(SRCDIR)/, $(dir)))
 OBJDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(OBJDIR)/, $(dir)))
+INCLUDES = $(foreach dir, $(SRCDIRS), $(addprefix -I, $(dir)))
 
 SRCS = $(foreach file, $(SUBFILE), $(addprefix $(SRCDIR)/, $(file)))
 OBJS = $(subst $(SRCDIR),$(OBJDIR),$(SRCS:.c=.o))
+DEPS = $(OBJS:.o=.d)
 
-VERBOSE = false
-ifeq ($(VERBOSE),true)
+VERBOSE = FALSE
+ifeq ($(VERBOSE),TRUE)
 	HIDE =  
 else
 	HIDE = @
-endif 
-RM = rm -rf 
-RMDIR = rm -rf 
+endif
+MAKE = make -C
+RM = rm -rf
 MKDIR = mkdir -p
 ERRIGNORE = 2>/dev/null
-SEP=/
-PSEP = $(strip $(SEP))
 
-.PHONY: all directories clean fclean re
+.PHONY: all clean fclean re
 
-all: directories $(TARGET)
+all: $(NAME)
 
-$(TARGET): $(OBJS)
-	$(HIDE)echo $(MAKEFILE_NAME): Linking $@
-	$(HIDE)$(CC) $(OBJS) $(LDFLAGS) -o $(TARGET)
-	$(HIDE)ln -s $(TARGET) $(LIBNAME)
+$(NAME): $(OBJDIRS) $(OBJS) 
+	$(HIDE)echo $(MAKEFILE_NAME): "Linking \t ->" $@
+	$(HIDE)$(CC) $(OBJS) $(LDFLAGS) -o $(NAME)
+	$(HIDE)ln -s $(NAME) $(LIBNAME)
+
+-include $(DEPS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@echo $(MAKEFILE_NAME): Building $@
-	$(HIDE)$(CC) $(CFLAGS) -c $(INCLUDES) -o $@ $< -MMD
+	@echo $(MAKEFILE_NAME): "Building \t ->" $@
+	$(HIDE)$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@ -MMD
 
-directories:
-	$(HIDE)$(MKDIR) $(subst /,$(PSEP),$(OBJDIRS)) $(ERRIGNORE)
+$(OBJDIRS):
+	@echo $(MAKEFILE_NAME): "Making  \t ->" $(OBJDIRS)
+	$(HIDE)$(MKDIR) $(OBJDIRS) $(ERRIGNORE)
 
 clean:
-	$(HIDE)$(RMDIR) $(subst /,$(PSEP),$(OBJDIRS)) $(ERRIGNORE)
-	@echo $(MAKEFILE_NAME): Build cleaning done !
+	$(HIDE)$(RM) $(OBJDIR) $(ERRIGNORE)
+	@echo $(MAKEFILE_NAME): Clean done !
 
 fclean: clean
-	$(HIDE)$(RM) $(TARGET) $(ERRIGNORE)
+	$(HIDE)$(RM) $(NAME) $(ERRIGNORE)
 	$(HIDE)$(RM) $(LIBNAME) $(ERRIGNORE)
-	@echo $(MAKEFILE_NAME): Bin cleaning done !
+	@echo $(MAKEFILE_NAME): Fclean done !
 
 re: fclean all
