@@ -16,60 +16,39 @@
 t_alloc			g_alloc = { 0 };
 t_mutex			g_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-static int 		ft_alloc_init_rlimit(t_ainfo *info)
+static int		ft_alloc_init_info(void)
 {
-	t_limit		rlp;
-
-	ft_memset(&rlp, 0, sizeof(t_limit));
-	if (getrlimit(RLIMIT_AS, &rlp) == -1)
+	t_limit		rl;
+	t_ainfo  	*info;
+	
+	ft_memset(&rl, 0, sizeof(t_limit));
+	if	((info = &g_alloc.info) == NULL)
 		return (EXIT_FAILURE);
-	info->rlim_cur = (FT_AUINT)rlp.rlim_cur;
-	info->rlim_max = (FT_AUINT)rlp.rlim_max;
-	return (EXIT_SUCCESS);
-}
-
-static int		ft_alloc_init_system(t_ainfo *info)
-{
-	if ((info->pagesize = getpagesize()) == 0)
+	if (getrlimit(RLIMIT_AS, &rl) == -1 || !(info->s_page = getpagesize()))
 		return (EXIT_FAILURE);
-	info->size_chunk = ft_alloc_init_size(sizeof(t_achunk), FT_AALIGN);
-	info->size_arena = ft_alloc_init_size(sizeof(t_aarena), FT_AALIGN);
+	info->rlim_cur = (FT_AUINT)rl.rlim_cur;
+	info->rlim_max = (FT_AUINT)rl.rlim_max;
+	info->s_chunk = ft_alloc_align_size(sizeof(t_achunk), FT_AALIGN);
+	info->s_arena = ft_alloc_align_size(sizeof(t_aarena), FT_AALIGN);
+	info->s_tiny_request = ft_alloc_align_size(FT_ATINY, FT_AALIGN);
+	info->s_small_request = ft_alloc_align_size(FT_ASMALL, FT_AALIGN);
+	info->s_tiny_map = ft_alloc_align_size((info->s_tiny_request * 
+		FT_AN) + (info->s_chunk * FT_AN) + info->s_arena, info->s_page);
+	info->s_small_map = ft_alloc_align_size((info->s_small_request *
+		FT_AM) + (info->s_chunk * FT_AM) + info->s_arena, info->s_page);
 	return (EXIT_SUCCESS);
 }
 
-static int		ft_alloc_init_size_align(t_ainfo *info)
-{
-	FT_AUINT	size_map;
-
-	size_map = 0;
-	info->tiny_size_request = ft_alloc_init_size(FT_ATINY, FT_AALIGN);
-	info->small_size_request = ft_alloc_init_size(FT_ASMALL, FT_AALIGN);
-	size_map = (info->tiny_size_request * 100)
-				+ (info->size_chunk * 100) + info->size_arena;
-	info->tiny_size_map = ft_alloc_init_size(size_map, info->pagesize);
-	size_map = (info->small_size_request * 100)
-				+ (info->size_chunk * 100) + info->size_arena;
-	info->small_size_map = ft_alloc_init_size(size_map, info->pagesize);
-	return (EXIT_SUCCESS);
-}
-
-size_t			ft_alloc_init_size(size_t offset, size_t align)
+size_t			ft_alloc_align_size(size_t offset, size_t align)
 {
 	return ((offset % align == 0) ? offset : offset + (align - (offset % align) % align));
 }
 
 int				ft_alloc_init(void)
 {
-	t_ainfo		*info;
-
-	info = &g_alloc.info;
-	if (info->pagesize != 0)
+	if (g_alloc.info.s_page != 0)
 		return (EXIT_SUCCESS);
-	if (ft_alloc_init_rlimit(info) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (ft_alloc_init_system(info) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (ft_alloc_init_size_align(info) == EXIT_FAILURE)
+	if (ft_alloc_init_info() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
