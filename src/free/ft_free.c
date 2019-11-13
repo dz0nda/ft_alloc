@@ -28,9 +28,9 @@ static void		ft_free(void *ptr)
 void			free(void *ptr)
 {
 	if (pthread_mutex_lock(&g_mutex) != 0)
-		return (EXIT_FAILURE);
+		return ;
 	if (ft_alloc_init() == EXIT_SUCCESS)
 		ft_free(ptr);
 	if (pthread_mutex_unlock(&g_mutex) != 0)
-		return (EXIT_FAILURE);
+		return ;
 }
