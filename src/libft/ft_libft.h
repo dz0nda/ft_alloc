@@ -26,5 +26,6 @@ void			ft_putstr(const char *s);
 void	        ft_putstr_color(const char *s, int color);
 void			ft_puthexa(size_t nb);
 void			ft_putnbr(int nb);
+void			*ft_memmove(void *dst, const void *src, size_t len);
 
 #endif

@@ -21,7 +21,8 @@ static void		ft_free(void *ptr)
 	if (ptr == NULL || ((chunk = ft_alloc_search_chunk_by_address(ptr)) == NULL))
 		return ;
 	chunk->free = FT_TRUE;
-	chunk = ft_alloc_chunk_concat(chunk);
+	ft_alloc_history(chunk, FT_FREE);
+	ft_alloc_chunk_concat(chunk);
 	ft_alloc_arena_del(chunk);
 }
 

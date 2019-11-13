@@ -29,8 +29,8 @@
 
 # define FT_ATINY		(FT_AUINT)256
 # define FT_ASMALL		(FT_AUINT)2048
-# define FT_AN				(FT_AUINT)110
-# define FT_AM				(FT_AUINT)110
+# define FT_AN				(FT_AUINT)100
+# define FT_AM				(FT_AUINT)100
 
 # define FT_AHIST		(int)150
 
@@ -111,7 +111,7 @@ int							ft_alloc_arena_del(t_achunk *chunk);
 t_achunk					*ft_alloc_chunk_concat(t_achunk *chunk);
 t_achunk					*ft_alloc_chunk_split(t_achunk *chunk, size_t size);
 
-void						ft_alloc_history(t_achunk *chunk, t_aindex index, t_alloc_ft aft);
+void						ft_alloc_history(t_achunk *chunk, t_alloc_ft aft);
 
 size_t						ft_alloc_align_size(size_t offset, size_t align);
 int							ft_alloc_init(void);
@@ -123,6 +123,7 @@ int							ft_alloc_pthread_unlock_by_alloc(void);
 
 t_aarena					**ft_alloc_search_arena_by_address(void *ptr);
 t_achunk					*ft_alloc_search_chunk_by_address(void *ptr);
+t_achunk					**ft_alloc_search_achunk_by_address(void *ptr);
 t_achunk					*ft_alloc_search_chunk_by_size(size_t size);
 
 #endif

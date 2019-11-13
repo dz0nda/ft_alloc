@@ -22,8 +22,10 @@ static void		*ft_malloc(size_t size)
 	if ((chunk = ft_alloc_search_chunk_by_size(size)) == NULL)
 		if ((chunk = ft_alloc_arena_new(size)) == NULL)
 			return (NULL);
-	chunk = ft_alloc_chunk_split(chunk, size);
+	if (size <= g_alloc.info.s_small_request)
+		ft_alloc_chunk_split(chunk, size);
 	chunk->free = FT_FALSE;
+	ft_alloc_history(chunk, FT_MALLOC);
 	return ((void *)((FT_AUINT)chunk + g_alloc.info.s_chunk));
 }
 

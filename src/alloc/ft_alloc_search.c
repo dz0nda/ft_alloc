@@ -26,7 +26,7 @@ t_aarena		**ft_alloc_search_arena_by_address(void *ptr)
 	while (++index < FT_ALLOC_AINDEX_MAX)
 	{
 		arena = &g_alloc.arena[index];
-		while (*arena != NULL)
+		while (arena && *arena != NULL)
 		{
 			addr_arena = (FT_AUINT)(*arena);
 			if ((addr_arena) <= addr_ptr && addr_ptr <= (addr_arena + (*arena)->size))
@@ -37,6 +37,28 @@ t_aarena		**ft_alloc_search_arena_by_address(void *ptr)
 	return (NULL);
 }
 
+t_achunk		**ft_alloc_search_achunk_by_address(void *ptr)
+{
+	t_aarena **arena;
+	t_achunk **chunk;
+	FT_AUINT addr_ptr;
+	FT_AUINT addr_chunk;
+
+	if ((arena = ft_alloc_search_arena_by_address(ptr)) == NULL)
+		return (NULL);
+	addr_ptr = (FT_AUINT)ptr;
+	if (arena && *arena && (chunk = &(*arena)->head) != NULL)
+		while (*chunk != NULL)
+		{
+			addr_chunk = (FT_AUINT)((FT_AUINT)(*chunk) + g_alloc.info.s_chunk);
+			if (addr_chunk == addr_ptr)
+				return (chunk);
+			chunk = &(*chunk)->next;
+		}
+	return (NULL);
+}
+
+
 t_achunk		*ft_alloc_search_chunk_by_address(void *ptr)
 {
 	t_aarena **arena;
@@ -46,9 +68,8 @@ t_achunk		*ft_alloc_search_chunk_by_address(void *ptr)
 
 	if ((arena = ft_alloc_search_arena_by_address(ptr)) == NULL)
 		return (NULL);
-	chunk = NULL;
 	addr_ptr = (FT_AUINT)ptr;
-	if (arena != NULL && (chunk = (*arena)->head) != NULL)
+	if (arena && *arena && (chunk = (*arena)->head) != NULL)
 		while (chunk != NULL)
 		{
 			addr_chunk = (FT_AUINT)((FT_AUINT)chunk + g_alloc.info.s_chunk);
@@ -64,21 +85,17 @@ t_achunk		*ft_alloc_search_chunk_by_size(size_t size)
 	t_aarena 	**arena;
 	t_achunk 	*chunk;
 
-	arena = NULL;
-	chunk = NULL;
 	if (size > g_alloc.info.s_small_request)
 		return (NULL);
 	arena = ft_alloc_get_arena_by_size(size);
-	while (*arena && chunk == NULL)
+	while (arena && *arena && (chunk = (*arena)->head) != NULL)
 	{
-		if ((chunk = (*arena)->head) != NULL)
-			while (chunk != NULL)
-			{
-				if (chunk->size >= size && chunk->free == FT_TRUE)
-					return (chunk);
-				chunk = chunk->next;
-			}
-		chunk = NULL;
+		while (chunk != NULL)
+		{
+			if (chunk->size >= size && chunk->free == FT_TRUE)
+				return (chunk);
+			chunk = chunk->next;
+		}
 		arena = &(*arena)->next;
 	}
 	return (NULL);

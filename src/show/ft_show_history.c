@@ -13,6 +13,23 @@
 
 #include "ft_show.h"
 
+static size_t 	ft_show_addr(FT_AUINT ptr, FT_AUINT size)
+{
+	const char		*state[4] = { "mmap", "used", "freed", "overhead" };
+	const t_acolor	color[4] = { COLOR_BLUE, COLOR_RED, COLOR_GREEN, COLOR_YELLOW };
+
+	if (ptr != 0)
+	{
+		ft_puthexa(ptr);
+		ft_putstr(" - ");
+		ft_puthexa(ptr + size);
+		ft_putstr(" : ");
+	}
+	ft_putnbr(size);
+	ft_putstr(" bytes");
+	return (size);
+}
+
 void			show_alloc_history(void)
 {
 	const char	*anames[FT_ALLOC_AINDEX_MAX] = { "TINY", "SMALL", "LARGE" };
@@ -35,6 +52,7 @@ void			show_alloc_history(void)
 			ft_putstr("\t");
 			ft_putstr(ftnames[history[ij[0]].aft]);
 			ft_putstr("\t\t");
-			// ft_show_alloc_addr(history[ij[0]].addr, history[ij[0]].size, history[ij[0]].free);
+			ft_show_addr(history[ij[0]].addr, history[ij[0]].size);
+			ft_putstr("\n");
 		}
 }

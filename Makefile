@@ -20,33 +20,27 @@ CFLAGS = -fPIC
 LDFLAGS = -shared
 SUBDIR = \
 				alloc \
-				calloc \
 				free \
 				malloc \
-				realloc \
-				reallocf \
-				show
+				libft
 SUBFILE = \
-				calloc/ft_calloc.c \
-				alloc/ft_alloc_mem.c \
 				alloc/ft_alloc_search.c \
-				alloc/ft_alloc_state_user.c \
 				alloc/ft_alloc_history.c \
 				alloc/ft_alloc_init.c \
 				alloc/ft_alloc_chunk.c \
-				alloc/ft_alloc_get.c \
 				alloc/ft_alloc_arena.c \
-				alloc/ft_alloc_pthread.c \
-				alloc/ft_alloc_state_system.c \
 				malloc/ft_malloc.c \
-				reallocf/ft_reallocf.c \
-				realloc/ft_realloc.c \
 				free/ft_free.c \
-				show/ft_show_hexa.c \
-				show/ft_show_info.c \
-				show/ft_show_mem.c \
+				realloc/ft_realloc.c \
+				calloc/ft_calloc.c \
+				reallocf/ft_reallocf.c \
 				show/ft_show_history.c \
-				show/ft_show_tools.c
+				show/ft_show_mem.c \
+				libft/ft_memcpy.c \
+				libft/ft_memset.c \
+				libft/ft_putnbr.c \
+				libft/ft_putstr.c \
+				libft/ft_memmove.c
 
 SRCDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(SRCDIR)/, $(dir)))
 OBJDIRS = $(foreach dir, $(SUBDIR), $(addprefix $(OBJDIR)/, $(dir)))

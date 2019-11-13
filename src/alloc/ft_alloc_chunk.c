@@ -26,6 +26,7 @@ t_achunk		*ft_alloc_chunk_concat(t_achunk *chunk)
 		chunk->prev->size += chunk->size + g_alloc.info.s_chunk;
 		if ((chunk->prev->next = chunk->next) != NULL)
 			chunk->next->prev = chunk->prev;
+		chunk->prev->free = chunk->free;
 		chunk = chunk->prev;
 	}
 	return (chunk);
@@ -36,7 +37,7 @@ t_achunk		*ft_alloc_chunk_split(t_achunk *chunk, size_t size)
 	t_achunk	*new;
 
 	new = NULL;
-	if (size > g_alloc.info.s_small_request || !(chunk->size > (size + g_alloc.info.s_chunk)))
+	if (chunk->size < (size + g_alloc.info.s_chunk))
 		return (chunk);
 	new = (t_achunk *)((FT_AUINT)chunk + g_alloc.info.s_chunk + size);
 	new->size = chunk->size - (g_alloc.info.s_chunk + size);

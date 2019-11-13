@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:38:17 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 21:51:39 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/12 09:37:03 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,7 +40,7 @@ static void 		ft_show_alloc_chunks(size_t total[4], t_achunk *chunk, t_bool deta
 {
 	size_t 	size;
 
-	size = g_alloc.info.size_chunk;
+	size = g_alloc.info.s_chunk;
 	if (details == FT_TRUE || (details == FT_FALSE && chunk->free == FT_FALSE))
 		ft_putstr(" - ");
 	if (details == FT_TRUE)
@@ -62,7 +62,7 @@ static void			ft_show_alloc(size_t total[4], t_aarena *arena, t_bool details)
 	size_t size;
 	t_achunk	*chunk;
 
-	size = g_alloc.info.size_arena;
+	size = g_alloc.info.s_arena;
 	while (arena && arena->head != NULL)
 	{
 		ft_putstr(anames[arena->aindex]);
@@ -94,7 +94,7 @@ void				show_alloc_mem(void)
 
 	i = -1;
 	arena = NULL;
-	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
+	if (pthread_mutex_lock(&g_mutex) != 0)
 		return ;
 	ft_putstr("|| show_alloc_mem ||\n\n");
 	while (++i < FT_ALLOC_AINDEX_MAX)
@@ -102,7 +102,7 @@ void				show_alloc_mem(void)
 			ft_show_alloc(total, arena, FT_FALSE);
 	ft_putstr("Total : ");
 	ft_show_addr(0, total[1], FT_FALSE, -1);
-	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
+	if (pthread_mutex_unlock(&g_mutex) != 0)
 		return ;
 }
 
@@ -114,7 +114,7 @@ void				show_alloc_mem_state(void)
 
 	i = -1;
 	arena = NULL;
-	if (ft_alloc_pthread_lock() == EXIT_FAILURE)
+	if (pthread_mutex_lock(&g_mutex) != 0)
 		return ;
 	ft_putstr("|| show_alloc_mem ||\n\n");
 	while (++i < FT_ALLOC_AINDEX_MAX)
@@ -125,6 +125,6 @@ void				show_alloc_mem_state(void)
 	while (++i < 4)
 		ft_show_addr(0, total[i], FT_TRUE, i);
 	ft_putstr("\n");
-	if (ft_alloc_pthread_unlock() == EXIT_FAILURE)
+	if (pthread_mutex_unlock(&g_mutex) != 0)
 		return ;
 }

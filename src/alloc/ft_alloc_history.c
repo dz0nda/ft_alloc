@@ -13,7 +13,7 @@
 
 #include "ft_alloc.h"
 
-void			ft_alloc_history(t_achunk *chunk, t_aindex index, t_alloc_ft aft)
+void			ft_alloc_history(t_achunk *chunk, t_alloc_ft aft)
 {
 	int			i;
 	t_ahist		*history;
@@ -22,10 +22,14 @@ void			ft_alloc_history(t_achunk *chunk, t_aindex index, t_alloc_ft aft)
 
 	i = -1;
 	history = g_alloc.history;
-	newhistory.addr = (FT_AUINT)chunk + sizeof(t_achunk);
-	newhistory.size = chunk->size;
-	newhistory.free = chunk->free;
-	newhistory.index = index;
+	ft_memset(&newhistory, 0, sizeof(newhistory));
+	if (chunk != NULL)
+	{
+		newhistory.addr = (FT_AUINT)chunk + g_alloc.info.s_chunk;
+		newhistory.size = chunk->size;
+		newhistory.free = chunk->free;
+		newhistory.index = ft_alloc_get_aindex_by_size(chunk->size);
+	}
 	newhistory.aft = aft;
 	while (++i < FT_AHIST)
 	{

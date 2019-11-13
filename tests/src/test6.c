@@ -14,9 +14,7 @@ int		main(void)
 	free(p3);
 	show_alloc_mem();
 	ft_putstr("\n");
-	show_alloc_mem_details();
-	ft_putstr("\n");
-	show_alloc_info();
+	show_alloc_mem_state();
 	ft_putstr("\n");
 	show_alloc_history();
 }
