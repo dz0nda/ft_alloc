@@ -117,7 +117,7 @@ void				show_alloc_mem_state(void)
 	ft_memset(total, 0, sizeof(total));	
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return ;
-	ft_putstr("|| show_alloc_mem ||\n\n");
+	ft_putstr("|| show_alloc_mem_state ||\n\n");
 	while (++i < FT_ALLOC_AINDEX_MAX)
 		if ((arena = g_alloc.arena[i]) != NULL)
 			ft_show_alloc(total, arena, FT_TRUE);
