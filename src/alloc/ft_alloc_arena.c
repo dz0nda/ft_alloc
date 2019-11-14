@@ -86,8 +86,8 @@ int				ft_alloc_arena_del(t_achunk *chunk)
 	if ((arena = ft_alloc_search_arena_by_address((void *)chunk)) == NULL)
 		return (EXIT_FAILURE);
 	del = (*arena);
-	if ((*arena)->size ==
-		(chunk->size + g_alloc.info.s_arena + g_alloc.info.s_chunk))
+	if ((del->prev != NULL || del->next != NULL) && ((*arena)->size ==
+		(chunk->size + g_alloc.info.s_arena + g_alloc.info.s_chunk)))
 	{
 		if (del->prev == NULL)
 			*arena = del->next;
