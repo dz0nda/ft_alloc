@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:08:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 21:04:02 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/14 06:51:14 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,10 +19,10 @@ t_mutex			g_mutex = PTHREAD_MUTEX_INITIALIZER;
 static int		ft_alloc_init_info(void)
 {
 	t_limit		rl;
-	t_ainfo  	*info;
-	
+	t_ainfo		*info;
+
 	ft_memset(&rl, 0, sizeof(t_limit));
-	if	((info = &g_alloc.info) == NULL)
+	if ((info = &g_alloc.info) == NULL)
 		return (EXIT_FAILURE);
 	if (getrlimit(RLIMIT_AS, &rl) == -1 || !(info->s_page = getpagesize()))
 		return (EXIT_FAILURE);
@@ -32,7 +32,7 @@ static int		ft_alloc_init_info(void)
 	info->s_arena = ft_alloc_align_size(sizeof(t_aarena), FT_AALIGN);
 	info->s_tiny_request = ft_alloc_align_size(FT_ATINY, FT_AALIGN);
 	info->s_small_request = ft_alloc_align_size(FT_ASMALL, FT_AALIGN);
-	info->s_tiny_map = ft_alloc_align_size((info->s_tiny_request * 
+	info->s_tiny_map = ft_alloc_align_size((info->s_tiny_request *
 		FT_AN) + (info->s_chunk * FT_AN) + info->s_arena, info->s_page);
 	info->s_small_map = ft_alloc_align_size((info->s_small_request *
 		FT_AM) + (info->s_chunk * FT_AM) + info->s_arena, info->s_page);
@@ -41,7 +41,8 @@ static int		ft_alloc_init_info(void)
 
 size_t			ft_alloc_align_size(size_t offset, size_t align)
 {
-	return ((offset % align == 0) ? offset : offset + (align - (offset % align) % align));
+	return ((offset % align == 0) ? offset :
+			offset + (align - (offset % align) % align));
 }
 
 int				ft_alloc_init(void)

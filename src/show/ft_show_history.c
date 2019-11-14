@@ -6,14 +6,14 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 21:22:20 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 23:04:15 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/14 07:05:02 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_show.h"
 
-static size_t 	ft_show_addr(FT_AUINT ptr, FT_AUINT size)
+static size_t	ft_show_addr(FT_AUINT ptr, FT_AUINT size)
 {
 	if (ptr != 0)
 	{

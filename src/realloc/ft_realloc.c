@@ -1,19 +1,19 @@
-// /* ************************************************************************** */
-// /*                                                          LE - /            */
-// /*                                                              /             */
-// /*   ft_realloc.c                                     .::    .:/ .      .::   */
-// /*                                                 +:+:+   +:    +:  +:+:+    */
-// /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
-// /*                                                 #+#   #+    #+    #+#      */
-// /*   Created: 2019/10/11 21:16:55 by dzonda       #+#   ##    ##    #+#       */
-// /*   Updated: 2019/10/11 21:17:01 by dzonda      ###    #+. /#+    ###.fr     */
-// /*                                                         /                  */
-// /*                                                        /                   */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   ft_realloc.c                                     .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/11/14 06:56:17 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/14 06:57:28 by dzonda      ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
 
 #include "ft_realloc.h"
 
-static void     *ft_realloc_by_concat(t_achunk *chunk, void *ptr, size_t size)
+static void		*ft_realloc_by_concat(t_achunk *chunk, void *ptr, size_t size)
 {
 	t_aindex	aindex_req;
 	t_aindex	aindex_chunk;
@@ -40,15 +40,15 @@ static void		*ft_realloc_by_mmap(t_achunk *chunk, void *ptr, size_t size)
 		return (NULL);
 	if (new == NULL)
 		return (NULL);
-    if (ptr != NULL && chunk != NULL)
-    {
-        ft_memcpy(new, ptr, (chunk->size >= size) ? size : chunk->size);
+	if (ptr != NULL && chunk != NULL)
+	{
+		ft_memcpy(new, ptr, (chunk->size >= size) ? size : chunk->size);
 		if (pthread_mutex_unlock(&g_mutex) != 0)
 			return (NULL);
-        free(ptr);
+		free(ptr);
 		if (pthread_mutex_lock(&g_mutex) != 0)
 			return (NULL);
-    }
+	}
 	return (new);
 }
 
@@ -60,13 +60,13 @@ static void		*ft_realloc(void *ptr, size_t size)
 	new = NULL;
 	chunk = NULL;
 	size = ft_alloc_align_size(size, FT_AALIGN);
-	if (ptr == NULL) 
-        new = ft_realloc_by_mmap(chunk, ptr, size);
+	if (ptr == NULL)
+		new = ft_realloc_by_mmap(chunk, ptr, size);
 	else if ((chunk = ft_alloc_search_chunk_by_address(ptr)) != NULL)
 		if ((new = ft_realloc_by_concat(chunk, ptr, size)) == NULL)
 			new = ft_realloc_by_mmap(chunk, ptr, size);
 	if (new != NULL)
-		ft_alloc_history(new - g_alloc.info.s_chunk, FT_REALLOC);	
+		ft_alloc_history(new - g_alloc.info.s_chunk, FT_REALLOC);
 	return (new);
 }
 

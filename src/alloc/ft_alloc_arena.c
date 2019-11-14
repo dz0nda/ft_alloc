@@ -6,13 +6,12 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/05 03:42:53 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/09/24 04:54:34 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/14 06:53:26 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_alloc.h"
-// #include "../show/ft_show.h"
 
 static size_t	ft_alloc_get_map_size_by_size_request(size_t size)
 {
@@ -23,7 +22,8 @@ static size_t	ft_alloc_get_map_size_by_size_request(size_t size)
 		return (info.s_tiny_map);
 	else if (size > info.s_tiny_request && size <= info.s_small_request)
 		return (info.s_small_map);
-	return (ft_alloc_align_size((size + info.s_arena + info.s_chunk), info.s_page));
+	return (ft_alloc_align_size((size + info.s_arena + info.s_chunk),
+				info.s_page));
 }
 
 t_aarena		**ft_alloc_get_arena_by_size(size_t size)
@@ -86,7 +86,8 @@ int				ft_alloc_arena_del(t_achunk *chunk)
 	if ((arena = ft_alloc_search_arena_by_address((void *)chunk)) == NULL)
 		return (EXIT_FAILURE);
 	del = (*arena);
-	if ((*arena)->size == (chunk->size + g_alloc.info.s_arena + g_alloc.info.s_chunk))
+	if ((*arena)->size ==
+		(chunk->size + g_alloc.info.s_arena + g_alloc.info.s_chunk))
 	{
 		if (del->prev == NULL)
 			*arena = del->next;

@@ -6,17 +6,19 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:38:17 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/11/12 09:37:03 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/14 07:04:46 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_show.h"
 
-static size_t 	ft_show_addr(FT_AUINT ptr, FT_AUINT size, t_bool details, int i)
+static size_t	ft_show_addr(FT_AUINT ptr, FT_AUINT size, t_bool details, int i)
 {
 	const char		*state[4] = { "mmap", "used", "freed", "overhead" };
-	const t_acolor	color[4] = { COLOR_BLUE, COLOR_RED, COLOR_GREEN, COLOR_YELLOW };
+	const t_acolor	color[4] = {
+		COLOR_BLUE, COLOR_RED, COLOR_GREEN, COLOR_YELLOW
+	};
 
 	if (ptr != 0)
 	{
@@ -36,9 +38,10 @@ static size_t 	ft_show_addr(FT_AUINT ptr, FT_AUINT size, t_bool details, int i)
 	return (size);
 }
 
-static void 		ft_show_alloc_chunks(size_t total[4], t_achunk *chunk, t_bool details)
+static void		ft_show_alloc_chunks(size_t total[4], t_achunk *chunk,
+		t_bool details)
 {
-	size_t 	size;
+	size_t	size;
 
 	size = g_alloc.info.s_chunk;
 	if (details == FT_TRUE || (details == FT_FALSE && chunk->free == FT_FALSE))
@@ -48,35 +51,38 @@ static void 		ft_show_alloc_chunks(size_t total[4], t_achunk *chunk, t_bool deta
 		total[3] += ft_show_addr((FT_AUINT)chunk, size, FT_TRUE, 3);
 		ft_putstr(" - ");
 		if (chunk->free == FT_TRUE)
-			total[2] += ft_show_addr((FT_AUINT)chunk + size, chunk->size, FT_TRUE, 2);
+			total[2] += ft_show_addr((FT_AUINT)chunk + size, chunk->size,
+					FT_TRUE, 2);
 		else
-			total[1] += ft_show_addr((FT_AUINT)chunk + size, chunk->size, FT_TRUE, 1);
+			total[1] += ft_show_addr((FT_AUINT)chunk + size, chunk->size,
+					FT_TRUE, 1);
 	}
 	if (details == FT_FALSE && chunk->free == FT_FALSE)
-		total[1] += ft_show_addr((FT_AUINT)chunk + size, chunk->size, FT_FALSE, -1);
+		total[1] += ft_show_addr((FT_AUINT)chunk + size, chunk->size,
+				FT_FALSE, -1);
 }
 
-static void			ft_show_alloc(size_t total[4], t_aarena *arena, t_bool details)
+static void		ft_show_alloc(size_t total[4], t_aarena *arena,
+		t_bool details)
 {
-	const char	*anames[FT_ALLOC_AINDEX_MAX] = { "TINY : ", "SMALL : ", "LARGE : " };
-	size_t size;
+	const char	*anames[FT_ALLOC_AINDEX_MAX] = {
+		"TINY : ", "SMALL : ", "LARGE : "
+	};
+	size_t		size;
 	t_achunk	*chunk;
 
 	size = g_alloc.info.s_arena;
-	while (arena && arena->head != NULL)
+	while (arena && (chunk = arena->head) != NULL)
 	{
 		ft_putstr(anames[arena->aindex]);
 		if (details == FT_TRUE)
-		{
 			total[0] += ft_show_addr((FT_AUINT)arena, arena->size, FT_TRUE, 0);
+		if (details == FT_TRUE)
 			total[3] += ft_show_addr((FT_AUINT)arena, size, FT_TRUE, 3);
-		}
-		else
-		{
+		if (details == FT_FALSE)
 			ft_puthexa((FT_AUINT)arena);
+		if (details == FT_FALSE)
 			ft_putstr("\n");
-		}
-		chunk = arena->head;
 		while (chunk != NULL)
 		{
 			ft_show_alloc_chunks(total, chunk, details);
@@ -86,7 +92,7 @@ static void			ft_show_alloc(size_t total[4], t_aarena *arena, t_bool details)
 	}
 }
 
-void				show_alloc_mem(void)
+void			show_alloc_mem(void)
 {
 	size_t		total[4];
 	t_aindex	i;
@@ -106,15 +112,15 @@ void				show_alloc_mem(void)
 		return ;
 }
 
-void				show_alloc_mem_state(void)
+void			show_alloc_mem_state(void)
 {
-	int	i;
+	int			i;
 	t_aarena	*arena;
 	size_t		total[4];
 
 	i = -1;
 	arena = NULL;
-	ft_memset(total, 0, sizeof(total));	
+	ft_memset(total, 0, sizeof(total));
 	if (pthread_mutex_lock(&g_mutex) != 0)
 		return ;
 	ft_putstr("|| show_alloc_mem_state ||\n\n");

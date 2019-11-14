@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/10/11 20:57:59 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 21:41:03 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/14 07:07:25 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,14 +21,14 @@
 # include <pthread.h>
 # include "../libft/ft_libft.h"
 
-# define EXIT_SUCCESS			(int)0
-# define EXIT_FAILURE			(int)1
+# define EXIT_SUCCESS		(int)0
+# define EXIT_FAILURE		(int)1
 
-# define FT_AUINT		size_t
-# define FT_AALIGN	sizeof(FT_AUINT) * 2
+# define FT_AUINT			size_t
+# define FT_AALIGN			sizeof(FT_AUINT) * 2
 
-# define FT_ATINY		(FT_AUINT)256
-# define FT_ASMALL		(FT_AUINT)2048
+# define FT_ATINY			(FT_AUINT)256
+# define FT_ASMALL			(FT_AUINT)2048
 # define FT_AN				(FT_AUINT)100
 # define FT_AM				(FT_AUINT)100
 

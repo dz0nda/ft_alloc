@@ -6,7 +6,7 @@
 /*   By: dzonda <dzonda@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/09/18 07:07:58 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2019/10/11 21:12:17 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/14 06:52:18 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,7 +29,8 @@ t_aarena		**ft_alloc_search_arena_by_address(void *ptr)
 		while (arena && *arena != NULL)
 		{
 			addr_arena = (FT_AUINT)(*arena);
-			if ((addr_arena) <= addr_ptr && addr_ptr <= (addr_arena + (*arena)->size))
+			if ((addr_arena) <= addr_ptr &&
+				addr_ptr <= (addr_arena + (*arena)->size))
 				return (arena);
 			arena = &(*arena)->next;
 		}
@@ -58,7 +59,6 @@ t_achunk		**ft_alloc_search_achunk_by_address(void *ptr)
 	return (NULL);
 }
 
-
 t_achunk		*ft_alloc_search_chunk_by_address(void *ptr)
 {
 	t_aarena **arena;
@@ -82,8 +82,8 @@ t_achunk		*ft_alloc_search_chunk_by_address(void *ptr)
 
 t_achunk		*ft_alloc_search_chunk_by_size(size_t size)
 {
-	t_aarena 	**arena;
-	t_achunk 	*chunk;
+	t_aarena	**arena;
+	t_achunk	*chunk;
 
 	if (size > g_alloc.info.s_small_request)
 		return (NULL);

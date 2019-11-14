@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   ft_libft.h                                       .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/11/14 06:54:07 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2019/11/14 06:54:44 by dzonda      ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
 
 #ifndef FT_LIBFT_H
 # define FT_LIBFT_H
@@ -23,7 +35,7 @@ typedef enum	e_alloc_color
 void			*ft_memset(void *b, int c, size_t len);
 void			*ft_memcpy(void *dest, const void *src, size_t n);
 void			ft_putstr(const char *s);
-void	        ft_putstr_color(const char *s, int color);
+void			ft_putstr_color(const char *s, int color);
 void			ft_puthexa(size_t nb);
 void			ft_putnbr(int nb);
 void			*ft_memmove(void *dst, const void *src, size_t len);

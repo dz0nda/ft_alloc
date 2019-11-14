@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/12 20:11:30 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/12 11:38:03 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/11/14 06:55:40 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,8 +15,8 @@
 
 void			*ft_memmove(void *dst, const void *src, size_t len)
 {
-	const unsigned char *srce;
-	unsigned char *dest;
+	const unsigned char	*srce;
+	unsigned char		*dest;
 
 	srce = src;
 	dest = dst;
